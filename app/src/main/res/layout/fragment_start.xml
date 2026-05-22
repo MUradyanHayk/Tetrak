@@ -15,6 +15,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/nextButton"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:layout_width="wrap_content"

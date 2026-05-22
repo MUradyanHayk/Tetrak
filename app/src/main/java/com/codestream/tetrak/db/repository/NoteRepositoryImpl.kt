@@ -5,7 +5,7 @@ import com.codestream.tetrak.db.dao.NoteDao
 import com.codestream.tetrak.model.NoteModel
 
 class NoteRepositoryImpl(private val noteDao: NoteDao) : NoteRepository {
-    override val allNotes: LiveData<List<NoteModel>>
+    override val allNotes: LiveData<MutableList<NoteModel>>
         get() = noteDao.getAllNotes()
 
     override suspend fun insertNote(noteModel: NoteModel, onSuccess: () -> Unit) {
