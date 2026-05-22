@@ -8,11 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.codestream.tetrak.R
 import com.codestream.tetrak.adapter.NoteAdapter
+import com.codestream.tetrak.adapter.NoteAdapterDelegate
 import com.codestream.tetrak.databinding.ActivityMainBinding
 import com.codestream.tetrak.databinding.FragmentStartBinding
+import com.codestream.tetrak.model.NoteModel
 import com.codestream.tetrak.utils.AppConstants
+import java.lang.ref.WeakReference
 
-class StartFragment : Fragment() {
+class StartFragment : Fragment(), NoteAdapterDelegate {
     private lateinit var binding: FragmentStartBinding
     private var adapter: NoteAdapter? = null
     override fun onCreateView(
@@ -31,16 +34,21 @@ class StartFragment : Fragment() {
     fun init() {
         val viewModel = ViewModelProvider(this)[StartViewModel::class.java]
         viewModel.initDatabase()
-        adapter = NoteAdapter()
+        adapter = NoteAdapter(this)
         binding.rvNotes.adapter = adapter
         viewModel.getAllNotes().observe(viewLifecycleOwner) { notes ->
-            notes.reversed()
-            adapter?.setList(notes)
+            adapter?.setList(notes.asReversed())
         }
 
         binding.nextButton.setOnClickListener {
             AppConstants.mainApplication.navController.navigate(R.id.action_startFragment_to_addNoteFragment)
         }
+    }
+
+    override fun onClick(note: NoteModel) {
+        val bundle = Bundle()
+        bundle.putSerializable("note", note)
+        AppConstants.mainApplication.navController.navigate(R.id.action_startFragment_to_detailFragment, bundle)
     }
 
     companion object {
