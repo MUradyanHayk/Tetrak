@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import androidx.core.view.doOnLayout
+import com.codestream.tetrak.premium.PremiumManager
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
@@ -43,6 +44,12 @@ object AdMobManager {
         loadingView: ProgressBar,
         onLoaded: (AdView) -> Unit
     ) {
+        if (PremiumManager.isPremium(activity)) {
+            loadingView.visibility = View.GONE
+            adShell.visibility = View.GONE
+            adContainer.removeAllViews()
+            return
+        }
         initialize(activity)
         adShell.showAnimated()
         loadingView.visibility = View.VISIBLE
@@ -84,6 +91,7 @@ object AdMobManager {
     }
 
     fun preloadVideoAd(context: Context) {
+        if (PremiumManager.isPremium(context)) return
         initialize(context)
         if (interstitialAd != null || interstitialLoading) return
 
@@ -110,6 +118,10 @@ object AdMobManager {
         activity: Activity,
         onFinished: () -> Unit
     ) {
+        if (PremiumManager.isPremium(activity)) {
+            onFinished()
+            return
+        }
         initialize(activity)
 
         val prefs = activity.applicationContext.getSharedPreferences(PREFS, Context.MODE_PRIVATE)

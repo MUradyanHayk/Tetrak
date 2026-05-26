@@ -43,7 +43,7 @@
     <string name="discard">صرف‌نظر</string>
     <string name="ad_label">تبلیغ</string>
     <string name="ads">تبلیغات</string>
-    <string name="ads_info">یک بنر تطبیقی کوچک از نسخه رایگان Tetrak پشتیبانی می‌کند. پس از ذخیره چند یادداشت، ممکن است در یک لحظه مناسب یک تبلیغ آزمایشی تمام‌صفحه video/interstitial نمایش داده شود. قبل از انتشار، همه شناسه‌های آزمایشی AdMob را با شناسه‌های واقعی جایگزین کنید.</string>
+    <string name="ads_info">کاربران رایگان ممکن است تبلیغات بنر و video/interstitial ببینند. کاربران پریمیوم برنامه بدون تبلیغ و ساخت عنوان با AI دارند. قبل از انتشار شناسه‌های آزمایشی AdMob را با شناسه‌های واقعی جایگزین کنید.</string>
     <string name="copy">کپی</string>
     <string name="search">جستجو</string>
     <string name="undo">واگرد</string>
@@ -59,4 +59,20 @@
     <string name="ai_title_description_required">ابتدا توضیحات را بنویسید</string>
     <string name="ai_title_generation_failed">ساخت عنوان انجام نشد. دوباره تلاش کنید.</string>
     <string name="ai_title_api_key_missing">کلید Gemini API وجود ندارد. GEMINI_API_KEY را به local.properties اضافه کنید.</string>
+
+    <string name="premium">پریمیوم</string>
+    <string name="premium_status_active">پریمیوم فعال است</string>
+    <string name="premium_status_free">طرح رایگان</string>
+    <string name="premium_info">پریمیوم همه تبلیغات را حذف می‌کند و ساخت عنوان با هوش مصنوعی را فعال می‌کند. هر بار که روی دکمه AI بزنید، برنامه یادآوری می‌کند که توضیح برای ساخت عنوان به Gemini ارسال می‌شود.</string>
+    <string name="premium_upgrade">ارتقا</string>
+    <string name="premium_restore">بازیابی</string>
+    <string name="premium_required_title">ویژگی پریمیوم</string>
+    <string name="premium_ai_title_required_message">ساخت عنوان با AI یک ابزار پریمیوم است. کلیک شماره %1$d به Gemini ارسال نشد. برای ساخت عنوان و حذف تبلیغات ارتقا دهید.</string>
+    <string name="premium_ai_title_notice">کلیک پریمیوم AI شماره %1$d. توضیح شما فقط برای ساخت عنوان به Gemini ارسال می‌شود.</string>
+    <string name="premium_billing_not_configured">خرید پریمیوم در رابط برنامه آماده است، اما Google Play Billing هنوز وصل نشده است. محصول اشتراک %1$s را در Play Console بسازید و جریان پرداخت را در PremiumBillingManager وصل کنید.</string>
+    <string name="premium_restore_success">دسترسی پریمیوم بازیابی شد.</string>
+    <string name="premium_restore_empty">اشتراک فعال پریمیوم پیدا نشد.</string>
+    <string name="premium_dev_unlock">فعال‌سازی آزمایشی پریمیوم</string>
+    <string name="premium_dev_enabled">پریمیوم برای تست فعال شد.</string>
+    <string name="premium_dev_disabled">پریمیوم برای تست غیرفعال شد.</string>
 </resources>

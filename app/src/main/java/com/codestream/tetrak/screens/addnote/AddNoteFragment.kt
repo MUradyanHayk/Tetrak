@@ -26,6 +26,8 @@ import com.codestream.tetrak.ads.AdMobManager
 import com.codestream.tetrak.databinding.DialogColorPickerBinding
 import com.codestream.tetrak.databinding.FragmentAddNoteBinding
 import com.codestream.tetrak.model.NoteModel
+import com.codestream.tetrak.premium.PremiumBillingManager
+import com.codestream.tetrak.premium.PremiumManager
 import com.codestream.tetrak.util.NoteEditorHistory
 import com.codestream.tetrak.util.NoteEditorSearch
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -159,6 +161,7 @@ class AddNoteFragment : Fragment() {
 
     private fun generateTitleWithAi() {
         if (isGeneratingTitle) return
+        if (!requirePremiumForAiTitle()) return
         val description = binding.edAddDesc.text?.toString().orEmpty().trim()
         if (description.isBlank()) {
             Snackbar.make(binding.root, R.string.ai_title_description_required, Snackbar.LENGTH_SHORT).show()
@@ -202,6 +205,33 @@ class AddNoteFragment : Fragment() {
                 ).show()
             }
         )
+    }
+
+    private fun requirePremiumForAiTitle(): Boolean {
+        val clickCount = PremiumManager.recordAiTitleClick(requireContext())
+        if (PremiumManager.isPremium(requireContext())) {
+            Snackbar.make(
+                binding.root,
+                getString(R.string.premium_ai_title_notice, clickCount),
+                Snackbar.LENGTH_LONG
+            ).show()
+            return true
+        }
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.premium_required_title)
+            .setMessage(getString(R.string.premium_ai_title_required_message, clickCount))
+            .setNegativeButton(R.string.cancel, null)
+            .setNeutralButton(R.string.premium_restore) { _, _ ->
+                PremiumBillingManager.restorePurchases(requireContext()) { _, message ->
+                    if (isAdded) Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+                }
+            }
+            .setPositiveButton(R.string.premium_upgrade) { _, _ ->
+                findNavController().navigate(R.id.settingsFragment)
+            }
+            .show()
+        return false
     }
 
     private fun setupColorPicker() {

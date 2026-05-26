@@ -43,7 +43,7 @@
     <string name="discard">Не сохранять</string>
     <string name="ad_label">Реклама</string>
     <string name="ads">Реклама</string>
-    <string name="ads_info">Небольшой adaptive banner поддерживает бесплатную версию Tetrak. После нескольких сохранённых заметок в естественный момент может появляться полноэкранная video/interstitial тестовая реклама. Перед публикацией замените все тестовые AdMob ID на production ID.</string>
+    <string name="ads_info">Пользователи бесплатной версии могут видеть баннеры и video/interstitial рекламу. Пользователи Премиум получают приложение без рекламы и генерацию заголовков с ИИ. Перед публикацией замените тестовые AdMob ID на production ID.</string>
     <string name="copy">Копировать</string>
     <string name="search">Поиск</string>
     <string name="undo">Отменить</string>
@@ -59,4 +59,20 @@
     <string name="ai_title_description_required">Сначала напишите описание</string>
     <string name="ai_title_generation_failed">Не удалось создать заголовок. Попробуйте снова.</string>
     <string name="ai_title_api_key_missing">Отсутствует API-ключ Gemini. Добавьте GEMINI_API_KEY в local.properties.</string>
+
+    <string name="premium">Премиум</string>
+    <string name="premium_status_active">Премиум активен</string>
+    <string name="premium_status_free">Бесплатный план</string>
+    <string name="premium_info">Премиум убирает всю рекламу и открывает генерацию заголовков с ИИ. Каждый раз при нажатии ИИ приложение напомнит, что описание отправляется в Gemini для создания заголовка.</string>
+    <string name="premium_upgrade">Обновить</string>
+    <string name="premium_restore">Восстановить</string>
+    <string name="premium_required_title">Премиум функция</string>
+    <string name="premium_ai_title_required_message">Генерация заголовка ИИ доступна в Премиум. Нажатие №%1$d не было отправлено в Gemini. Обновитесь, чтобы генерировать заголовки и убрать рекламу.</string>
+    <string name="premium_ai_title_notice">Премиум ИИ, нажатие №%1$d. Ваше описание будет отправлено в Gemini только для генерации заголовка.</string>
+    <string name="premium_billing_not_configured">Покупка Премиум готова в интерфейсе, но Google Play Billing ещё не подключён. Создайте подписку %1$s в Play Console и подключите поток покупки в PremiumBillingManager.</string>
+    <string name="premium_restore_success">Премиум восстановлен.</string>
+    <string name="premium_restore_empty">Активная подписка Премиум не найдена.</string>
+    <string name="premium_dev_unlock">Тестовый Премиум доступ</string>
+    <string name="premium_dev_enabled">Премиум включён для тестирования.</string>
+    <string name="premium_dev_disabled">Премиум выключен для тестирования.</string>
 </resources>

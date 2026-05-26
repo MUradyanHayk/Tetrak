@@ -30,6 +30,8 @@ import com.codestream.tetrak.databinding.DialogNoteHistoryBinding
 import com.codestream.tetrak.databinding.FragmentDetailBinding
 import com.codestream.tetrak.model.NoteHistoryModel
 import com.codestream.tetrak.model.NoteModel
+import com.codestream.tetrak.premium.PremiumBillingManager
+import com.codestream.tetrak.premium.PremiumManager
 import com.codestream.tetrak.util.NoteEditorHistory
 import com.codestream.tetrak.util.NoteEditorSearch
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -194,6 +196,7 @@ class DetailFragment : Fragment() {
 
     private fun generateTitleWithAi() {
         if (isGeneratingTitle) return
+        if (!requirePremiumForAiTitle()) return
         if (!isEditMode) enterEditMode()
         val description = binding.editDescription.text?.toString().orEmpty().trim()
         if (description.isBlank()) {
@@ -238,6 +241,33 @@ class DetailFragment : Fragment() {
                 ).show()
             }
         )
+    }
+
+    private fun requirePremiumForAiTitle(): Boolean {
+        val clickCount = PremiumManager.recordAiTitleClick(requireContext())
+        if (PremiumManager.isPremium(requireContext())) {
+            Snackbar.make(
+                binding.root,
+                getString(R.string.premium_ai_title_notice, clickCount),
+                Snackbar.LENGTH_LONG
+            ).show()
+            return true
+        }
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.premium_required_title)
+            .setMessage(getString(R.string.premium_ai_title_required_message, clickCount))
+            .setNegativeButton(R.string.cancel, null)
+            .setNeutralButton(R.string.premium_restore) { _, _ ->
+                PremiumBillingManager.restorePurchases(requireContext()) { _, message ->
+                    if (isAdded) Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+                }
+            }
+            .setPositiveButton(R.string.premium_upgrade) { _, _ ->
+                findNavController().navigate(R.id.settingsFragment)
+            }
+            .show()
+        return false
     }
 
     private fun setupColorPicker() {

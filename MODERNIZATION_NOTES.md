@@ -142,3 +142,18 @@ The project wrapper tried to download Gradle `9.3.1`, but this environment has n
   - `GEMINI_API_KEY=your_key_here`
   - `GEMINI_MODEL=gemini-2.0-flash`
 - For production, move the API key behind a backend/serverless proxy before publishing, because APKs can be decompiled.
+
+## Premium subscription layer
+
+- Added a premium entitlement boundary with `PremiumManager`.
+- Added a `PremiumBillingManager` integration point for Google Play Billing subscription flow.
+- Added `PremiumConfig.PREMIUM_SUBSCRIPTION_PRODUCT_ID` with the planned product id `tetrak_premium_monthly`.
+- Added a Premium card in Settings with status, upgrade, restore, and development unlock controls.
+- Premium users do not see banner ads.
+- Premium users do not receive save-count interstitial/video ads.
+- AI title generation is now a Premium feature.
+- Every AI title button click informs the user that Premium is required or, for Premium users, that the description is sent to Gemini for title generation.
+- Free users see an upgrade dialog instead of sending text to Gemini.
+- Added localized Premium strings for English, Armenian, Russian, Arabic, and Persian.
+
+Production note: before release, create the subscription product in Google Play Console and connect the real BillingClient flow inside `PremiumBillingManager`. Server-side receipt verification is recommended before granting premium entitlement.

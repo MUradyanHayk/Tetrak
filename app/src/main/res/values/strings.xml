@@ -58,7 +58,7 @@
     <string name="close">Close</string>
     <string name="ad_label">Ad</string>
     <string name="ads">Ads</string>
-    <string name="ads_info">A small adaptive banner supports the free version of Tetrak. A full-screen video/interstitial test ad may appear after every few saved notes at a natural break. Replace all test AdMob IDs with production IDs before publishing.</string>
+    <string name="ads_info">Free users may see banner and video/interstitial ads. Premium users get an ad-free app and AI title generation. Replace all test AdMob IDs with production IDs before publishing.</string>
     <string name="copy">Copy</string>
     <string name="search">Search</string>
     <string name="undo">Undo</string>
@@ -74,4 +74,20 @@
     <string name="ai_title_description_required">Write a description first</string>
     <string name="ai_title_generation_failed">Could not generate title. Try again.</string>
     <string name="ai_title_api_key_missing">Gemini API key is missing. Add GEMINI_API_KEY to local.properties.</string>
+
+    <string name="premium">Premium</string>
+    <string name="premium_status_active">Premium active</string>
+    <string name="premium_status_free">Free plan</string>
+    <string name="premium_info">Premium removes all ads and unlocks AI title generation. Every time you tap AI title, the app will remind you that the description is sent to Gemini to create a title.</string>
+    <string name="premium_upgrade">Upgrade</string>
+    <string name="premium_restore">Restore</string>
+    <string name="premium_required_title">Premium feature</string>
+    <string name="premium_ai_title_required_message">AI title generation is a Premium tool. Click #%1$d was not sent to Gemini. Upgrade to generate titles and remove ads.</string>
+    <string name="premium_ai_title_notice">Premium AI title click #%1$d. Your description will be sent to Gemini only for title generation.</string>
+    <string name="premium_billing_not_configured">Premium purchase is ready in the app UI, but Google Play Billing is not connected yet. Create subscription product %1$s in Play Console, then connect the billing flow in PremiumBillingManager.</string>
+    <string name="premium_restore_success">Premium access restored.</string>
+    <string name="premium_restore_empty">No active Premium subscription found.</string>
+    <string name="premium_dev_unlock">Development Premium unlock</string>
+    <string name="premium_dev_enabled">Premium enabled for development testing.</string>
+    <string name="premium_dev_disabled">Premium disabled for development testing.</string>
 </resources>

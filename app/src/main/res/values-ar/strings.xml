@@ -43,7 +43,7 @@
     <string name="discard">تجاهل</string>
     <string name="ad_label">إعلان</string>
     <string name="ads">الإعلانات</string>
-    <string name="ads_info">يدعم إعلان بانر تكيفي صغير النسخة المجانية من Tetrak. بعد حفظ عدة ملاحظات قد يظهر إعلان تجريبي بملء الشاشة video/interstitial في لحظة مناسبة. استبدل كل معرّفات AdMob التجريبية بمعرّفات الإنتاج قبل النشر.</string>
+    <string name="ads_info">قد يرى المستخدمون المجانيون إعلانات بانر وvideo/interstitial. مستخدمو بريميوم يحصلون على تطبيق بدون إعلانات وإنشاء العنوان بالذكاء الاصطناعي. استبدل معرّفات AdMob التجريبية بمعرّفات الإنتاج قبل النشر.</string>
     <string name="copy">نسخ</string>
     <string name="search">بحث</string>
     <string name="undo">تراجع</string>
@@ -59,4 +59,20 @@
     <string name="ai_title_description_required">اكتب الوصف أولاً</string>
     <string name="ai_title_generation_failed">تعذر إنشاء العنوان. حاول مرة أخرى.</string>
     <string name="ai_title_api_key_missing">مفتاح Gemini API غير موجود. أضف GEMINI_API_KEY إلى local.properties.</string>
+
+    <string name="premium">بريميوم</string>
+    <string name="premium_status_active">بريميوم مفعّل</string>
+    <string name="premium_status_free">الخطة المجانية</string>
+    <string name="premium_info">بريميوم يزيل كل الإعلانات ويفتح إنشاء العنوان بالذكاء الاصطناعي. عند كل ضغط على زر الذكاء الاصطناعي سيذكّرك التطبيق بأن الوصف يُرسل إلى Gemini لإنشاء العنوان.</string>
+    <string name="premium_upgrade">ترقية</string>
+    <string name="premium_restore">استعادة</string>
+    <string name="premium_required_title">ميزة بريميوم</string>
+    <string name="premium_ai_title_required_message">إنشاء العنوان بالذكاء الاصطناعي أداة بريميوم. الضغطة رقم %1$d لم تُرسل إلى Gemini. قم بالترقية لإنشاء العناوين وإزالة الإعلانات.</string>
+    <string name="premium_ai_title_notice">ضغط بريميوم AI رقم %1$d. سيتم إرسال الوصف إلى Gemini فقط لإنشاء العنوان.</string>
+    <string name="premium_billing_not_configured">شراء بريميوم جاهز في الواجهة، لكن Google Play Billing غير موصول بعد. أنشئ منتج الاشتراك %1$s في Play Console ثم صِل مسار الدفع في PremiumBillingManager.</string>
+    <string name="premium_restore_success">تمت استعادة بريميوم.</string>
+    <string name="premium_restore_empty">لم يتم العثور على اشتراك بريميوم نشط.</string>
+    <string name="premium_dev_unlock">فتح بريميوم للتطوير</string>
+    <string name="premium_dev_enabled">تم تفعيل بريميوم للاختبار.</string>
+    <string name="premium_dev_disabled">تم تعطيل بريميوم للاختبار.</string>
 </resources>

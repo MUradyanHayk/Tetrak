@@ -8,11 +8,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.codestream.tetrak.ads.AdMobManager
 import com.codestream.tetrak.databinding.ActivityMainBinding
+import com.codestream.tetrak.premium.PremiumManager
 import com.codestream.tetrak.utils.AppSettings
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var bannerAdView: com.google.android.gms.ads.AdView? = null
+    private var bannerRequested = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AppSettings.applySavedSettings(this)
@@ -28,11 +30,28 @@ class MainActivity : AppCompatActivity() {
             animateAdForKeyboard(imeVisible)
             insets
         }
-        setupAdMobBanner()
+        setupPremiumAwareAds()
+    }
+
+    private fun setupPremiumAwareAds() {
+        if (PremiumManager.isPremium(this)) {
+            bannerRequested = false
+            binding.adSection.visibility = android.view.View.GONE
+            binding.navFragment.layoutParams = binding.navFragment.layoutParams.apply {
+                if (this is androidx.constraintlayout.widget.ConstraintLayout.LayoutParams) {
+                    bottomToBottom = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
+                    bottomToTop = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.UNSET
+                }
+            }
+            return
+        }
         AdMobManager.preloadVideoAd(this)
+        setupAdMobBanner()
     }
 
     private fun setupAdMobBanner() {
+        if (bannerRequested) return
+        bannerRequested = true
         AdMobManager.loadAdaptiveBanner(
             activity = this,
             adContainer = binding.adViewContainer,
@@ -57,7 +76,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        bannerAdView?.resume()
+        if (PremiumManager.isPremium(this)) {
+            bannerAdView?.destroy()
+            bannerAdView = null
+            bannerRequested = false
+            binding.adViewContainer.removeAllViews()
+            binding.adSection.visibility = android.view.View.GONE
+        } else if (bannerAdView == null) {
+            setupPremiumAwareAds()
+        } else {
+            bannerAdView?.resume()
+        }
     }
 
     override fun onPause() {
@@ -68,6 +97,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         bannerAdView?.destroy()
         bannerAdView = null
+        bannerRequested = false
         super.onDestroy()
     }
 }

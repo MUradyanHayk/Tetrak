@@ -43,7 +43,7 @@
     <string name="discard">Չպահպանել</string>
     <string name="ad_label">Գովազդ</string>
     <string name="ads">Գովազդներ</string>
-    <string name="ads_info">Փոքր adaptive banner-ը աջակցում է Tetrak-ի անվճար տարբերակին։ Մի քանի պահպանված նշումից հետո բնական պահին կարող է ցուցադրվել full-screen video/interstitial test գովազդ։ Հրապարակելուց առաջ փոխարինեք բոլոր test AdMob ID-ները production ID-ներով։</string>
+    <string name="ads_info">Անվճար օգտատերերը կարող են տեսնել banner և video/interstitial գովազդներ։ Պրեմիում օգտատերերը ստանում են առանց գովազդի հավելված և AI վերնագրի գեներացիա։ Հրապարակելուց առաջ փոխարինեք test AdMob ID-ները production ID-ներով։</string>
     <string name="copy">Պատճենել</string>
     <string name="search">Որոնել</string>
     <string name="undo">Հետարկել</string>
@@ -59,4 +59,20 @@
     <string name="ai_title_description_required">Նախ գրեք նկարագրություն</string>
     <string name="ai_title_generation_failed">Չհաջողվեց ստեղծել վերնագիր։ Փորձեք կրկին։</string>
     <string name="ai_title_api_key_missing">Gemini API բանալին բացակայում է։ Ավելացրեք GEMINI_API_KEY-ը local.properties-ում։</string>
+
+    <string name="premium">Պրեմիում</string>
+    <string name="premium_status_active">Պրեմիումը ակտիվ է</string>
+    <string name="premium_status_free">Անվճար պլան</string>
+    <string name="premium_info">Պրեմիումը հեռացնում է բոլոր գովազդները և բացում AI վերնագրի գեներացիան։ Ամեն անգամ AI կոճակը սեղմելիս հավելվածը կհիշեցնի, որ նկարագրությունը ուղարկվում է Gemini՝ վերնագիր ստեղծելու համար։</string>
+    <string name="premium_upgrade">Թարմացնել</string>
+    <string name="premium_restore">Վերականգնել</string>
+    <string name="premium_required_title">Պրեմիում հնարավորություն</string>
+    <string name="premium_ai_title_required_message">AI վերնագրի գեներացիան Պրեմիում գործիք է։ Սեղմում #%1$d-ը չի ուղարկվել Gemini։ Թարմացրեք՝ վերնագրեր ստեղծելու և գովազդները հեռացնելու համար։</string>
+    <string name="premium_ai_title_notice">Պրեմիում AI սեղմում #%1$d։ Ձեր նկարագրությունը կուղարկվի Gemini միայն վերնագիր ստեղծելու համար։</string>
+    <string name="premium_billing_not_configured">Պրեմիում գնումը պատրաստ է UI-ում, բայց Google Play Billing-ը դեռ միացված չէ։ Ստեղծեք %1$s subscription product-ը Play Console-ում և միացրեք billing flow-ը PremiumBillingManager-ում։</string>
+    <string name="premium_restore_success">Պրեմիում հասանելիությունը վերականգնվեց։</string>
+    <string name="premium_restore_empty">Ակտիվ Պրեմիում բաժանորդագրություն չի գտնվել։</string>
+    <string name="premium_dev_unlock">Development Premium unlock</string>
+    <string name="premium_dev_enabled">Պրեմիումը միացվեց թեստավորման համար։</string>
+    <string name="premium_dev_disabled">Պրեմիումը անջատվեց թեստավորման համար։</string>
 </resources>
