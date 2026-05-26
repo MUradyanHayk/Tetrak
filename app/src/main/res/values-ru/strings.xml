@@ -53,4 +53,10 @@
     <string name="search_no_results">Совпадений нет</string>
     <string name="copied_to_clipboard">Скопировано</string>
     <string name="nothing_to_copy">Нечего копировать</string>
+    <string name="generate_title_with_ai">Создать заголовок с AI</string>
+    <string name="ai_title_generating">Создание заголовка...</string>
+    <string name="ai_title_generated">AI-заголовок создан</string>
+    <string name="ai_title_description_required">Сначала напишите описание</string>
+    <string name="ai_title_generation_failed">Не удалось создать заголовок. Попробуйте снова.</string>
+    <string name="ai_title_api_key_missing">Отсутствует API-ключ Gemini. Добавьте GEMINI_API_KEY в local.properties.</string>
 </resources>

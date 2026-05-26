@@ -53,4 +53,10 @@
     <string name="search_no_results">Համընկնում չի գտնվել</string>
     <string name="copied_to_clipboard">Պատճենվեց</string>
     <string name="nothing_to_copy">Պատճենելու բան չկա</string>
+    <string name="generate_title_with_ai">Ստեղծել վերնագիր AI-ով</string>
+    <string name="ai_title_generating">Վերնագիրը ստեղծվում է...</string>
+    <string name="ai_title_generated">AI վերնագիրը ստեղծվեց</string>
+    <string name="ai_title_description_required">Նախ գրեք նկարագրություն</string>
+    <string name="ai_title_generation_failed">Չհաջողվեց ստեղծել վերնագիր։ Փորձեք կրկին։</string>
+    <string name="ai_title_api_key_missing">Gemini API բանալին բացակայում է։ Ավելացրեք GEMINI_API_KEY-ը local.properties-ում։</string>
 </resources>

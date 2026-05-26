@@ -3,6 +3,12 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+}
+
 android {
     namespace 'com.codestream.tetrak'
     compileSdk 36
@@ -15,10 +21,13 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "GEMINI_API_KEY", "\"${localProperties.getProperty('GEMINI_API_KEY', '')}\""
+        buildConfigField "String", "GEMINI_MODEL", "\"${localProperties.getProperty('GEMINI_MODEL', 'gemini-2.0-flash')}\""
     }
 
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 
     buildTypes {

@@ -53,4 +53,10 @@
     <string name="search_no_results">لا توجد نتائج</string>
     <string name="copied_to_clipboard">تم النسخ</string>
     <string name="nothing_to_copy">لا يوجد شيء للنسخ</string>
+    <string name="generate_title_with_ai">إنشاء عنوان بالذكاء الاصطناعي</string>
+    <string name="ai_title_generating">جارٍ إنشاء العنوان...</string>
+    <string name="ai_title_generated">تم إنشاء العنوان بالذكاء الاصطناعي</string>
+    <string name="ai_title_description_required">اكتب الوصف أولاً</string>
+    <string name="ai_title_generation_failed">تعذر إنشاء العنوان. حاول مرة أخرى.</string>
+    <string name="ai_title_api_key_missing">مفتاح Gemini API غير موجود. أضف GEMINI_API_KEY إلى local.properties.</string>
 </resources>

@@ -51,6 +51,7 @@ class AddNoteFragment : Fragment() {
     private var lastSaveButtonBottomMargin: Int = -1
     private var editorHistory: NoteEditorHistory? = null
     private var editorSearch: NoteEditorSearch? = null
+    private var isGeneratingTitle = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAddNoteBinding.inflate(inflater, container, false)
@@ -64,6 +65,7 @@ class AddNoteFragment : Fragment() {
         setupKeyboardAwareSaveButton()
         setupColorPicker()
         setupEditorTools()
+        setupAiTitleGenerator()
         animateIntro()
         setupValidation()
         setupClicks()
@@ -145,6 +147,61 @@ class AddNoteFragment : Fragment() {
                 binding.editorScroll.smoothScrollTo(0, focusedBottom - binding.editorScroll.height)
             }
         }, 120L)
+    }
+
+
+    private fun setupAiTitleGenerator() {
+        binding.titleInput.setEndIconOnClickListener {
+            animateToolTap(binding.titleInput)
+            generateTitleWithAi()
+        }
+    }
+
+    private fun generateTitleWithAi() {
+        if (isGeneratingTitle) return
+        val description = binding.edAddDesc.text?.toString().orEmpty().trim()
+        if (description.isBlank()) {
+            Snackbar.make(binding.root, R.string.ai_title_description_required, Snackbar.LENGTH_SHORT).show()
+            binding.edAddDesc.requestFocus()
+            return
+        }
+
+        isGeneratingTitle = true
+        binding.titleInput.isEndIconVisible = false
+        binding.titleInput.helperText = getString(R.string.ai_title_generating)
+        binding.titleInput.animate().scaleX(1.01f).scaleY(1.01f).setDuration(140L).withEndAction {
+            binding.titleInput.animate().scaleX(1f).scaleY(1f).setDuration(160L).start()
+        }.start()
+
+        viewModel.generateTitle(
+            description = description,
+            onSuccess = { title ->
+                isGeneratingTitle = false
+                binding.titleInput.isEndIconVisible = true
+                binding.titleInput.helperText = null
+                if (title.isBlank()) {
+                    Snackbar.make(binding.root, R.string.ai_title_generation_failed, Snackbar.LENGTH_SHORT).show()
+                    return@generateTitle
+                }
+                binding.edAddTitle.setText(title)
+                binding.edAddTitle.setSelection(binding.edAddTitle.text?.length ?: 0)
+                binding.titleInput.error = null
+                binding.titleInput.animate().translationX(6f).setDuration(55L).withEndAction {
+                    binding.titleInput.animate().translationX(0f).setDuration(120L).start()
+                }.start()
+                Snackbar.make(binding.root, R.string.ai_title_generated, Snackbar.LENGTH_SHORT).show()
+            },
+            onError = { message ->
+                isGeneratingTitle = false
+                binding.titleInput.isEndIconVisible = true
+                binding.titleInput.helperText = null
+                Snackbar.make(
+                    binding.root,
+                    message.takeIf { it.isNotBlank() } ?: getString(R.string.ai_title_generation_failed),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        )
     }
 
     private fun setupColorPicker() {

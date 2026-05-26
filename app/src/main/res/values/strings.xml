@@ -68,4 +68,10 @@
     <string name="search_no_results">No matches found</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="nothing_to_copy">Nothing to copy</string>
+    <string name="generate_title_with_ai">Generate title with AI</string>
+    <string name="ai_title_generating">Generating title...</string>
+    <string name="ai_title_generated">AI title generated</string>
+    <string name="ai_title_description_required">Write a description first</string>
+    <string name="ai_title_generation_failed">Could not generate title. Try again.</string>
+    <string name="ai_title_api_key_missing">Gemini API key is missing. Add GEMINI_API_KEY to local.properties.</string>
 </resources>

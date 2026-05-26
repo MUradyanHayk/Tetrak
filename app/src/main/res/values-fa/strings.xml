@@ -53,4 +53,10 @@
     <string name="search_no_results">موردی پیدا نشد</string>
     <string name="copied_to_clipboard">کپی شد</string>
     <string name="nothing_to_copy">چیزی برای کپی نیست</string>
+    <string name="generate_title_with_ai">ساخت عنوان با هوش مصنوعی</string>
+    <string name="ai_title_generating">در حال ساخت عنوان...</string>
+    <string name="ai_title_generated">عنوان هوشمند ساخته شد</string>
+    <string name="ai_title_description_required">ابتدا توضیحات را بنویسید</string>
+    <string name="ai_title_generation_failed">ساخت عنوان انجام نشد. دوباره تلاش کنید.</string>
+    <string name="ai_title_api_key_missing">کلید Gemini API وجود ندارد. GEMINI_API_KEY را به local.properties اضافه کنید.</string>
 </resources>

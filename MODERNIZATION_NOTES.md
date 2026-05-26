@@ -132,3 +132,13 @@ The project wrapper tried to download Gradle `9.3.1`, but this environment has n
 - Converted editor tools to compact icon-only buttons with content descriptions and tooltips.
 - Increased Add Note description editor minimum height.
 - Increased Edit Note description editor height for a normal writing experience.
+
+## Gemini AI title generation
+- Added a Gemini REST client (`GeminiTitleGenerator`) for generating a short title from the note description.
+- Added AI title action as the end icon of the title field in both Add Note and Edit Note flows.
+- The prompt keeps the generated title short, max 5 words, and uses the same language as the description.
+- Added localized UI/error strings for English, Armenian, Russian, Arabic, and Persian.
+- API configuration is read from `local.properties` via `BuildConfig`:
+  - `GEMINI_API_KEY=your_key_here`
+  - `GEMINI_MODEL=gemini-2.0-flash`
+- For production, move the API key behind a backend/serverless proxy before publishing, because APKs can be decompiled.
