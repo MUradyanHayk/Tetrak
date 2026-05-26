@@ -89,9 +89,7 @@ class SettingsFragment : Fragment() {
             it.animate().scaleX(0.96f).scaleY(0.96f).setDuration(70L).withEndAction {
                 it.animate().scaleX(1f).scaleY(1f).setDuration(120L).start()
             }.start()
-            PremiumBillingManager.launchPremiumPurchase(requireActivity()) { message ->
-                Snackbar.make(root, message, Snackbar.LENGTH_LONG).show()
-            }
+            findNavController().navigate(R.id.action_settingsFragment_to_premiumFragment)
         }
 
         premiumRestoreBtn.setOnClickListener {
@@ -117,7 +115,8 @@ class SettingsFragment : Fragment() {
         premiumStatus.setText(if (premium) R.string.premium_status_active else R.string.premium_status_free)
         premiumDebugSwitch.isChecked = premium
         adsCard.alpha = if (premium) 0.55f else 1f
-        premiumUpgradeBtn.isEnabled = !premium
+        premiumUpgradeBtn.isEnabled = true
+        premiumUpgradeBtn.setText(if (premium) R.string.premium_manage_plan else R.string.premium_view_plans)
     }
 
     private fun animateIntro() = with(binding) {

@@ -90,4 +90,22 @@
     <string name="premium_dev_unlock">Development Premium unlock</string>
     <string name="premium_dev_enabled">Premium enabled for development testing.</string>
     <string name="premium_dev_disabled">Premium disabled for development testing.</string>
+
+    <string name="premium_title">Tetrak Premium</string>
+    <string name="premium_subtitle">Unlock AI title generation, remove ads, and support future smart note tools.</string>
+    <string name="premium_monthly">Monthly Premium</string>
+    <string name="premium_monthly_subtitle">Flexible plan for regular note taking.</string>
+    <string name="premium_yearly">Yearly Premium</string>
+    <string name="premium_yearly_subtitle">Best value for long-term use. About 50% cheaper than monthly.</string>
+    <string name="best_value">Best value</string>
+    <string name="choose">Choose</string>
+    <string name="premium_includes">Premium includes</string>
+    <string name="premium_feature_ai_titles">- AI title generation from your note description</string>
+    <string name="premium_feature_no_ads">- No banner ads and no video/interstitial ads</string>
+    <string name="premium_feature_future_tools">- Access to future premium editor and AI tools</string>
+    <string name="premium_view_plans">View plans</string>
+    <string name="premium_manage_plan">Manage Premium</string>
+    <string name="premium_already_active">Premium is already active.</string>
+    <string name="premium_billing_unavailable">Google Play Billing is not available right now. Try again later.</string>
+    <string name="premium_products_not_ready">Premium products are not ready yet. Check Play Console product IDs and tester setup.</string>
 </resources>

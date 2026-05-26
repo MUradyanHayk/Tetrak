@@ -49,5 +49,19 @@
         android:id="@+id/settingsFragment"
         android:name="com.codestream.tetrak.screens.settings.SettingsFragment"
         android:label="@string/settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_premiumFragment"
+            app:destination="@id/premiumFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/premiumFragment"
+        android:name="com.codestream.tetrak.screens.premium.PremiumFragment"
+        android:label="@string/premium"
+        tools:layout="@layout/fragment_premium" />
 </navigation>

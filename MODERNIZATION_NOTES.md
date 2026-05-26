@@ -157,3 +157,26 @@ The project wrapper tried to download Gradle `9.3.1`, but this environment has n
 - Added localized Premium strings for English, Armenian, Russian, Arabic, and Persian.
 
 Production note: before release, create the subscription product in Google Play Console and connect the real BillingClient flow inside `PremiumBillingManager`. Server-side receipt verification is recommended before granting premium entitlement.
+
+## Premium monthly/yearly subscription integration
+
+- Added Google Play Billing dependency through the version catalog.
+- Replaced the single placeholder premium product with two subscription product IDs:
+  - `tetrak_premium_monthly` for the recommended $1.99/month plan.
+  - `tetrak_premium_yearly` for the recommended $11.99/year plan.
+- Added `PremiumPlan` and expanded `PremiumManager` to persist entitlement, active product ID, and purchase token.
+- Reworked `PremiumBillingManager` into a real BillingClient boundary:
+  - initializes once from `TetrakApplication`,
+  - queries subscription product details,
+  - launches monthly/yearly purchase flows,
+  - restores active subscription purchases,
+  - acknowledges purchases,
+  - grants local Premium entitlement after successful purchase.
+- Added a dedicated Premium info/plans screen with animated monthly/yearly cards, feature list, restore button, and status chip.
+- Settings now opens the Premium plans screen instead of showing only a placeholder upgrade action.
+- Premium entitlement still controls app behavior:
+  - Premium users can use Gemini AI title generation.
+  - Premium users do not see banner ads.
+  - Premium users do not see interstitial/video ads after saved notes.
+
+Production note: before Play Store release, create both subscription products in Play Console and verify purchase tokens on a backend before trusting long-term entitlements.
