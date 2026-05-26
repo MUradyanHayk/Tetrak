@@ -1,5 +1,6 @@
 package com.codestream.tetrak.screens.detail
 
+import android.animation.ValueAnimator
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
@@ -7,7 +8,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -33,6 +38,8 @@ class DetailFragment : Fragment() {
     private var isEditMode = false
     private var isSaving = false
     private var latestHistory: List<NoteHistoryModel> = emptyList()
+    private var actionRowBottomAnimator: ValueAnimator? = null
+    private var lastActionRowBottomMargin: Int = -1
 
     private val colorOptions = listOf(
         Color.parseColor("#5B6CFF"),
@@ -55,6 +62,7 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupBackHandling()
         setupToolbar()
+        setupKeyboardAwareEditActions()
         setupColorPicker()
         bindNote()
         observeHistory()
@@ -97,6 +105,71 @@ class DetailFragment : Fragment() {
                 else -> false
             }
         }
+    }
+
+
+    private fun setupKeyboardAwareEditActions() {
+        val defaultBottomMargin = binding.actionRow.resources.getDimensionPixelSize(R.dimen.save_button_bottom_margin)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
+            val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val keyboardHeight = (imeInsets.bottom - systemBarInsets.bottom).coerceAtLeast(0)
+            val targetBottomMargin = defaultBottomMargin + keyboardHeight
+            val keyboardVisible = keyboardHeight > 0
+
+            animateEditActionsForKeyboard(targetBottomMargin, keyboardVisible)
+            if (keyboardVisible && isEditMode) {
+                keepFocusedEditFieldVisible()
+            }
+            insets
+        }
+    }
+
+    private fun animateEditActionsForKeyboard(targetBottomMargin: Int, keyboardVisible: Boolean) {
+        if (lastActionRowBottomMargin == targetBottomMargin) return
+
+        val params = binding.actionRow.layoutParams as ConstraintLayout.LayoutParams
+        val startBottomMargin = if (lastActionRowBottomMargin == -1) params.bottomMargin else lastActionRowBottomMargin
+        lastActionRowBottomMargin = targetBottomMargin
+
+        actionRowBottomAnimator?.cancel()
+        actionRowBottomAnimator = ValueAnimator.ofInt(startBottomMargin, targetBottomMargin).apply {
+            duration = if (keyboardVisible) 280L else 220L
+            interpolator = DecelerateInterpolator()
+            addUpdateListener { animator ->
+                val animatedMargin = animator.animatedValue as Int
+                val animatedParams = binding.actionRow.layoutParams as ConstraintLayout.LayoutParams
+                animatedParams.bottomMargin = animatedMargin
+                binding.actionRow.layoutParams = animatedParams
+            }
+            start()
+        }
+
+        if (isEditMode) {
+            binding.saveEditBtn.animate()
+                .scaleX(if (keyboardVisible) 0.985f else 1f)
+                .scaleY(if (keyboardVisible) 0.985f else 1f)
+                .alpha(1f)
+                .setDuration(180L)
+                .withEndAction {
+                    binding.saveEditBtn.animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(140L)
+                        .start()
+                }
+                .start()
+        }
+    }
+
+    private fun keepFocusedEditFieldVisible() {
+        binding.detailScroll.postDelayed({
+            val focusedView = binding.root.findFocus() ?: return@postDelayed
+            val focusedBottom = focusedView.bottom + binding.detailScroll.paddingBottom + 32
+            if (focusedBottom > binding.detailScroll.scrollY + binding.detailScroll.height) {
+                binding.detailScroll.smoothScrollTo(0, focusedBottom - binding.detailScroll.height)
+            }
+        }, 120L)
     }
 
     private fun setupColorPicker() {
@@ -172,6 +245,10 @@ class DetailFragment : Fragment() {
         binding.editContainer.alpha = 0f
         binding.editContainer.translationY = 24f
         binding.editContainer.animate().alpha(1f).translationY(0f).setDuration(260L).start()
+        binding.actionRow.animate().translationY(0f).alpha(1f).setDuration(220L).start()
+        binding.saveEditBtn.scaleX = 0.96f
+        binding.saveEditBtn.scaleY = 0.96f
+        binding.saveEditBtn.animate().scaleX(1f).scaleY(1f).setDuration(180L).start()
         binding.editTitle.requestFocus()
     }
 
@@ -383,6 +460,8 @@ class DetailFragment : Fragment() {
     override fun onDestroyView() {
         binding.colorPicker.adapter = null
         colorAdapter = null
+        actionRowBottomAnimator?.cancel()
+        actionRowBottomAnimator = null
         _binding = null
         super.onDestroyView()
     }

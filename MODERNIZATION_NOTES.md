@@ -110,3 +110,9 @@ The project wrapper tried to download Gradle `9.3.1`, but this environment has n
 - Saving a note is never blocked by ads. If the ad is not ready or fails, the app continues normally.
 - The ad is shown at a natural break after the note is saved and before returning to the notes list.
 - Production releases must replace both banner and interstitial test ad unit IDs in `AdMobConfig`.
+
+## Edit screen keyboard-aware save action
+- Matched the Edit Note screen behavior with the Add Note screen keyboard handling.
+- The bottom edit action row now animates above the keyboard using IME insets instead of being covered by the keyboard.
+- Added the same polished Save button scale feedback used on the create-note screen.
+- Added focused edit-field auto-scroll while typing, so the title/description editor remains visible when the keyboard is open.
