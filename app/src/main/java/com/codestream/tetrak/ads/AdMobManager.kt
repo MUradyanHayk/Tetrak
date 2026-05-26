@@ -12,12 +12,23 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import java.util.concurrent.atomic.AtomicBoolean
 
 object AdMobManager {
+    private const val PREFS = "tetrak_admob_prefs"
+    private const val KEY_NOTES_SAVED_SINCE_VIDEO_AD = "notes_saved_since_video_ad"
+    private const val KEY_LAST_VIDEO_AD_TIME = "last_video_ad_time"
+    private const val VIDEO_AD_SAVE_INTERVAL = 3
+    private const val VIDEO_AD_COOLDOWN_MS = 2 * 60 * 1000L
+
     private val initialized = AtomicBoolean(false)
+    private var interstitialAd: InterstitialAd? = null
+    private var interstitialLoading = false
 
     fun initialize(context: Context) {
         if (!initialized.compareAndSet(false, true)) return
@@ -70,6 +81,70 @@ object AdMobManager {
             adView.loadAd(AdRequest.Builder().build())
             onLoaded(adView)
         }
+    }
+
+    fun preloadVideoAd(context: Context) {
+        initialize(context)
+        if (interstitialAd != null || interstitialLoading) return
+
+        interstitialLoading = true
+        InterstitialAd.load(
+            context.applicationContext,
+            AdMobConfig.INTERSTITIAL_VIDEO_AD_UNIT_ID,
+            AdRequest.Builder().build(),
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(ad: InterstitialAd) {
+                    interstitialAd = ad
+                    interstitialLoading = false
+                }
+
+                override fun onAdFailedToLoad(error: LoadAdError) {
+                    interstitialAd = null
+                    interstitialLoading = false
+                }
+            }
+        )
+    }
+
+    fun recordNoteSavedAndMaybeShowVideoAd(
+        activity: Activity,
+        onFinished: () -> Unit
+    ) {
+        initialize(activity)
+
+        val prefs = activity.applicationContext.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        val savedCount = prefs.getInt(KEY_NOTES_SAVED_SINCE_VIDEO_AD, 0) + 1
+        val now = System.currentTimeMillis()
+        val lastAdTime = prefs.getLong(KEY_LAST_VIDEO_AD_TIME, 0L)
+        val cooldownPassed = now - lastAdTime >= VIDEO_AD_COOLDOWN_MS
+        val shouldShow = savedCount >= VIDEO_AD_SAVE_INTERVAL && cooldownPassed
+        val ad = interstitialAd
+
+        if (!shouldShow || ad == null) {
+            prefs.edit().putInt(KEY_NOTES_SAVED_SINCE_VIDEO_AD, savedCount).apply()
+            preloadVideoAd(activity)
+            onFinished()
+            return
+        }
+
+        prefs.edit()
+            .putInt(KEY_NOTES_SAVED_SINCE_VIDEO_AD, 0)
+            .putLong(KEY_LAST_VIDEO_AD_TIME, now)
+            .apply()
+
+        interstitialAd = null
+        ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+            override fun onAdDismissedFullScreenContent() {
+                preloadVideoAd(activity)
+                onFinished()
+            }
+
+            override fun onAdFailedToShowFullScreenContent(error: com.google.android.gms.ads.AdError) {
+                preloadVideoAd(activity)
+                onFinished()
+            }
+        }
+        ad.show(activity)
     }
 
     private fun calculateAdWidth(activity: Activity, container: View): Int {

@@ -58,5 +58,5 @@
     <string name="close">Close</string>
     <string name="ad_label">Ad</string>
     <string name="ads">Ads</string>
-    <string name="ads_info">A small adaptive banner supports the free version of Tetrak. Test AdMob IDs are used in this build; replace them with production IDs before publishing.</string>
+    <string name="ads_info">A small adaptive banner supports the free version of Tetrak. A full-screen video/interstitial test ad may appear after every few saved notes at a natural break. Replace all test AdMob IDs with production IDs before publishing.</string>
 </resources>

@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         setupAdMobBanner()
+        AdMobManager.preloadVideoAd(this)
     }
 
     private fun setupAdMobBanner() {

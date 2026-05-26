@@ -102,3 +102,11 @@ The project wrapper tried to download Gradle `9.3.1`, but this environment has n
 - Added lifecycle-safe adaptive banner loading in `MainActivity`.
 - Added animated banner container UI with loading state and automatic hide-on-keyboard behavior.
 - Added localized Ads information card in Settings.
+
+## AdMob save-count video/interstitial ads
+- Added an interstitial video-style AdMob flow using Google's official test interstitial ad unit.
+- Video/interstitial ads are preloaded on app start and after each dismissal/failure.
+- A full-screen ad is considered only after every 3 saved notes and only after a 2-minute cooldown.
+- Saving a note is never blocked by ads. If the ad is not ready or fails, the app continues normally.
+- The ad is shown at a natural break after the note is saved and before returning to the notes list.
+- Production releases must replace both banner and interstitial test ad unit IDs in `AdMobConfig`.

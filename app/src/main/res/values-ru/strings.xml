@@ -43,5 +43,5 @@
     <string name="discard">Не сохранять</string>
     <string name="ad_label">Реклама</string>
     <string name="ads">Реклама</string>
-    <string name="ads_info">Небольшой adaptive banner поддерживает бесплатную версию Tetrak. В этой сборке используются тестовые AdMob ID; перед публикацией замените их на production ID.</string>
+    <string name="ads_info">Небольшой adaptive banner поддерживает бесплатную версию Tetrak. После нескольких сохранённых заметок в естественный момент может появляться полноэкранная video/interstitial тестовая реклама. Перед публикацией замените все тестовые AdMob ID на production ID.</string>
 </resources>

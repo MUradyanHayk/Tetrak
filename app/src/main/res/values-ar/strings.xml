@@ -43,5 +43,5 @@
     <string name="discard">تجاهل</string>
     <string name="ad_label">إعلان</string>
     <string name="ads">الإعلانات</string>
-    <string name="ads_info">يدعم إعلان بانر تكيفي صغير النسخة المجانية من Tetrak. يستخدم هذا الإصدار معرّفات AdMob تجريبية؛ استبدلها بمعرّفات الإنتاج قبل النشر.</string>
+    <string name="ads_info">يدعم إعلان بانر تكيفي صغير النسخة المجانية من Tetrak. بعد حفظ عدة ملاحظات قد يظهر إعلان تجريبي بملء الشاشة video/interstitial في لحظة مناسبة. استبدل كل معرّفات AdMob التجريبية بمعرّفات الإنتاج قبل النشر.</string>
 </resources>

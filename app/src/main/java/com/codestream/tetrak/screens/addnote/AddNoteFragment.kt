@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.codestream.tetrak.R
 import com.codestream.tetrak.adapter.NoteColorAdapter
+import com.codestream.tetrak.ads.AdMobManager
 import com.codestream.tetrak.databinding.DialogColorPickerBinding
 import com.codestream.tetrak.databinding.FragmentAddNoteBinding
 import com.codestream.tetrak.model.NoteModel
@@ -289,7 +290,11 @@ class AddNoteFragment : Fragment() {
         isSaving = true
         binding.addNoteBtn.isEnabled = false
         viewModel.insert(NoteModel(title = title, description = description, color = selectedColor)) {
-            findNavController().navigateUp()
+            AdMobManager.recordNoteSavedAndMaybeShowVideoAd(requireActivity()) {
+                if (isAdded) {
+                    findNavController().navigateUp()
+                }
+            }
         }
     }
 
