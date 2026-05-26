@@ -44,4 +44,13 @@
     <string name="ad_label">Реклама</string>
     <string name="ads">Реклама</string>
     <string name="ads_info">Небольшой adaptive banner поддерживает бесплатную версию Tetrak. После нескольких сохранённых заметок в естественный момент может появляться полноэкранная video/interstitial тестовая реклама. Перед публикацией замените все тестовые AdMob ID на production ID.</string>
+    <string name="copy">Копировать</string>
+    <string name="search">Поиск</string>
+    <string name="undo">Отменить</string>
+    <string name="redo">Повторить</string>
+    <string name="search_in_note">Искать в заметке</string>
+    <string name="search_next">Найти далее</string>
+    <string name="search_no_results">Совпадений нет</string>
+    <string name="copied_to_clipboard">Скопировано</string>
+    <string name="nothing_to_copy">Нечего копировать</string>
 </resources>

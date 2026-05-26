@@ -116,3 +116,11 @@ The project wrapper tried to download Gradle `9.3.1`, but this environment has n
 - The bottom edit action row now animates above the keyboard using IME insets instead of being covered by the keyboard.
 - Added the same polished Save button scale feedback used on the create-note screen.
 - Added focused edit-field auto-scroll while typing, so the title/description editor remains visible when the keyboard is open.
+
+## Instrumental note editor tools
+- Added a compact modern editor tools card to Add Note and edit mode in Note Details.
+- Added Copy behavior that copies the selected text when there is a selection, otherwise copies the active field or the whole note draft.
+- Added in-note search with an animated inline search bar and next-match selection across title and description.
+- Added Undo and Redo support for title/description editing with live enabled/disabled button state.
+- Added small tap/scale animations for the editor tools so the editor feels more polished and productive.
+- Kept everything XML-based, MVVM-friendly, dependency-free, and compatible with the existing keyboard-aware save behavior.

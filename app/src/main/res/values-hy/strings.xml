@@ -44,4 +44,13 @@
     <string name="ad_label">Գովազդ</string>
     <string name="ads">Գովազդներ</string>
     <string name="ads_info">Փոքր adaptive banner-ը աջակցում է Tetrak-ի անվճար տարբերակին։ Մի քանի պահպանված նշումից հետո բնական պահին կարող է ցուցադրվել full-screen video/interstitial test գովազդ։ Հրապարակելուց առաջ փոխարինեք բոլոր test AdMob ID-ները production ID-ներով։</string>
+    <string name="copy">Պատճենել</string>
+    <string name="search">Որոնել</string>
+    <string name="undo">Հետարկել</string>
+    <string name="redo">Կրկնել</string>
+    <string name="search_in_note">Որոնել գրառման մեջ</string>
+    <string name="search_next">Գտնել հաջորդը</string>
+    <string name="search_no_results">Համընկնում չի գտնվել</string>
+    <string name="copied_to_clipboard">Պատճենվեց</string>
+    <string name="nothing_to_copy">Պատճենելու բան չկա</string>
 </resources>

@@ -44,4 +44,13 @@
     <string name="ad_label">تبلیغ</string>
     <string name="ads">تبلیغات</string>
     <string name="ads_info">یک بنر تطبیقی کوچک از نسخه رایگان Tetrak پشتیبانی می‌کند. پس از ذخیره چند یادداشت، ممکن است در یک لحظه مناسب یک تبلیغ آزمایشی تمام‌صفحه video/interstitial نمایش داده شود. قبل از انتشار، همه شناسه‌های آزمایشی AdMob را با شناسه‌های واقعی جایگزین کنید.</string>
+    <string name="copy">کپی</string>
+    <string name="search">جستجو</string>
+    <string name="undo">واگرد</string>
+    <string name="redo">بازانجام</string>
+    <string name="search_in_note">جستجو در یادداشت</string>
+    <string name="search_next">یافتن بعدی</string>
+    <string name="search_no_results">موردی پیدا نشد</string>
+    <string name="copied_to_clipboard">کپی شد</string>
+    <string name="nothing_to_copy">چیزی برای کپی نیست</string>
 </resources>

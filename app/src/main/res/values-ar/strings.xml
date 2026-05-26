@@ -44,4 +44,13 @@
     <string name="ad_label">إعلان</string>
     <string name="ads">الإعلانات</string>
     <string name="ads_info">يدعم إعلان بانر تكيفي صغير النسخة المجانية من Tetrak. بعد حفظ عدة ملاحظات قد يظهر إعلان تجريبي بملء الشاشة video/interstitial في لحظة مناسبة. استبدل كل معرّفات AdMob التجريبية بمعرّفات الإنتاج قبل النشر.</string>
+    <string name="copy">نسخ</string>
+    <string name="search">بحث</string>
+    <string name="undo">تراجع</string>
+    <string name="redo">إعادة</string>
+    <string name="search_in_note">البحث داخل الملاحظة</string>
+    <string name="search_next">البحث التالي</string>
+    <string name="search_no_results">لا توجد نتائج</string>
+    <string name="copied_to_clipboard">تم النسخ</string>
+    <string name="nothing_to_copy">لا يوجد شيء للنسخ</string>
 </resources>

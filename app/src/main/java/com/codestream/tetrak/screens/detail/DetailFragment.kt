@@ -1,6 +1,9 @@
 package com.codestream.tetrak.screens.detail
 
 import android.animation.ValueAnimator
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
@@ -9,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
@@ -26,7 +30,10 @@ import com.codestream.tetrak.databinding.DialogNoteHistoryBinding
 import com.codestream.tetrak.databinding.FragmentDetailBinding
 import com.codestream.tetrak.model.NoteHistoryModel
 import com.codestream.tetrak.model.NoteModel
+import com.codestream.tetrak.util.NoteEditorHistory
+import com.codestream.tetrak.util.NoteEditorSearch
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
@@ -40,6 +47,8 @@ class DetailFragment : Fragment() {
     private var latestHistory: List<NoteHistoryModel> = emptyList()
     private var actionRowBottomAnimator: ValueAnimator? = null
     private var lastActionRowBottomMargin: Int = -1
+    private var editorHistory: NoteEditorHistory? = null
+    private var editorSearch: NoteEditorSearch? = null
 
     private val colorOptions = listOf(
         Color.parseColor("#5B6CFF"),
@@ -64,6 +73,7 @@ class DetailFragment : Fragment() {
         setupToolbar()
         setupKeyboardAwareEditActions()
         setupColorPicker()
+        setupEditorTools()
         bindNote()
         observeHistory()
         animateIntro()
@@ -185,6 +195,101 @@ class DetailFragment : Fragment() {
         binding.colorPicker.adapter = colorAdapter
     }
 
+    private fun setupEditorTools() {
+        editorHistory = NoteEditorHistory(
+            fields = listOf(binding.editTitle, binding.editDescription),
+            onStateChanged = { updateEditorToolState() }
+        ).also { it.attach() }
+        editorSearch = NoteEditorSearch(listOf(binding.editTitle, binding.editDescription))
+
+        binding.toolCopyBtn.setOnClickListener {
+            animateToolTap(it)
+            copySelectionOrNoteText()
+        }
+        binding.toolUndoBtn.setOnClickListener {
+            animateToolTap(it)
+            editorHistory?.undo()
+        }
+        binding.toolRedoBtn.setOnClickListener {
+            animateToolTap(it)
+            editorHistory?.redo()
+        }
+        binding.toolSearchBtn.setOnClickListener {
+            animateToolTap(it)
+            toggleSearchPanel(show = binding.searchContainer.visibility != View.VISIBLE)
+        }
+        binding.searchNextBtn.setOnClickListener {
+            animateToolTap(it)
+            findNextSearchMatch()
+        }
+        binding.searchCloseBtn.setOnClickListener { toggleSearchPanel(show = false) }
+        binding.searchInput.setOnEditorActionListener { _, _, _ ->
+            findNextSearchMatch()
+            true
+        }
+        updateEditorToolState()
+    }
+
+    private fun updateEditorToolState() {
+        val history = editorHistory
+        binding.toolUndoBtn.isEnabled = history?.canUndo() == true
+        binding.toolRedoBtn.isEnabled = history?.canRedo() == true
+    }
+
+    private fun toggleSearchPanel(show: Boolean) = with(binding.searchContainer) {
+        if (show) {
+            visibility = View.VISIBLE
+            alpha = 0f
+            translationY = -12f
+            animate().alpha(1f).translationY(0f).setDuration(220L).start()
+            binding.searchInput.post {
+                binding.searchInput.requestFocus()
+                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.searchInput, InputMethodManager.SHOW_IMPLICIT)
+            }
+        } else {
+            animate().alpha(0f).translationY(-12f).setDuration(160L).withEndAction {
+                visibility = View.GONE
+                binding.searchInput.setText("")
+                binding.searchInputLayout.error = null
+            }.start()
+        }
+    }
+
+    private fun findNextSearchMatch() {
+        val found = editorSearch?.findNext(binding.searchInput.text?.toString().orEmpty()) == true
+        binding.searchInputLayout.error = if (found) null else getString(R.string.search_no_results)
+        if (found) keepFocusedEditFieldVisible()
+    }
+
+    private fun copySelectionOrNoteText() {
+        val fields = listOf(binding.editTitle, binding.editDescription)
+        val focused = fields.firstOrNull { it.hasFocus() }
+        val selectedText = focused?.let { field ->
+            val start = minOf(field.selectionStart, field.selectionEnd).coerceAtLeast(0)
+            val end = maxOf(field.selectionStart, field.selectionEnd).coerceAtLeast(0)
+            if (end > start) field.text?.substring(start, end) else null
+        }
+        val textToCopy = selectedText ?: focused?.text?.toString()?.takeIf { it.isNotBlank() }
+            ?: listOf(binding.editTitle.text?.toString().orEmpty(), binding.editDescription.text?.toString().orEmpty())
+                .filter { it.isNotBlank() }
+                .joinToString(separator = "\n\n")
+
+        if (textToCopy.isBlank()) {
+            Snackbar.make(binding.root, R.string.nothing_to_copy, Snackbar.LENGTH_SHORT).show()
+            return
+        }
+        val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.setPrimaryClip(ClipData.newPlainText(getString(R.string.app_name), textToCopy))
+        Snackbar.make(binding.root, R.string.copied_to_clipboard, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun animateToolTap(view: View) {
+        view.animate().scaleX(0.92f).scaleY(0.92f).setDuration(70L).withEndAction {
+            view.animate().scaleX(1f).scaleY(1f).setDuration(120L).start()
+        }.start()
+    }
+
     private fun observeHistory() {
         val noteId = currentNote?.id ?: return
         viewModel.getHistory(noteId).observe(viewLifecycleOwner) { history ->
@@ -203,6 +308,7 @@ class DetailFragment : Fragment() {
         toolbar.menu.findItem(R.id.action_history)?.isVisible = note.edited
         colorAdapter?.select(selectedColor)
         updateColorUi(animate = false)
+        editorHistory?.reset()
     }
 
     private fun updateColorUi(animate: Boolean) = with(binding) {
@@ -245,6 +351,9 @@ class DetailFragment : Fragment() {
         binding.editContainer.alpha = 0f
         binding.editContainer.translationY = 24f
         binding.editContainer.animate().alpha(1f).translationY(0f).setDuration(260L).start()
+        binding.editorToolsCard.alpha = 0f
+        binding.editorToolsCard.translationY = 16f
+        binding.editorToolsCard.animate().alpha(1f).translationY(0f).setDuration(260L).setStartDelay(90L).start()
         binding.actionRow.animate().translationY(0f).alpha(1f).setDuration(220L).start()
         binding.saveEditBtn.scaleX = 0.96f
         binding.saveEditBtn.scaleY = 0.96f
@@ -270,6 +379,10 @@ class DetailFragment : Fragment() {
         binding.editContainer.visibility = View.GONE
         binding.cancelEditBtn.visibility = View.GONE
         binding.saveEditBtn.visibility = View.GONE
+        binding.searchContainer.visibility = View.GONE
+        binding.searchInput.setText("")
+        binding.searchInputLayout.error = null
+        editorHistory?.reset()
     }
 
     private fun handleCancelEdit() {
@@ -460,6 +573,8 @@ class DetailFragment : Fragment() {
     override fun onDestroyView() {
         binding.colorPicker.adapter = null
         colorAdapter = null
+        editorHistory = null
+        editorSearch = null
         actionRowBottomAnimator?.cancel()
         actionRowBottomAnimator = null
         _binding = null

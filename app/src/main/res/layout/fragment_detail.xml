@@ -134,6 +134,152 @@
                         tools:itemCount="8"
                         tools:listitem="@layout/item_note_color" />
 
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/editor_tools_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        app:cardBackgroundColor="?attr/colorSurfaceContainer"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="?attr/colorSurfaceVariant"
+                        app:strokeWidth="1dp">
+
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clipToPadding="false"
+                            android:overScrollMode="never"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="8dp"
+                            android:scrollbars="none">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/tool_copy_btn"
+                                    style="@style/Widget.Material3.Button.OutlinedButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="40dp"
+                                    android:minWidth="0dp"
+                                    android:paddingHorizontal="12dp"
+                                    android:text="@string/copy"
+                                    android:textAllCaps="false"
+                                    app:cornerRadius="14dp"
+                                    app:icon="@drawable/ic_copy" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/tool_search_btn"
+                                    style="@style/Widget.Material3.Button.OutlinedButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="40dp"
+                                    android:layout_marginStart="8dp"
+                                    android:minWidth="0dp"
+                                    android:paddingHorizontal="12dp"
+                                    android:text="@string/search"
+                                    android:textAllCaps="false"
+                                    app:cornerRadius="14dp"
+                                    app:icon="@drawable/ic_search" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/tool_undo_btn"
+                                    style="@style/Widget.Material3.Button.OutlinedButton"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginStart="8dp"
+                                    android:contentDescription="@string/undo"
+                                    android:insetLeft="0dp"
+                                    android:insetRight="0dp"
+                                    android:minWidth="0dp"
+                                    app:cornerRadius="14dp"
+                                    app:icon="@drawable/ic_undo"
+                                    app:iconGravity="textStart"
+                                    app:iconPadding="0dp" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/tool_redo_btn"
+                                    style="@style/Widget.Material3.Button.OutlinedButton"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginStart="8dp"
+                                    android:contentDescription="@string/redo"
+                                    android:insetLeft="0dp"
+                                    android:insetRight="0dp"
+                                    android:minWidth="0dp"
+                                    app:cornerRadius="14dp"
+                                    app:icon="@drawable/ic_redo"
+                                    app:iconGravity="textStart"
+                                    app:iconPadding="0dp" />
+                            </LinearLayout>
+                        </HorizontalScrollView>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:id="@+id/search_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/search_input_layout"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="@string/search_in_note"
+                            app:boxCornerRadiusBottomEnd="16dp"
+                            app:boxCornerRadiusBottomStart="16dp"
+                            app:boxCornerRadiusTopEnd="16dp"
+                            app:boxCornerRadiusTopStart="16dp"
+                            app:startIconDrawable="@drawable/ic_search">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/search_input"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionSearch"
+                                android:inputType="text"
+                                android:maxLines="1" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/search_next_btn"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="8dp"
+                            android:contentDescription="@string/search_next"
+                            android:insetLeft="0dp"
+                            android:insetRight="0dp"
+                            android:minWidth="0dp"
+                            app:cornerRadius="16dp"
+                            app:icon="@drawable/ic_search"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/search_close_btn"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="6dp"
+                            android:contentDescription="@string/close"
+                            android:insetLeft="0dp"
+                            android:insetRight="0dp"
+                            android:minWidth="0dp"
+                            app:cornerRadius="16dp"
+                            app:icon="@drawable/ic_close"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp" />
+                    </LinearLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/title_input"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
