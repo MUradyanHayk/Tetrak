@@ -76,9 +76,11 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/color_picker"
                     android:layout_width="match_parent"
-                    android:layout_height="72dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
                     android:clipToPadding="false"
+                    android:paddingStart="1dp"
+                    android:paddingEnd="1dp"
                     android:orientation="horizontal"
                     android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

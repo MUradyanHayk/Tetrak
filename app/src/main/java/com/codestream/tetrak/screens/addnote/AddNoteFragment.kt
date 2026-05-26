@@ -3,6 +3,7 @@ package com.codestream.tetrak.screens.addnote
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +33,7 @@ class AddNoteFragment : Fragment() {
     )
     private var colorAdapter: NoteColorAdapter? = null
     private var selectedColor: Int = NoteModel.DEFAULT_NOTE_COLOR
+    private var isSaving = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAddNoteBinding.inflate(inflater, container, false)
@@ -40,6 +42,7 @@ class AddNoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupBackHandling()
         setupToolbar()
         setupColorPicker()
         animateIntro()
@@ -47,8 +50,19 @@ class AddNoteFragment : Fragment() {
         setupClicks()
     }
 
+    private fun setupBackHandling() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    handleExitRequest()
+                }
+            }
+        )
+    }
+
     private fun setupToolbar() {
-        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+        binding.toolbar.setNavigationOnClickListener { handleExitRequest() }
     }
 
     private fun setupColorPicker() {
@@ -157,10 +171,54 @@ class AddNoteFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            binding.addNoteBtn.isEnabled = false
-            viewModel.insert(NoteModel(title = title, description = description, color = selectedColor)) {
-                findNavController().navigateUp()
+            saveNote(title, description)
+        }
+    }
+
+
+    private fun handleExitRequest() {
+        if (isSaving) return
+        if (!hasDraftChanges()) {
+            findNavController().navigateUp()
+            return
+        }
+
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.unsaved_note_title)
+            .setMessage(R.string.unsaved_note_message)
+            .setNegativeButton(R.string.discard) { _, _ -> findNavController().navigateUp() }
+            .setNeutralButton(R.string.cancel, null)
+            .setPositiveButton(R.string.save, null)
+            .create()
+
+        dialog.setOnShowListener {
+            dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val title = binding.edAddTitle.text?.toString().orEmpty().trim()
+                val description = binding.edAddDesc.text?.toString().orEmpty().trim()
+                if (title.isBlank()) {
+                    binding.titleInput.error = getString(R.string.title_required)
+                    binding.edAddTitle.requestFocus()
+                    return@setOnClickListener
+                }
+                dialog.dismiss()
+                saveNote(title, description)
             }
+        }
+        dialog.show()
+    }
+
+    private fun hasDraftChanges(): Boolean {
+        val title = binding.edAddTitle.text?.toString().orEmpty().trim()
+        val description = binding.edAddDesc.text?.toString().orEmpty().trim()
+        return title.isNotBlank() || description.isNotBlank() || selectedColor != NoteModel.DEFAULT_NOTE_COLOR
+    }
+
+    private fun saveNote(title: String, description: String) {
+        if (isSaving) return
+        isSaving = true
+        binding.addNoteBtn.isEnabled = false
+        viewModel.insert(NoteModel(title = title, description = description, color = selectedColor)) {
+            findNavController().navigateUp()
         }
     }
 

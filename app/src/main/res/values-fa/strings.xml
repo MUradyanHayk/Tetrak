@@ -37,4 +37,8 @@
     <string name="invalid_hex_color">یک رنگ hex معتبر ۶ کاراکتری وارد کنید</string>
     <string name="apply">اعمال</string>
     <string name="cancel">لغو</string>
+    <string name="unsaved_note_title">این یادداشت ذخیره شود؟</string>
+    <string name="unsaved_note_message">تغییرات ذخیره‌نشده دارید. قبل از خروج یادداشت را ذخیره می‌کنید؟</string>
+    <string name="save">ذخیره</string>
+    <string name="discard">صرف‌نظر</string>
 </resources>

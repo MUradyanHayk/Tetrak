@@ -37,4 +37,8 @@
     <string name="invalid_hex_color">Введите корректный hex-цвет из 6 символов</string>
     <string name="apply">Применить</string>
     <string name="cancel">Отмена</string>
+    <string name="unsaved_note_title">Сохранить эту заметку?</string>
+    <string name="unsaved_note_message">Есть несохранённые изменения. Сохранить заметку перед выходом?</string>
+    <string name="save">Сохранить</string>
+    <string name="discard">Не сохранять</string>
 </resources>

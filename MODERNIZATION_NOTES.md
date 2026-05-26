@@ -60,3 +60,10 @@ The project wrapper tried to download Gradle `9.3.1`, but this environment has n
 - Added a compact trailing custom color item inside the preset picker; tapping it opens the advanced dialog.
 - The custom item shows a spectrum when no custom color is selected, and it becomes the selected swatch when the chosen color is outside the preset palette.
 - Kept XML UI, MVVM, no DI, and no third-party color picker dependency.
+
+## Back confirmation and color row bug fix
+
+- Add Note now intercepts both system back and the toolbar navigation button.
+- If the user has typed a title, typed a description, or changed the note color, the app asks whether to save, discard, or cancel before leaving.
+- The save action in the confirmation dialog validates the title and keeps the user on the screen if the title is missing.
+- Reduced note color swatch size, spacing, selected stroke width, icon size, and selected-scale animation so the horizontal picker fits much better and avoids the partially clipped look shown in the screenshot.

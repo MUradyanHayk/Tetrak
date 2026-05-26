@@ -71,16 +71,16 @@ class NoteColorAdapter(
             checkIcon.alpha = if (isSelected) 1f else 0f
             checkIcon.setColorFilter(if (isColorDark(color)) Color.WHITE else Color.BLACK)
             root.animate()
-                .scaleX(if (isSelected) 1.12f else 1f)
-                .scaleY(if (isSelected) 1.12f else 1f)
-                .rotation(if (isSelected) 4f else 0f)
+                .scaleX(if (isSelected) 1.07f else 1f)
+                .scaleY(if (isSelected) 1.07f else 1f)
+                .rotation(if (isSelected) 2f else 0f)
                 .setDuration(180L)
                 .start()
 
             root.setOnClickListener {
                 if (isCustomItem) {
                     root.animate().scaleX(0.94f).scaleY(0.94f).setDuration(70L).withEndAction {
-                        root.animate().scaleX(if (isSelected) 1.12f else 1f).scaleY(if (isSelected) 1.12f else 1f).setDuration(110L).start()
+                        root.animate().scaleX(if (isSelected) 1.07f else 1f).scaleY(if (isSelected) 1.07f else 1f).setDuration(110L).start()
                     }.start()
                     onCustomColorClick()
                 } else if (selectedColor != color) {

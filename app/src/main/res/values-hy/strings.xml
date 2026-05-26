@@ -37,4 +37,8 @@
     <string name="invalid_hex_color">Մուտքագրեք վավեր 6 նիշանոց hex գույն</string>
     <string name="apply">Կիրառել</string>
     <string name="cancel">Չեղարկել</string>
+    <string name="unsaved_note_title">Պահպանե՞լ այս նշումը</string>
+    <string name="unsaved_note_message">Դուք ունեք չպահպանված փոփոխություններ։ Պահպանե՞լ նշումը դուրս գալուց առաջ։</string>
+    <string name="save">Պահպանել</string>
+    <string name="discard">Չպահպանել</string>
 </resources>

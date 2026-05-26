@@ -37,4 +37,8 @@
     <string name="invalid_hex_color">Use a valid 6-character hex color</string>
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
+    <string name="unsaved_note_title">Save this note?</string>
+    <string name="unsaved_note_message">You have unsaved changes. Save the note before leaving?</string>
+    <string name="save">Save</string>
+    <string name="discard">Discard</string>
 </resources>
