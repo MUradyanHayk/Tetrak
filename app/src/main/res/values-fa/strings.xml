@@ -13,6 +13,7 @@
     <string name="delete">حذف</string>
     <string name="note_details">جزئیات یادداشت</string>
     <string name="note_color">رنگ یادداشت</string>
+    <string name="selected_color_value">رنگ انتخاب‌شده: %1$s</string>
     <string name="selected_color">رنگ انتخاب‌شده</string>
     <string name="open_note">باز کردن یادداشت</string>
     <string name="no_description">بدون توضیح</string>
@@ -30,4 +31,10 @@
     <string name="language_russian">روسی</string>
     <string name="language_arabic">عربی</string>
     <string name="language_persian">فارسی</string>
+    <string name="custom_note_color">رنگ سفارشی یادداشت</string>
+    <string name="custom_note_color_subtitle">روی طیف رنگ بکشید، رنگ‌مایه را تنظیم کنید یا مقدار hex را وارد کنید.</string>
+    <string name="hex_color">رنگ Hex</string>
+    <string name="invalid_hex_color">یک رنگ hex معتبر ۶ کاراکتری وارد کنید</string>
+    <string name="apply">اعمال</string>
+    <string name="cancel">لغو</string>
 </resources>

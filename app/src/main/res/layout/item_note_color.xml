@@ -26,6 +26,16 @@
             tools:background="#5B6CFF" />
 
         <ImageView
+            android:id="@+id/custom_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:alpha="0"
+            android:contentDescription="@string/custom_note_color"
+            android:src="@drawable/ic_palette"
+            app:tint="?attr/colorOnSurface" />
+
+        <ImageView
             android:id="@+id/check_icon"
             android:layout_width="22dp"
             android:layout_height="22dp"

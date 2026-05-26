@@ -13,6 +13,7 @@
     <string name="delete">Удалить</string>
     <string name="note_details">Детали заметки</string>
     <string name="note_color">Цвет заметки</string>
+    <string name="selected_color_value">Выбранный цвет: %1$s</string>
     <string name="selected_color">Выбранный цвет</string>
     <string name="open_note">Открыть заметку</string>
     <string name="no_description">Нет описания</string>
@@ -30,4 +31,10 @@
     <string name="language_russian">Русский</string>
     <string name="language_arabic">Арабский</string>
     <string name="language_persian">Персидский</string>
+    <string name="custom_note_color">Свой цвет заметки</string>
+    <string name="custom_note_color_subtitle">Перетащите маркер по спектру, настройте оттенок или введите hex-код.</string>
+    <string name="hex_color">Hex-цвет</string>
+    <string name="invalid_hex_color">Введите корректный hex-цвет из 6 символов</string>
+    <string name="apply">Применить</string>
+    <string name="cancel">Отмена</string>
 </resources>

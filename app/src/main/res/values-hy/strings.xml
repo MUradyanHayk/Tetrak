@@ -13,6 +13,7 @@
     <string name="delete">Ջնջել</string>
     <string name="note_details">Նշման մանրամասներ</string>
     <string name="note_color">Նշման գույն</string>
+    <string name="selected_color_value">Ընտրված գույն՝ %1$s</string>
     <string name="selected_color">Ընտրված գույն</string>
     <string name="open_note">Բացել նշումը</string>
     <string name="no_description">Նկարագրություն չկա</string>
@@ -30,4 +31,10 @@
     <string name="language_russian">Ռուսերեն</string>
     <string name="language_arabic">Արաբերեն</string>
     <string name="language_persian">Պարսկերեն</string>
+    <string name="custom_note_color">Անհատական նշման գույն</string>
+    <string name="custom_note_color_subtitle">Քաշեք գունային դաշտում, փոխեք երանգը կամ գրեք hex արժեք։</string>
+    <string name="hex_color">Hex գույն</string>
+    <string name="invalid_hex_color">Մուտքագրեք վավեր 6 նիշանոց hex գույն</string>
+    <string name="apply">Կիրառել</string>
+    <string name="cancel">Չեղարկել</string>
 </resources>

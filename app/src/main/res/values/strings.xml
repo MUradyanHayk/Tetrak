@@ -13,6 +13,7 @@
     <string name="delete">Delete</string>
     <string name="note_details">Note Details</string>
     <string name="note_color">Note color</string>
+    <string name="selected_color_value">Selected color: %1$s</string>
     <string name="selected_color">Selected color</string>
     <string name="open_note">Open note</string>
     <string name="no_description">No description</string>
@@ -30,4 +31,10 @@
     <string name="language_russian">Russian</string>
     <string name="language_arabic">Arabic</string>
     <string name="language_persian">Persian</string>
+    <string name="custom_note_color">Custom note color</string>
+    <string name="custom_note_color_subtitle">Drag anywhere on the spectrum, adjust hue, or type a hex value.</string>
+    <string name="hex_color">Hex color</string>
+    <string name="invalid_hex_color">Use a valid 6-character hex color</string>
+    <string name="apply">Apply</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -44,3 +44,19 @@ The project wrapper tried to download Gradle `9.3.1`, but this environment has n
 - Added a Room `1 -> 2` migration that preserves existing notes and assigns them the default accent color.
 - Removed separate bottom back buttons from add/detail screens and moved navigation to MaterialToolbar top-left navigation icons.
 - Added settings navigation from the start screen header.
+
+## Custom color picker update
+
+- Replaced the fixed horizontal note color palette with a modern custom color picker dialog.
+- Added `AdvancedColorPickerView`, a reusable XML-compatible custom View that supports full HSV color selection.
+- Users can now choose any note color by dragging on the saturation/value spectrum, adjusting hue, or typing a hex color.
+- Added animated color preview feedback and validation for invalid hex input.
+- Kept the implementation dependency-free: no third-party color picker library, no DI, and no Compose.
+
+## Hybrid preset + custom color picker update
+
+- Restored the fast horizontal preset color picker for common note colors.
+- Kept the advanced custom color picker dialog for choosing any color.
+- Added a compact trailing custom color item inside the preset picker; tapping it opens the advanced dialog.
+- The custom item shows a spectrum when no custom color is selected, and it becomes the selected swatch when the chosen color is outside the preset palette.
+- Kept XML UI, MVVM, no DI, and no third-party color picker dependency.

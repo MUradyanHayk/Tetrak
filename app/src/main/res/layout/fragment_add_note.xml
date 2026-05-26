@@ -82,8 +82,17 @@
                     android:orientation="horizontal"
                     android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="5"
+                    tools:itemCount="8"
                     tools:listitem="@layout/item_note_color" />
+
+                <TextView
+                    android:id="@+id/selected_color_hex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:textSize="13sp"
+                    tools:text="#5B6CFF" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/title_input"

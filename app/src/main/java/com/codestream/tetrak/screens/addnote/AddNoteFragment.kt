@@ -1,6 +1,7 @@
 package com.codestream.tetrak.screens.addnote
 
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.codestream.tetrak.R
 import com.codestream.tetrak.adapter.NoteColorAdapter
+import com.codestream.tetrak.databinding.DialogColorPickerBinding
 import com.codestream.tetrak.databinding.FragmentAddNoteBinding
 import com.codestream.tetrak.model.NoteModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class AddNoteFragment : Fragment() {
     private var _binding: FragmentAddNoteBinding? = null
@@ -27,6 +30,7 @@ class AddNoteFragment : Fragment() {
         Color.parseColor("#4DB6FF"),
         Color.parseColor("#FF8A3D")
     )
+    private var colorAdapter: NoteColorAdapter? = null
     private var selectedColor: Int = NoteModel.DEFAULT_NOTE_COLOR
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -48,9 +52,94 @@ class AddNoteFragment : Fragment() {
     }
 
     private fun setupColorPicker() {
-        binding.colorPicker.adapter = NoteColorAdapter(colorOptions, selectedColor) { color ->
-            selectedColor = color
-            binding.editorCard.strokeColor = color
+        colorAdapter = NoteColorAdapter(
+            presetColors = colorOptions,
+            selectedColor = selectedColor,
+            onColorSelected = { color ->
+                selectedColor = color
+                updateSelectedColorUi(animate = true)
+            },
+            onCustomColorClick = { showColorPickerDialog() }
+        )
+        binding.colorPicker.adapter = colorAdapter
+        updateSelectedColorUi(animate = false)
+    }
+
+    private fun showColorPickerDialog() {
+        val dialogBinding = DialogColorPickerBinding.inflate(layoutInflater)
+        var dialogColor = selectedColor
+        var isUpdatingHexFromPicker = false
+
+        fun updatePreview(color: Int, animate: Boolean) = with(dialogBinding) {
+            colorPreview.background = roundedColorDrawable(color, 16f)
+            colorValue.text = color.toHexColor()
+            selectedColorCard.strokeColor = color
+            if (animate) {
+                colorPreview.animate().scaleX(1.08f).scaleY(1.08f).setDuration(90L).withEndAction {
+                    colorPreview.animate().scaleX(1f).scaleY(1f).setDuration(120L).start()
+                }.start()
+            }
+        }
+
+        dialogBinding.advancedColorPicker.setColor(selectedColor, animate = false)
+        updatePreview(selectedColor, animate = false)
+        dialogBinding.hexInput.setText(selectedColor.toHexColor().removePrefix("#"))
+
+        dialogBinding.advancedColorPicker.setOnColorChangedListener { color ->
+            dialogColor = color
+            updatePreview(color, animate = true)
+            isUpdatingHexFromPicker = true
+            dialogBinding.hexInput.setText(color.toHexColor().removePrefix("#"))
+            dialogBinding.hexInput.setSelection(dialogBinding.hexInput.text?.length ?: 0)
+            dialogBinding.hexInputLayout.error = null
+            isUpdatingHexFromPicker = false
+        }
+
+        dialogBinding.hexInput.doAfterTextChanged { editable ->
+            if (isUpdatingHexFromPicker) return@doAfterTextChanged
+            val typedColor = editable?.toString().orEmpty().toColorOrNull()
+            if (typedColor != null) {
+                dialogBinding.hexInputLayout.error = null
+                dialogColor = typedColor
+                dialogBinding.advancedColorPicker.setColor(typedColor, animate = true)
+                updatePreview(typedColor, animate = true)
+            } else if (!editable.isNullOrBlank()) {
+                dialogBinding.hexInputLayout.error = getString(R.string.invalid_hex_color)
+            } else {
+                dialogBinding.hexInputLayout.error = null
+            }
+        }
+
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.custom_note_color)
+            .setView(dialogBinding.root)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.apply, null)
+            .create()
+
+        dialog.setOnShowListener {
+            dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val typedColor = dialogBinding.hexInput.text?.toString().orEmpty().toColorOrNull()
+                if (typedColor == null) {
+                    dialogBinding.hexInputLayout.error = getString(R.string.invalid_hex_color)
+                    return@setOnClickListener
+                }
+                selectedColor = dialogColor
+                colorAdapter?.select(selectedColor)
+                updateSelectedColorUi(animate = true)
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
+
+    private fun updateSelectedColorUi(animate: Boolean) = with(binding) {
+        selectedColorHex.text = getString(R.string.selected_color_value, selectedColor.toHexColor())
+        editorCard.strokeColor = selectedColor
+        if (animate) {
+            colorPicker.animate().scaleX(1.01f).scaleY(1.01f).setDuration(90L).withEndAction {
+                colorPicker.animate().scaleX(1f).scaleY(1f).setDuration(140L).start()
+            }.start()
         }
     }
 
@@ -81,8 +170,25 @@ class AddNoteFragment : Fragment() {
         animate().translationY(0f).alpha(1f).setDuration(450L).start()
     }
 
+    private fun roundedColorDrawable(color: Int, radiusDp: Float): GradientDrawable {
+        return GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = radiusDp * resources.displayMetrics.density
+            setColor(color)
+        }
+    }
+
+    private fun Int.toHexColor(): String = String.format("#%06X", 0xFFFFFF and this)
+
+    private fun String.toColorOrNull(): Int? {
+        val normalized = trim().removePrefix("#")
+        if (!Regex("^[0-9A-Fa-f]{6}$").matches(normalized)) return null
+        return runCatching { Color.parseColor("#$normalized") }.getOrNull()
+    }
+
     override fun onDestroyView() {
         binding.colorPicker.adapter = null
+        colorAdapter = null
         _binding = null
         super.onDestroyView()
     }

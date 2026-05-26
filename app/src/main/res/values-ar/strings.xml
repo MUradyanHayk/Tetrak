@@ -13,6 +13,7 @@
     <string name="delete">حذف</string>
     <string name="note_details">تفاصيل الملاحظة</string>
     <string name="note_color">لون الملاحظة</string>
+    <string name="selected_color_value">اللون المحدد: %1$s</string>
     <string name="selected_color">اللون المحدد</string>
     <string name="open_note">فتح الملاحظة</string>
     <string name="no_description">لا يوجد وصف</string>
@@ -30,4 +31,10 @@
     <string name="language_russian">الروسية</string>
     <string name="language_arabic">العربية</string>
     <string name="language_persian">الفارسية</string>
+    <string name="custom_note_color">لون مخصص للملاحظة</string>
+    <string name="custom_note_color_subtitle">اسحب داخل الطيف، أو غيّر التدرج، أو اكتب قيمة hex.</string>
+    <string name="hex_color">لون Hex</string>
+    <string name="invalid_hex_color">استخدم لون hex صالحًا من 6 أحرف</string>
+    <string name="apply">تطبيق</string>
+    <string name="cancel">إلغاء</string>
 </resources>
