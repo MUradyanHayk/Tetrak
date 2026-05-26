@@ -124,3 +124,11 @@ The project wrapper tried to download Gradle `9.3.1`, but this environment has n
 - Added Undo and Redo support for title/description editing with live enabled/disabled button state.
 - Added small tap/scale animations for the editor tools so the editor feels more polished and productive.
 - Kept everything XML-based, MVVM-friendly, dependency-free, and compatible with the existing keyboard-aware save behavior.
+
+## Editor workspace refinement
+- Rebalanced the Add Note and Edit Note layouts so the writing area is the primary workspace again.
+- Hid the secondary subtitle on Add Note to recover vertical editor space.
+- Reduced color picker height, margins, and editor tool spacing.
+- Converted editor tools to compact icon-only buttons with content descriptions and tooltips.
+- Increased Add Note description editor minimum height.
+- Increased Edit Note description editor height for a normal writing experience.
