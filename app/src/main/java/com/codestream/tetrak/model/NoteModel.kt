@@ -17,7 +17,16 @@ data class NoteModel(
     var description: String = "",
 
     @ColumnInfo(defaultValue = "-10785537")
-    var color: Int = DEFAULT_NOTE_COLOR
+    var color: Int = DEFAULT_NOTE_COLOR,
+
+    @ColumnInfo(defaultValue = "0")
+    var createdAt: Long = 0L,
+
+    @ColumnInfo(defaultValue = "0")
+    var updatedAt: Long = 0L,
+
+    @ColumnInfo(defaultValue = "0")
+    var edited: Boolean = false
 ) : Serializable {
     companion object {
         const val DEFAULT_NOTE_COLOR: Int = -10785537

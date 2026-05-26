@@ -67,3 +67,29 @@ The project wrapper tried to download Gradle `9.3.1`, but this environment has n
 - If the user has typed a title, typed a description, or changed the note color, the app asks whether to save, discard, or cancel before leaving.
 - The save action in the confirmation dialog validates the title and keeps the user on the screen if the title is missing.
 - Reduced note color swatch size, spacing, selected stroke width, icon size, and selected-scale animation so the horizontal picker fits much better and avoids the partially clipped look shown in the screenshot.
+
+## Add Note keyboard and editor-size fix
+
+- Enlarged the description editor so it fills the remaining space inside the editor card instead of leaving unused empty space below it.
+- Made the editor content scrollable with `fillViewport`, so the screen remains usable on smaller devices and when the keyboard is visible.
+- Added `windowSoftInputMode="adjustResize"` to `MainActivity`.
+- Added keyboard-inset handling in `AddNoteFragment` so the Save Note button stays pinned above the keyboard instead of being hidden by it.
+
+## Edit Mode + Version History
+
+- Added note editing from the detail screen with a toolbar edit action.
+- Added animated transition between read mode and edit mode.
+- Added validation for edited titles.
+- Added unsaved-change handling when leaving edit mode or pressing back.
+- Added Room database version 3 with note timestamps and an `edited` flag.
+- Added `note_history_table` to persist every previous note version before an update.
+- Added an edit history dialog that lists changed fields, previous content, previous color, and timestamp.
+- Added a small edited badge on each changed note in the list.
+- Preserved MVVM, XML layouts, and no DI framework.
+
+## Animated keyboard-aware Save button refinement
+
+- Kept the previous keyboard-aware Save Note behavior instead of removing it.
+- Replaced the instant bottom-margin jump with a smooth animated transition when the keyboard opens or closes.
+- Added a subtle Save button scale animation so the pinned bottom action feels intentional and modern.
+- Added focused-field auto-scroll assistance so the active title/description field stays easier to see while typing.

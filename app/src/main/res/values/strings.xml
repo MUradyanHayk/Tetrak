@@ -41,4 +41,19 @@
     <string name="unsaved_note_message">You have unsaved changes. Save the note before leaving?</string>
     <string name="save">Save</string>
     <string name="discard">Discard</string>
+
+    <string name="edit">Edit</string>
+    <string name="edited">Edited</string>
+    <string name="edited_note">Edited</string>
+    <string name="history">History</string>
+    <string name="edit_history">Edit history</string>
+    <string name="edit_history_subtitle">Previous versions are saved every time you update this note.</string>
+    <string name="history_empty">No edit history yet.</string>
+    <string name="changed_fields_value">Changed: %1$s</string>
+    <string name="save_changes">Save changes</string>
+    <string name="discard_changes_title">Discard changes?</string>
+    <string name="discard_changes_message">Your edits will be lost.</string>
+    <string name="unsaved_changes_title">Save changes?</string>
+    <string name="unsaved_changes_message">You edited this note. Save changes before leaving?</string>
+    <string name="close">Close</string>
 </resources>

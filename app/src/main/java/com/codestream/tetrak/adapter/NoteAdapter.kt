@@ -2,6 +2,7 @@ package com.codestream.tetrak.adapter
 
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -40,6 +41,11 @@ class NoteAdapter(
                 setColor(note.color)
             }
             noteIcon.setColorFilter(note.color)
+            editedBadge.visibility = if (note.edited) View.VISIBLE else View.GONE
+            editedBadge.alpha = if (note.edited) 1f else 0f
+            if (note.edited) {
+                editedBadge.animate().rotationBy(360f).setDuration(420L).start()
+            }
             root.setOnClickListener { delegate.onClick(note) }
         }
     }
