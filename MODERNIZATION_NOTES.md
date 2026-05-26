@@ -93,3 +93,12 @@ The project wrapper tried to download Gradle `9.3.1`, but this environment has n
 - Replaced the instant bottom-margin jump with a smooth animated transition when the keyboard opens or closes.
 - Added a subtle Save button scale animation so the pinned bottom action feels intentional and modern.
 - Added focused-field auto-scroll assistance so the active title/description field stays easier to see while typing.
+
+
+## AdMob implementation
+- Added Google Mobile Ads SDK dependency using the current official `play-services-ads` artifact.
+- Added test AdMob App ID and banner unit ID. Replace both before production release.
+- Added app-level SDK initialization in `TetrakApplication`.
+- Added lifecycle-safe adaptive banner loading in `MainActivity`.
+- Added animated banner container UI with loading state and automatic hide-on-keyboard behavior.
+- Added localized Ads information card in Settings.

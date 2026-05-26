@@ -41,4 +41,7 @@
     <string name="unsaved_note_message">Դուք ունեք չպահպանված փոփոխություններ։ Պահպանե՞լ նշումը դուրս գալուց առաջ։</string>
     <string name="save">Պահպանել</string>
     <string name="discard">Չպահպանել</string>
+    <string name="ad_label">Գովազդ</string>
+    <string name="ads">Գովազդներ</string>
+    <string name="ads_info">Փոքր adaptive banner-ը աջակցում է Tetrak-ի անվճար տարբերակին։ Այս build-ում օգտագործվում են test AdMob ID-ներ․ հրապարակելուց առաջ փոխարինեք production ID-ներով։</string>
 </resources>

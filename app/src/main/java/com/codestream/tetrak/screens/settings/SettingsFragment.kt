@@ -82,10 +82,13 @@ class SettingsFragment : Fragment() {
     private fun animateIntro() = with(binding) {
         themeCard.translationY = 32f
         languageCard.translationY = 32f
+        adsCard.translationY = 32f
         themeCard.alpha = 0f
         languageCard.alpha = 0f
+        adsCard.alpha = 0f
         themeCard.animate().translationY(0f).alpha(1f).setDuration(280L).start()
         languageCard.animate().translationY(0f).alpha(1f).setStartDelay(90L).setDuration(280L).start()
+        adsCard.animate().translationY(0f).alpha(1f).setStartDelay(180L).setDuration(280L).start()
     }
 
     override fun onDestroyView() {

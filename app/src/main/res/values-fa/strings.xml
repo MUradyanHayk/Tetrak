@@ -41,4 +41,7 @@
     <string name="unsaved_note_message">تغییرات ذخیره‌نشده دارید. قبل از خروج یادداشت را ذخیره می‌کنید؟</string>
     <string name="save">ذخیره</string>
     <string name="discard">صرف‌نظر</string>
+    <string name="ad_label">تبلیغ</string>
+    <string name="ads">تبلیغات</string>
+    <string name="ads_info">یک بنر تطبیقی کوچک از نسخه رایگان Tetrak پشتیبانی می‌کند. در این نسخه از شناسه‌های آزمایشی AdMob استفاده شده است؛ قبل از انتشار آن‌ها را با شناسه‌های واقعی جایگزین کنید.</string>
 </resources>
