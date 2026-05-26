@@ -180,3 +180,14 @@ Production note: before release, create the subscription product in Google Play 
   - Premium users do not see interstitial/video ads after saved notes.
 
 Production note: before Play Store release, create both subscription products in Play Console and verify purchase tokens on a backend before trusting long-term entitlements.
+
+### Premium plan bugfix
+- Fixed Premium back navigation by explicitly returning to Settings and falling back safely instead of leaving an empty/black navigation state.
+- Added a background to the NavHost container so transitions never show a black empty surface.
+- Changed plan cards to selection-first behavior: tapping Monthly/Yearly now visually selects the plan instead of immediately starting billing.
+- Added selected-card styling with animated scale, thicker primary stroke, selected background, and Selected/Choose button text state.
+- Added a single Continue button that starts purchase for the selected monthly/yearly plan.
+
+
+## Premium color resource build fix
+- Replaced Material attribute lookup in PremiumFragment with project color resources to avoid `colorPrimary not found` issues on some Material/AGP combinations.

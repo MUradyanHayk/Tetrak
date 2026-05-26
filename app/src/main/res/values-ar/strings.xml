@@ -93,4 +93,7 @@
     <string name="premium_already_active">Premium is already active.</string>
     <string name="premium_billing_unavailable">Google Play Billing is not available right now. Try again later.</string>
     <string name="premium_products_not_ready">Premium products are not ready yet. Check Play Console product IDs and tester setup.</string>
+    <string name="selected_plan">محدد</string>
+    <string name="premium_continue">متابعة</string>
+    <string name="continue_with_plan">متابعة - %1$s</string>
 </resources>

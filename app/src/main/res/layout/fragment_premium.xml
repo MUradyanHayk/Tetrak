@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_screen_gradient"
     android:clipToPadding="false"
+    android:fillViewport="true"
     tools:context=".screens.premium.PremiumFragment">
 
     <LinearLayout
@@ -246,6 +247,15 @@
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/continue_button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/premium_continue"
+            app:cornerRadius="18dp"
+            app:icon="@drawable/ic_premium" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/features_card"

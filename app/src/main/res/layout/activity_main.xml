@@ -13,6 +13,7 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/bg_screen_gradient"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/ad_section"
         app:layout_constraintEnd_toEndOf="parent"

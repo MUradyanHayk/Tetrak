@@ -7,8 +7,8 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
-import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.ProductDetails
+import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
@@ -30,6 +30,7 @@ object PremiumBillingManager : PurchasesUpdatedListener {
     private var billingClient: BillingClient? = null
     private var appContext: Context? = null
     private var isConnecting = false
+    private val pendingConnectionCallbacks = mutableListOf<() -> Unit>()
     private val productDetails = linkedMapOf<String, ProductDetails>()
 
     fun initialize(context: Context) {
@@ -41,7 +42,8 @@ object PremiumBillingManager : PurchasesUpdatedListener {
                 PendingPurchasesParams.newBuilder()
                     .enableOneTimeProducts()
                     .build()
-            ).enableAutoServiceReconnection()
+            )
+            .enableAutoServiceReconnection()
             .build()
         connectIfNeeded()
     }
@@ -159,13 +161,16 @@ object PremiumBillingManager : PurchasesUpdatedListener {
             onConnected?.invoke()
             return
         }
+        onConnected?.let { pendingConnectionCallbacks.add(it) }
         if (isConnecting) return
         isConnecting = true
         client.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 isConnecting = false
+                val callbacks = pendingConnectionCallbacks.toList()
+                pendingConnectionCallbacks.clear()
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    onConnected?.invoke()
+                    callbacks.forEach { it.invoke() }
                 }
             }
 
@@ -186,9 +191,7 @@ object PremiumBillingManager : PurchasesUpdatedListener {
         return PremiumPlan(
             productId = productId,
             title = if (productId == PremiumConfig.PREMIUM_YEARLY_PRODUCT_ID) context.getString(R.string.premium_yearly) else context.getString(R.string.premium_monthly),
-            subtitle = if (productId == PremiumConfig.PREMIUM_YEARLY_PRODUCT_ID) context.getString(R.string.premium_yearly_subtitle) else context.getString(
-                R.string.premium_monthly_subtitle
-            ),
+            subtitle = if (productId == PremiumConfig.PREMIUM_YEARLY_PRODUCT_ID) context.getString(R.string.premium_yearly_subtitle) else context.getString(R.string.premium_monthly_subtitle),
             formattedPrice = price,
             offerToken = subscriptionOfferDetails?.firstOrNull()?.offerToken,
             isBestValue = productId == PremiumConfig.PREMIUM_YEARLY_PRODUCT_ID
