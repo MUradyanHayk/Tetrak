@@ -1,17 +1,25 @@
 package com.codestream.tetrak.screens.addnote
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.codestream.tetrak.db.NoteDatabase
+import com.codestream.tetrak.db.repository.NoteRepository
+import com.codestream.tetrak.db.repository.NoteRepositoryImpl
 import com.codestream.tetrak.model.NoteModel
-import com.codestream.tetrak.utils.AppConstants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class AddNoteViewModel : ViewModel() {
-    fun insert(noteModel: NoteModel, onSuccess: () -> Unit) =
+class AddNoteViewModel(app: Application) : AndroidViewModel(app) {
+    private val repository: NoteRepository = NoteRepositoryImpl(
+        NoteDatabase.getInstance(app).getNoteDao()
+    )
+
+    fun insert(noteModel: NoteModel, onSuccess: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
-            AppConstants.REPOSITORY.insertNote(noteModel) {
-                onSuccess()
-            }
+            repository.insertNote(noteModel)
+            withContext(Dispatchers.Main) { onSuccess() }
         }
+    }
 }

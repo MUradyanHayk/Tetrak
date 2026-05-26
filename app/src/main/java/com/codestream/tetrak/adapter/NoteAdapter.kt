@@ -1,48 +1,44 @@
 package com.codestream.tetrak.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.codestream.tetrak.databinding.ItemLayoutBinding
 import com.codestream.tetrak.model.NoteModel
-import com.codestream.tetrak.utils.AppConstants
-import java.lang.ref.WeakReference
 
 interface NoteAdapterDelegate {
     fun onClick(note: NoteModel)
 }
 
-class NoteAdapter(val delegate: NoteAdapterDelegate) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
-    var listNote = mutableListOf<NoteModel>()
+class NoteAdapter(
+    private val delegate: NoteAdapterDelegate
+) : ListAdapter<NoteModel, NoteAdapter.NoteViewHolder>(DiffCallback) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NoteViewHolder(binding)
+        return NoteViewHolder(binding, delegate)
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        val note = listNote[position]
-        holder.bind(note)
-        holder.itemView.setOnClickListener {
-            Toast.makeText(AppConstants.mainApplication, "$position", Toast.LENGTH_SHORT).show()
-            delegate.onClick(note)
+        holder.bind(getItem(position))
+    }
+
+    class NoteViewHolder(
+        private val binding: ItemLayoutBinding,
+        private val delegate: NoteAdapterDelegate
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(note: NoteModel) = with(binding) {
+            itemTitle.text = note.title
+            itemDescription.text = note.description.ifBlank { "No description" }
+            root.setOnClickListener { delegate.onClick(note) }
         }
     }
 
-    override fun getItemCount(): Int {
-        return listNote.size
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setList(list: MutableList<NoteModel>) {
-        listNote = list
-        notifyDataSetChanged()
-    }
-
-    class NoteViewHolder(val binding: ItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(note: NoteModel) {
-            binding.itemTitle.text = note.title
-        }
+    private object DiffCallback : DiffUtil.ItemCallback<NoteModel>() {
+        override fun areItemsTheSame(oldItem: NoteModel, newItem: NoteModel): Boolean = oldItem.id == newItem.id
+        override fun areContentsTheSame(oldItem: NoteModel, newItem: NoteModel): Boolean = oldItem == newItem
     }
 }

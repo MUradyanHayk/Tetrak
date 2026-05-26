@@ -4,54 +4,78 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
 import com.codestream.tetrak.R
 import com.codestream.tetrak.adapter.NoteAdapter
 import com.codestream.tetrak.adapter.NoteAdapterDelegate
-import com.codestream.tetrak.databinding.ActivityMainBinding
 import com.codestream.tetrak.databinding.FragmentStartBinding
 import com.codestream.tetrak.model.NoteModel
-import com.codestream.tetrak.utils.AppConstants
-import java.lang.ref.WeakReference
 
 class StartFragment : Fragment(), NoteAdapterDelegate {
-    private lateinit var binding: FragmentStartBinding
-    private var adapter: NoteAdapter? = null
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentStartBinding.inflate(layoutInflater, container, false)
+    private var _binding: FragmentStartBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: StartViewModel by viewModels()
+    private val adapter by lazy { NoteAdapter(this) }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentStartBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
+        setupList()
+        setupClicks()
+        animateIntro()
+        observeNotes()
     }
 
-    fun init() {
-        val viewModel = ViewModelProvider(this)[StartViewModel::class.java]
-        viewModel.initDatabase()
-        adapter = NoteAdapter(this)
-        binding.rvNotes.adapter = adapter
-        viewModel.getAllNotes().observe(viewLifecycleOwner) { notes ->
-            adapter?.setList(notes.asReversed())
-        }
+    private fun setupList() = with(binding.rvNotes) {
+        adapter = this@StartFragment.adapter
+        itemAnimator = DefaultItemAnimator()
+        setHasFixedSize(true)
+    }
 
+    private fun setupClicks() {
         binding.nextButton.setOnClickListener {
-            AppConstants.mainApplication.navController.navigate(R.id.action_startFragment_to_addNoteFragment)
+            findNavController().navigate(R.id.action_startFragment_to_addNoteFragment)
         }
+    }
+
+    private fun observeNotes() {
+        viewModel.getAllNotes().observe(viewLifecycleOwner) { notes ->
+            adapter.submitList(notes)
+            val isEmpty = notes.isEmpty()
+            binding.emptyStateGroup.isVisible = isEmpty
+            binding.rvNotes.isVisible = !isEmpty
+            if (!isEmpty) binding.rvNotes.scheduleLayoutAnimation()
+        }
+    }
+
+    private fun animateIntro() = with(binding) {
+        headerContainer.translationY = -32f
+        headerContainer.alpha = 0f
+        headerContainer.animate().translationY(0f).alpha(1f).setDuration(450L).start()
+        nextButton.scaleX = 0f
+        nextButton.scaleY = 0f
+        nextButton.animate().scaleX(1f).scaleY(1f).setStartDelay(180L).setDuration(300L).start()
     }
 
     override fun onClick(note: NoteModel) {
-        val bundle = Bundle()
-        bundle.putSerializable("note", note)
-        AppConstants.mainApplication.navController.navigate(R.id.action_startFragment_to_detailFragment, bundle)
+        findNavController().navigate(
+            R.id.action_startFragment_to_detailFragment,
+            bundleOf("note" to note)
+        )
     }
 
-    companion object {
-        const val TAG = "StartFragment"
+    override fun onDestroyView() {
+        binding.rvNotes.adapter = null
+        _binding = null
+        super.onDestroyView()
     }
 }
