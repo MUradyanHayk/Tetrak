@@ -1,5 +1,6 @@
 package com.codestream.tetrak.adapter
 
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -32,7 +33,13 @@ class NoteAdapter(
 
         fun bind(note: NoteModel) = with(binding) {
             itemTitle.text = note.title
-            itemDescription.text = note.description.ifBlank { "No description" }
+            itemDescription.text = note.description.ifBlank { root.context.getString(com.codestream.tetrak.R.string.no_description) }
+            colorStrip.background = GradientDrawable().apply {
+                shape = GradientDrawable.RECTANGLE
+                cornerRadius = 10f
+                setColor(note.color)
+            }
+            noteIcon.setColorFilter(note.color)
             root.setOnClickListener { delegate.onClick(note) }
         }
     }

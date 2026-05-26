@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Tetrak</string>
+    <string name="notes_title">یادداشت‌های شما</string>
+    <string name="notes_subtitle">فکرها را قبل از فراموش شدن ثبت کنید.</string>
+    <string name="empty_title">هنوز یادداشتی نیست</string>
+    <string name="empty_subtitle">برای ذخیره اولین ایده، + را بزنید.</string>
+    <string name="add_note">افزودن یادداشت</string>
+    <string name="add_note_subtitle">اکنون بنویسید، بعداً بهترش کنید.</string>
+    <string name="save_note">ذخیره یادداشت</string>
+    <string name="title_hint">عنوان</string>
+    <string name="description_hint">توضیحات</string>
+    <string name="back">بازگشت</string>
+    <string name="delete">حذف</string>
+    <string name="note_details">جزئیات یادداشت</string>
+    <string name="note_color">رنگ یادداشت</string>
+    <string name="selected_color">رنگ انتخاب‌شده</string>
+    <string name="open_note">باز کردن یادداشت</string>
+    <string name="no_description">بدون توضیح</string>
+    <string name="title_required">عنوان الزامی است</string>
+    <string name="settings">تنظیمات</string>
+    <string name="settings_subtitle">تم و زبان برنامه را شخصی‌سازی کنید.</string>
+    <string name="theme">تم</string>
+    <string name="theme_system">استفاده از تم سیستم</string>
+    <string name="theme_light">روشن</string>
+    <string name="theme_dark">تاریک</string>
+    <string name="language">زبان</string>
+    <string name="language_system">استفاده از زبان سیستم</string>
+    <string name="language_english">انگلیسی</string>
+    <string name="language_armenian">ارمنی</string>
+    <string name="language_russian">روسی</string>
+    <string name="language_arabic">عربی</string>
+    <string name="language_persian">فارسی</string>
+</resources>

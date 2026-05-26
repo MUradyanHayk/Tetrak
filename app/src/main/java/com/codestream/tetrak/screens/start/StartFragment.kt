@@ -45,6 +45,9 @@ class StartFragment : Fragment(), NoteAdapterDelegate {
         binding.nextButton.setOnClickListener {
             findNavController().navigate(R.id.action_startFragment_to_addNoteFragment)
         }
+        binding.settingsButton.setOnClickListener {
+            findNavController().navigate(R.id.action_startFragment_to_settingsFragment)
+        }
     }
 
     private fun observeNotes() {

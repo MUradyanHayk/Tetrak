@@ -7,12 +7,26 @@
     android:background="@drawable/bg_screen_gradient"
     tools:context=".screens.detail.DetailFragment">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationContentDescription="@string/back"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:title="@string/note_details"
+        app:titleTextColor="?attr/colorOnSurface" />
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/detail_card"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="18dp"
         app:cardBackgroundColor="?attr/colorSurface"
@@ -21,9 +35,9 @@
         app:layout_constraintBottom_toTopOf="@id/delete_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:strokeColor="?attr/colorSurfaceVariant"
-        app:strokeWidth="1dp">
+        app:strokeWidth="2dp">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -36,9 +50,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <View
+                    android:id="@+id/note_accent"
+                    android:layout_width="64dp"
+                    android:layout_height="8dp"
+                    android:background="?attr/colorPrimary" />
+
                 <ImageView
+                    android:id="@+id/note_icon"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/bg_empty_icon"
                     android:contentDescription="@string/app_name"
                     android:padding="14dp"
@@ -73,32 +95,17 @@
         android:layout_height="56dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/delete"
         android:textColor="?attr/colorError"
         app:backgroundTint="?attr/colorSurface"
         app:cornerRadius="18dp"
         app:icon="@drawable/ic_delete"
         app:iconTint="?attr/colorError"
-        app:layout_constraintBottom_toTopOf="@id/back_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:strokeColor="?attr/colorError"
         app:strokeWidth="1dp" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/back_btn"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/back"
-        android:textColor="?attr/colorOnSurfaceVariant"
-        app:cornerRadius="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

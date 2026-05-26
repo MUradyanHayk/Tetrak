@@ -1,5 +1,6 @@
 package com.codestream.tetrak.screens.detail
 
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,6 +26,7 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
         bindNote()
         animateIntro()
         setupClicks()
@@ -39,9 +41,21 @@ class DetailFragment : Fragment() {
         }
     }
 
+    private fun setupToolbar() {
+        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+    }
+
     private fun bindNote() = with(binding) {
+        val noteColor = currentNote?.color ?: NoteModel.DEFAULT_NOTE_COLOR
         title.text = currentNote?.title.orEmpty()
-        description.text = currentNote?.description?.ifBlank { "No description" }.orEmpty()
+        description.text = currentNote?.description?.ifBlank { getString(com.codestream.tetrak.R.string.no_description) }.orEmpty()
+        detailCard.strokeColor = noteColor
+        noteIcon.setColorFilter(noteColor)
+        noteAccent.background = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = 20f
+            setColor(noteColor)
+        }
     }
 
     private fun setupClicks() {
@@ -51,7 +65,6 @@ class DetailFragment : Fragment() {
                 viewModel.delete(note) { findNavController().navigateUp() }
             }
         }
-        binding.backBtn.setOnClickListener { findNavController().navigateUp() }
     }
 
     private fun animateIntro() = with(binding.detailCard) {

@@ -33,3 +33,14 @@ The project wrapper tried to download Gradle `9.3.1`, but this environment has n
 - Removed the deprecated `android.kotlinOptions {}` block. With AGP 9 built-in Kotlin, Kotlin's JVM target defaults to `android.compileOptions.targetCompatibility`.
 - Kept KSP because Room still uses KSP for annotation processing.
 
+
+## Settings, Localization, and Color Picker Update
+
+- Added a `SettingsFragment` using XML + MVVM with `SettingsViewModel`.
+- Added global theme selection: system, light, and dark.
+- Added runtime language selection using AppCompat locales: English, Armenian, Russian, Arabic, and Persian.
+- Added localized `strings.xml` resources for `values-hy`, `values-ru`, `values-ar`, and `values-fa`.
+- Added note color support with an animated horizontal color picker.
+- Added a Room `1 -> 2` migration that preserves existing notes and assigns them the default accent color.
+- Removed separate bottom back buttons from add/detail screens and moved navigation to MaterialToolbar top-left navigation icons.
+- Added settings navigation from the start screen header.

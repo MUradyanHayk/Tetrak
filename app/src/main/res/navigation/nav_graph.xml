@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/startFragment"
         android:name="com.codestream.tetrak.screens.start.StartFragment"
-        android:label="fragment_start"
+        android:label="@string/notes_title"
         tools:layout="@layout/fragment_start">
         <action
             android:id="@+id/action_startFragment_to_addNoteFragment"
@@ -24,17 +24,30 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_startFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/addNoteFragment"
         android:name="com.codestream.tetrak.screens.addnote.AddNoteFragment"
-        android:label="fragment_add_note"
+        android:label="@string/add_note"
         tools:layout="@layout/fragment_add_note" />
 
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.codestream.tetrak.screens.detail.DetailFragment"
-        android:label="fragment_detail"
+        android:label="@string/note_details"
         tools:layout="@layout/fragment_detail" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.codestream.tetrak.screens.settings.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

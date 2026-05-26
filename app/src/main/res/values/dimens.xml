@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="color_picker_selected_stroke">3dp</dimen>
+</resources>

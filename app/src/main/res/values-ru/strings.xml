@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Tetrak</string>
+    <string name="notes_title">Ваши заметки</string>
+    <string name="notes_subtitle">Записывайте мысли, пока они не исчезли.</string>
+    <string name="empty_title">Заметок пока нет</string>
+    <string name="empty_subtitle">Нажмите +, чтобы сохранить первую идею.</string>
+    <string name="add_note">Добавить заметку</string>
+    <string name="add_note_subtitle">Запишите сейчас, улучшите позже.</string>
+    <string name="save_note">Сохранить заметку</string>
+    <string name="title_hint">Заголовок</string>
+    <string name="description_hint">Описание</string>
+    <string name="back">Назад</string>
+    <string name="delete">Удалить</string>
+    <string name="note_details">Детали заметки</string>
+    <string name="note_color">Цвет заметки</string>
+    <string name="selected_color">Выбранный цвет</string>
+    <string name="open_note">Открыть заметку</string>
+    <string name="no_description">Нет описания</string>
+    <string name="title_required">Заголовок обязателен</string>
+    <string name="settings">Настройки</string>
+    <string name="settings_subtitle">Настройте тему и язык приложения.</string>
+    <string name="theme">Тема</string>
+    <string name="theme_system">Использовать системную тему</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="language">Язык</string>
+    <string name="language_system">Использовать системный язык</string>
+    <string name="language_english">Английский</string>
+    <string name="language_armenian">Армянский</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_arabic">Арабский</string>
+    <string name="language_persian">Персидский</string>
+</resources>

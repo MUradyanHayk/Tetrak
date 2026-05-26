@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Tetrak</string>
+    <string name="notes_title">ملاحظاتك</string>
+    <string name="notes_subtitle">سجّل أفكارك قبل أن تختفي.</string>
+    <string name="empty_title">لا توجد ملاحظات بعد</string>
+    <string name="empty_subtitle">اضغط + لحفظ أول فكرة.</string>
+    <string name="add_note">إضافة ملاحظة</string>
+    <string name="add_note_subtitle">اكتبها الآن، وحسّنها لاحقًا.</string>
+    <string name="save_note">حفظ الملاحظة</string>
+    <string name="title_hint">العنوان</string>
+    <string name="description_hint">الوصف</string>
+    <string name="back">رجوع</string>
+    <string name="delete">حذف</string>
+    <string name="note_details">تفاصيل الملاحظة</string>
+    <string name="note_color">لون الملاحظة</string>
+    <string name="selected_color">اللون المحدد</string>
+    <string name="open_note">فتح الملاحظة</string>
+    <string name="no_description">لا يوجد وصف</string>
+    <string name="title_required">العنوان مطلوب</string>
+    <string name="settings">الإعدادات</string>
+    <string name="settings_subtitle">خصص سمة التطبيق ولغته.</string>
+    <string name="theme">السمة</string>
+    <string name="theme_system">استخدام سمة النظام</string>
+    <string name="theme_light">فاتحة</string>
+    <string name="theme_dark">داكنة</string>
+    <string name="language">اللغة</string>
+    <string name="language_system">استخدام لغة النظام</string>
+    <string name="language_english">الإنجليزية</string>
+    <string name="language_armenian">الأرمنية</string>
+    <string name="language_russian">الروسية</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_persian">الفارسية</string>
+</resources>

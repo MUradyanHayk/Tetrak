@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Tetrak</string>
+    <string name="notes_title">Ձեր նշումները</string>
+    <string name="notes_subtitle">Գրի առեք մտքերը, մինչ դրանք կանցնեն։</string>
+    <string name="empty_title">Դեռ նշումներ չկան</string>
+    <string name="empty_subtitle">Սեղմեք +՝ առաջին միտքը պահելու համար։</string>
+    <string name="add_note">Ավելացնել նշում</string>
+    <string name="add_note_subtitle">Գրեք հիմա, բարելավեք հետո։</string>
+    <string name="save_note">Պահպանել նշումը</string>
+    <string name="title_hint">Վերնագիր</string>
+    <string name="description_hint">Նկարագրություն</string>
+    <string name="back">Հետ</string>
+    <string name="delete">Ջնջել</string>
+    <string name="note_details">Նշման մանրամասներ</string>
+    <string name="note_color">Նշման գույն</string>
+    <string name="selected_color">Ընտրված գույն</string>
+    <string name="open_note">Բացել նշումը</string>
+    <string name="no_description">Նկարագրություն չկա</string>
+    <string name="title_required">Վերնագիրը պարտադիր է</string>
+    <string name="settings">Կարգավորումներ</string>
+    <string name="settings_subtitle">Անհատականացրեք հավելվածի թեման և լեզուն։</string>
+    <string name="theme">Թեմա</string>
+    <string name="theme_system">Օգտագործել համակարգի թեման</string>
+    <string name="theme_light">Լուսավոր</string>
+    <string name="theme_dark">Մութ</string>
+    <string name="language">Լեզու</string>
+    <string name="language_system">Օգտագործել համակարգի լեզուն</string>
+    <string name="language_english">Անգլերեն</string>
+    <string name="language_armenian">Հայերեն</string>
+    <string name="language_russian">Ռուսերեն</string>
+    <string name="language_arabic">Արաբերեն</string>
+    <string name="language_persian">Պարսկերեն</string>
+</resources>
