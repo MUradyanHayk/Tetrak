@@ -68,8 +68,8 @@
                 android:layout_height="56dp"
                 android:background="@drawable/bg_empty_icon"
                 android:contentDescription="@string/app_name"
-                android:padding="14dp"
-                android:src="@drawable/ic_note"
+                android:padding="4dp"
+                android:src="@drawable/ic_tetrak_logo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/settings_button" />

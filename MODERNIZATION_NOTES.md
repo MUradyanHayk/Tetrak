@@ -264,3 +264,12 @@ Production note: before Play Store release, create both subscription products in
 - Moved shared color helper extensions (`toHexColor`, `toColorOrNull`) into `Extensions.kt`.
 - Moved shared lightweight view animation extensions into `Extensions.kt`.
 - Reused `pxToDp(...)` extension in AdMob adaptive banner width calculation.
+
+## App logo / launcher icon refresh
+- Added the new Tetrak logo source as SVG at `app/src/main/assets/brand/tetrak_logo.svg`.
+- Added the SVG source as a raw resource at `app/src/main/res/raw/tetrak_logo.svg` for easy future reuse/export.
+- Converted the logo into Android VectorDrawable XML at `app/src/main/res/drawable/ic_tetrak_logo.xml`.
+- Replaced the adaptive launcher icon foreground/background with the new Tetrak vector branding.
+- Added a monochrome launcher icon for Android themed icons.
+- Regenerated legacy launcher WebP icons for mdpi, hdpi, xhdpi, xxhdpi, and xxxhdpi devices.
+- Updated the main notes header to use the new Tetrak logo artwork.
