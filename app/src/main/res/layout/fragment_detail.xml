@@ -22,6 +22,67 @@
         app:title="@string/note_details"
         app:titleTextColor="?attr/colorOnSurface" />
 
+    <LinearLayout
+        android:id="@+id/action_row"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/delete_btn"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:text="@string/delete"
+            android:textColor="?attr/colorError"
+            app:backgroundTint="?attr/colorSurface"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_delete"
+            app:iconTint="?attr/colorError"
+            app:strokeColor="?attr/colorError"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel_edit_btn"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="52dp"
+            android:layout_height="44dp"
+            android:minWidth="0dp"
+            android:paddingHorizontal="4dp"
+            android:text="@string/cancel"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:cornerRadius="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/save_edit_btn"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="6dp"
+            android:contentDescription="@string/save"
+            android:gravity="center"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:minWidth="0dp"
+            android:padding="0dp"
+            android:tooltipText="@string/save"
+            android:visibility="gone"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_check"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="24dp" />
+    </LinearLayout>
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/detail_card"
         android:layout_width="0dp"
@@ -49,7 +110,7 @@
             android:paddingStart="20dp"
             android:paddingTop="16dp"
             android:paddingEnd="20dp"
-            android:paddingBottom="20dp">
+            android:paddingBottom="110dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -137,8 +198,6 @@
                         tools:itemCount="8"
                         tools:listitem="@layout/item_note_color" />
 
-
-
                     <LinearLayout
                         android:id="@+id/search_container"
                         android:layout_width="match_parent"
@@ -209,13 +268,13 @@
                         android:layout_marginTop="12dp"
                         android:hint="@string/title_hint"
                         app:boxBackgroundMode="none"
-                    app:endIconContentDescription="@string/generate_title_with_ai"
-                    app:endIconDrawable="@drawable/ic_auto_title"
-                    app:endIconMode="custom"
                         app:boxCornerRadiusBottomEnd="0dp"
                         app:boxCornerRadiusBottomStart="0dp"
                         app:boxCornerRadiusTopEnd="0dp"
-                        app:boxCornerRadiusTopStart="0dp">
+                        app:boxCornerRadiusTopStart="0dp"
+                        app:endIconContentDescription="@string/generate_title_with_ai"
+                        app:endIconDrawable="@drawable/ic_auto_title"
+                        app:endIconMode="custom">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edit_title"
@@ -232,8 +291,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="2dp"
-                        android:background="?attr/colorSurfaceVariant"
-                        android:alpha="0.55" />
+                        android:alpha="0.55"
+                        android:background="?attr/colorSurfaceVariant" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/description_input"
@@ -263,162 +322,128 @@
         </ScrollView>
     </com.google.android.material.card.MaterialCardView>
 
-    <LinearLayout
-        android:id="@+id/action_row"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/editor_tools_card"
         android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="10dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
+        android:layout_height="52dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="82dp"
+        android:layout_marginBottom="18dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="?attr/colorSurfaceContainer"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:strokeColor="?attr/colorSurfaceVariant"
+        app:strokeWidth="1dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/delete_btn"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="44dp"
-            android:layout_weight="1"
-            android:text="@string/delete"
-            android:textColor="?attr/colorError"
-            app:backgroundTint="?attr/colorSurface"
-            app:cornerRadius="16dp"
-            app:icon="@drawable/ic_delete"
-            app:iconTint="?attr/colorError"
-            app:strokeColor="?attr/colorError"
-            app:strokeWidth="1dp" />
+        <HorizontalScrollView
+            android:id="@+id/editor_tools_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingHorizontal="8dp"
+            android:scrollbars="none">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/cancel_edit_btn"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="54dp"
-            android:layout_height="44dp"
-            android:minWidth="0dp"
-            android:paddingHorizontal="6dp"
-            android:text="@string/cancel"
-            android:textSize="12sp"
-            android:visibility="gone"
-            app:cornerRadius="16dp" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/editor_tools_card"
-            android:layout_width="0dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            android:visibility="gone"
-            app:cardBackgroundColor="?attr/colorSurfaceContainer"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@android:color/transparent"
-            app:strokeWidth="0dp">
-
-            <HorizontalScrollView
-                android:id="@+id/editor_tools_scroll"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:overScrollMode="never"
-                android:paddingHorizontal="8dp"
-                android:scrollbars="none">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/tool_copy_btn"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="@string/copy"
+                    android:gravity="center"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:minWidth="0dp"
+                    android:padding="0dp"
+                    android:tooltipText="@string/copy"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_copy"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="19dp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/tool_copy_btn"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:contentDescription="@string/copy"
-                        android:gravity="center"
-                        android:insetLeft="0dp"
-                        android:insetRight="0dp"
-                        android:minWidth="0dp"
-                        android:padding="0dp"
-                        android:tooltipText="@string/copy"
-                        app:cornerRadius="14dp"
-                        app:icon="@drawable/ic_copy"
-                        app:iconGravity="textStart"
-                        app:iconPadding="0dp"
-                        app:iconSize="19dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/tool_search_btn"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="6dp"
+                    android:contentDescription="@string/search"
+                    android:gravity="center"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:minWidth="0dp"
+                    android:padding="0dp"
+                    android:tooltipText="@string/search"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_search"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="19dp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/tool_search_btn"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_marginStart="6dp"
-                        android:contentDescription="@string/search"
-                        android:gravity="center"
-                        android:insetLeft="0dp"
-                        android:insetRight="0dp"
-                        android:minWidth="0dp"
-                        android:padding="0dp"
-                        android:tooltipText="@string/search"
-                        app:cornerRadius="14dp"
-                        app:icon="@drawable/ic_search"
-                        app:iconGravity="textStart"
-                        app:iconPadding="0dp"
-                        app:iconSize="19dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/tool_undo_btn"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="6dp"
+                    android:contentDescription="@string/undo"
+                    android:gravity="center"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:minWidth="0dp"
+                    android:padding="0dp"
+                    android:tooltipText="@string/undo"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_undo"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="19dp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/tool_undo_btn"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_marginStart="6dp"
-                        android:contentDescription="@string/undo"
-                        android:gravity="center"
-                        android:insetLeft="0dp"
-                        android:insetRight="0dp"
-                        android:minWidth="0dp"
-                        android:padding="0dp"
-                        android:tooltipText="@string/undo"
-                        app:cornerRadius="14dp"
-                        app:icon="@drawable/ic_undo"
-                        app:iconGravity="textStart"
-                        app:iconPadding="0dp"
-                        app:iconSize="19dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/tool_redo_btn"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="6dp"
+                    android:contentDescription="@string/redo"
+                    android:gravity="center"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:minWidth="0dp"
+                    android:padding="0dp"
+                    android:tooltipText="@string/redo"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_redo"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="19dp" />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </com.google.android.material.card.MaterialCardView>
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/tool_redo_btn"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_marginStart="6dp"
-                        android:contentDescription="@string/redo"
-                        android:gravity="center"
-                        android:insetLeft="0dp"
-                        android:insetRight="0dp"
-                        android:minWidth="0dp"
-                        android:padding="0dp"
-                        android:tooltipText="@string/redo"
-                        app:cornerRadius="14dp"
-                        app:icon="@drawable/ic_redo"
-                        app:iconGravity="textStart"
-                        app:iconPadding="0dp"
-                        app:iconSize="19dp" />
-                </LinearLayout>
-            </HorizontalScrollView>
-        </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editor_tools_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/edit"
+        android:src="@drawable/ic_edit"
+        android:visibility="gone"
+        app:backgroundTint="?attr/colorPrimaryContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="?attr/colorOnPrimaryContainer" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/save_edit_btn"
-            android:layout_width="72dp"
-            android:layout_height="44dp"
-            android:minWidth="0dp"
-            android:paddingHorizontal="10dp"
-            android:text="@string/save"
-            android:textSize="13sp"
-            android:visibility="gone"
-            app:cornerRadius="16dp" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

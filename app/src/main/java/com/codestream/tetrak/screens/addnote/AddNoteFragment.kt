@@ -5,12 +5,16 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.OnBackPressedCallback
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.view.ViewTreeObserver
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -48,6 +52,11 @@ class AddNoteFragment : Fragment() {
     private var editorHistory: NoteEditorHistory? = null
     private var editorSearch: NoteEditorSearch? = null
     private var isGeneratingTitle = false
+    private val floatingHandler = Handler(Looper.getMainLooper())
+    private val showFloatingRunnable = Runnable { showFloatingControls() }
+    private var floatingKeyboardOffset = 0f
+    private var isToolsTrayExpanded = false
+    private val keyboardLayoutListener = ViewTreeObserver.OnGlobalLayoutListener { updateFloatingKeyboardOffset() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAddNoteBinding.inflate(inflater, container, false)
@@ -60,6 +69,7 @@ class AddNoteFragment : Fragment() {
         setupToolbar()
         setupColorPicker()
         setupEditorTools()
+        setupFloatingEditorControls()
         setupAiTitleGenerator()
         animateIntro()
         setupValidation()
@@ -78,7 +88,7 @@ class AddNoteFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        binding.topBackBtn.setOnClickListener { handleExitRequest() }
+        binding.topEditorBar.setNavigationOnClickListener { handleExitRequest() }
     }
 
 
@@ -293,9 +303,107 @@ class AddNoteFragment : Fragment() {
             true
         }
         updateEditorToolState()
-        binding.editorToolsCard.alpha = 0f
-        binding.editorToolsCard.translationY = 16f
-        binding.editorToolsCard.animate().alpha(1f).translationY(0f).setDuration(320L).setStartDelay(100L).start()
+    }
+
+    private fun setupFloatingEditorControls() = with(binding) {
+        editorToolsCard.visibility = View.GONE
+        editorToolsCard.alpha = 0f
+        editorToolsFab.setOnClickListener {
+            animateToolTap(it)
+            toggleToolsTray(!isToolsTrayExpanded)
+        }
+        // Keep the floating tools available while typing and scrolling.
+        root.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
+        showFloatingControls()
+    }
+
+    private fun toggleToolsTray(show: Boolean) {
+        isToolsTrayExpanded = show
+        val tray = binding.editorToolsCard
+        tray.animate().cancel()
+        if (show) {
+            tray.visibility = View.VISIBLE
+            tray.alpha = 0f
+            tray.scaleX = 0.92f
+            tray.scaleY = 0.92f
+            tray.translationY = floatingKeyboardOffset + 18f
+            tray.animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .translationY(floatingKeyboardOffset)
+                .setDuration(220L)
+                .start()
+        } else {
+            tray.animate()
+                .alpha(0f)
+                .scaleX(0.92f)
+                .scaleY(0.92f)
+                .translationY(floatingKeyboardOffset + 18f)
+                .setDuration(160L)
+                .withEndAction { tray.visibility = View.GONE }
+                .start()
+        }
+    }
+
+    private fun hideFloatingControlsTemporarily() {
+        floatingHandler.removeCallbacks(showFloatingRunnable)
+        hideFloatingControls()
+        floatingHandler.postDelayed(showFloatingRunnable, 650L)
+    }
+
+    private fun hideFloatingControls() {
+        binding.editorToolsFab.animate().cancel()
+        binding.editorToolsFab.animate()
+            .alpha(0f)
+            .scaleX(0.78f)
+            .scaleY(0.78f)
+            .translationY(floatingKeyboardOffset + 18f)
+            .setDuration(140L)
+            .start()
+        if (isToolsTrayExpanded) {
+            binding.editorToolsCard.animate().cancel()
+            binding.editorToolsCard.animate()
+                .alpha(0f)
+                .scaleX(0.94f)
+                .scaleY(0.94f)
+                .translationY(floatingKeyboardOffset + 18f)
+                .setDuration(140L)
+                .start()
+        }
+    }
+
+    private fun showFloatingControls() {
+        if (_binding == null) return
+        binding.editorToolsFab.animate().cancel()
+        binding.editorToolsFab.animate()
+            .alpha(1f)
+            .scaleX(1f)
+            .scaleY(1f)
+            .translationY(floatingKeyboardOffset)
+            .setDuration(190L)
+            .start()
+        if (isToolsTrayExpanded) {
+            binding.editorToolsCard.animate().cancel()
+            binding.editorToolsCard.animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .translationY(floatingKeyboardOffset)
+                .setDuration(190L)
+                .start()
+        }
+    }
+
+    private fun updateFloatingKeyboardOffset() {
+        val binding = _binding ?: return
+        val visibleFrame = Rect()
+        binding.root.getWindowVisibleDisplayFrame(visibleFrame)
+        val hiddenHeight = (binding.root.rootView.height - visibleFrame.bottom).coerceAtLeast(0)
+        val newOffset = if (hiddenHeight > binding.root.height * 0.15f) -hiddenHeight.toFloat() else 0f
+        if (kotlin.math.abs(newOffset - floatingKeyboardOffset) < 1f) return
+        floatingKeyboardOffset = newOffset
+        showFloatingControls()
     }
 
     private fun updateEditorToolState() {
@@ -449,7 +557,11 @@ class AddNoteFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        floatingHandler.removeCallbacks(showFloatingRunnable)
+        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(keyboardLayoutListener)
         binding.addNoteBtn.animate().cancel()
+        binding.editorToolsFab.animate().cancel()
+        binding.editorToolsCard.animate().cancel()
         binding.colorPicker.adapter = null
         colorAdapter = null
         editorHistory = null

@@ -211,3 +211,19 @@ Production note: before Play Store release, create both subscription products in
 - Removed the custom keyboard-aware focused-field auto-scroll logic from Add Note because Save is now fixed in the top toolbar.
 - Removed the matching custom focused-field auto-scroll logic from edit mode in Note Details.
 - Kept the top toolbar actions fixed and simple: Back/Cancel on the left area, tools in the middle, Save on the right.
+
+### Editor toolbar + floating tools redesign
+- Removed the scrollable tools cluster from the top compose bar.
+- Restored a simpler title-first top bar: Back on the left, screen title in the toolbar, and a compact confirm/check Save action on the right.
+- Moved editor tools into a floating bottom tools tray opened by a bottom-end FAB.
+- The floating tools FAB/tray moves above the keyboard instead of taking permanent editor space.
+- Added polished behavior for typing and scrolling:
+  - FAB hides with a scale/fade animation while the user types.
+  - FAB returns after a short pause.
+  - FAB hides while the editor scrolls and returns after the scroll settles.
+- Applied the same floating tools behavior to Note Details edit mode while keeping the delete button styling/behavior unchanged.
+
+### Floating tools interaction cleanup
+- Removed the auto-hide behavior that hid the floating editor tools FAB/tray while typing.
+- Removed the auto-hide behavior that hid the floating editor tools FAB/tray while scrolling.
+- Kept the other floating tools changes: bottom-end FAB, floating tools tray, keyboard-aware positioning, top Back/title/confirm action layout, and unchanged delete button behavior.

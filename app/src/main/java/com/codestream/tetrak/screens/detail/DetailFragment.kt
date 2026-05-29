@@ -5,12 +5,16 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.view.ViewTreeObserver
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -46,6 +50,11 @@ class DetailFragment : Fragment() {
     private var editorHistory: NoteEditorHistory? = null
     private var editorSearch: NoteEditorSearch? = null
     private var isGeneratingTitle = false
+    private val floatingHandler = Handler(Looper.getMainLooper())
+    private val showFloatingRunnable = Runnable { showFloatingControls() }
+    private var floatingKeyboardOffset = 0f
+    private var isToolsTrayExpanded = false
+    private val keyboardLayoutListener = ViewTreeObserver.OnGlobalLayoutListener { updateFloatingKeyboardOffset() }
 
     private val colorOptions = listOf(
         Color.parseColor("#5B6CFF"),
@@ -70,6 +79,7 @@ class DetailFragment : Fragment() {
         setupToolbar()
         setupColorPicker()
         setupEditorTools()
+        setupFloatingEditorControls()
         setupAiTitleGenerator()
         bindNote()
         observeHistory()
@@ -107,6 +117,10 @@ class DetailFragment : Fragment() {
                 }
                 R.id.action_history -> {
                     showHistoryDialog()
+                    true
+                }
+                R.id.action_save -> {
+                    saveEditedNote()
                     true
                 }
                 else -> false
@@ -256,6 +270,108 @@ class DetailFragment : Fragment() {
         binding.toolRedoBtn.isEnabled = history?.canRedo() == true
     }
 
+    private fun setupFloatingEditorControls() = with(binding) {
+        editorToolsCard.visibility = View.GONE
+        editorToolsCard.alpha = 0f
+        editorToolsFab.setOnClickListener {
+            animateToolTap(it)
+            toggleToolsTray(!isToolsTrayExpanded)
+        }
+        // Keep the floating tools available while typing and scrolling in edit mode.
+        root.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
+    }
+
+    private fun toggleToolsTray(show: Boolean) {
+        isToolsTrayExpanded = show
+        val tray = binding.editorToolsCard
+        tray.animate().cancel()
+        if (show && isEditMode) {
+            tray.visibility = View.VISIBLE
+            tray.alpha = 0f
+            tray.scaleX = 0.92f
+            tray.scaleY = 0.92f
+            tray.translationY = floatingKeyboardOffset + 18f
+            tray.animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .translationY(floatingKeyboardOffset)
+                .setDuration(220L)
+                .start()
+        } else {
+            tray.animate()
+                .alpha(0f)
+                .scaleX(0.92f)
+                .scaleY(0.92f)
+                .translationY(floatingKeyboardOffset + 18f)
+                .setDuration(160L)
+                .withEndAction { tray.visibility = View.GONE }
+                .start()
+        }
+    }
+
+    private fun hideFloatingControlsTemporarily() {
+        floatingHandler.removeCallbacks(showFloatingRunnable)
+        hideFloatingControls()
+        floatingHandler.postDelayed(showFloatingRunnable, 650L)
+    }
+
+    private fun hideFloatingControls() {
+        if (!isEditMode) return
+        binding.editorToolsFab.animate().cancel()
+        binding.editorToolsFab.animate()
+            .alpha(0f)
+            .scaleX(0.78f)
+            .scaleY(0.78f)
+            .translationY(floatingKeyboardOffset + 18f)
+            .setDuration(140L)
+            .start()
+        if (isToolsTrayExpanded) {
+            binding.editorToolsCard.animate().cancel()
+            binding.editorToolsCard.animate()
+                .alpha(0f)
+                .scaleX(0.94f)
+                .scaleY(0.94f)
+                .translationY(floatingKeyboardOffset + 18f)
+                .setDuration(140L)
+                .start()
+        }
+    }
+
+    private fun showFloatingControls() {
+        if (_binding == null || !isEditMode) return
+        binding.editorToolsFab.visibility = View.VISIBLE
+        binding.editorToolsFab.animate().cancel()
+        binding.editorToolsFab.animate()
+            .alpha(1f)
+            .scaleX(1f)
+            .scaleY(1f)
+            .translationY(floatingKeyboardOffset)
+            .setDuration(190L)
+            .start()
+        if (isToolsTrayExpanded) {
+            binding.editorToolsCard.animate().cancel()
+            binding.editorToolsCard.animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .translationY(floatingKeyboardOffset)
+                .setDuration(190L)
+                .start()
+        }
+    }
+
+    private fun updateFloatingKeyboardOffset() {
+        val binding = _binding ?: return
+        val visibleFrame = Rect()
+        binding.root.getWindowVisibleDisplayFrame(visibleFrame)
+        val hiddenHeight = (binding.root.rootView.height - visibleFrame.bottom).coerceAtLeast(0)
+        val newOffset = if (hiddenHeight > binding.root.height * 0.15f) -hiddenHeight.toFloat() else 0f
+        if (kotlin.math.abs(newOffset - floatingKeyboardOffset) < 1f) return
+        floatingKeyboardOffset = newOffset
+        showFloatingControls()
+    }
+
     private fun toggleSearchPanel(show: Boolean) = with(binding.searchContainer) {
         if (show) {
             visibility = View.VISIBLE
@@ -361,19 +477,24 @@ class DetailFragment : Fragment() {
         if (isEditMode) return
         isEditMode = true
         binding.toolbar.menu.findItem(R.id.action_edit)?.isVisible = false
+        binding.toolbar.menu.findItem(R.id.action_save)?.isVisible = true
+        binding.toolbar.menu.findItem(R.id.action_save)?.isEnabled = true
         binding.title.visibility = View.GONE
         binding.description.visibility = View.GONE
         binding.deleteBtn.visibility = View.GONE
         binding.editContainer.visibility = View.VISIBLE
-        binding.editorToolsCard.visibility = View.VISIBLE
+        binding.editorToolsFab.visibility = View.VISIBLE
         binding.cancelEditBtn.visibility = View.VISIBLE
-        binding.saveEditBtn.visibility = View.VISIBLE
+        binding.saveEditBtn.visibility = View.GONE
         binding.editContainer.alpha = 0f
         binding.editContainer.translationY = 24f
         binding.editContainer.animate().alpha(1f).translationY(0f).setDuration(260L).start()
-        binding.editorToolsCard.alpha = 0f
-        binding.editorToolsCard.translationY = 16f
-        binding.editorToolsCard.animate().alpha(1f).translationY(0f).setDuration(260L).setStartDelay(90L).start()
+        isToolsTrayExpanded = false
+        binding.editorToolsCard.visibility = View.GONE
+        binding.editorToolsFab.alpha = 0f
+        binding.editorToolsFab.scaleX = 0.78f
+        binding.editorToolsFab.scaleY = 0.78f
+        showFloatingControls()
         binding.actionRow.animate().translationY(0f).alpha(1f).setDuration(220L).start()
         binding.saveEditBtn.scaleX = 0.96f
         binding.saveEditBtn.scaleY = 0.96f
@@ -393,11 +514,14 @@ class DetailFragment : Fragment() {
         }
         isEditMode = false
         binding.toolbar.menu.findItem(R.id.action_edit)?.isVisible = true
+        binding.toolbar.menu.findItem(R.id.action_save)?.isVisible = false
         binding.title.visibility = View.VISIBLE
         binding.description.visibility = View.VISIBLE
         binding.deleteBtn.visibility = View.VISIBLE
         binding.editContainer.visibility = View.GONE
         binding.editorToolsCard.visibility = View.GONE
+        binding.editorToolsFab.visibility = View.GONE
+        isToolsTrayExpanded = false
         binding.cancelEditBtn.visibility = View.GONE
         binding.saveEditBtn.visibility = View.GONE
         binding.searchContainer.visibility = View.GONE
@@ -466,6 +590,7 @@ class DetailFragment : Fragment() {
         }
         isSaving = true
         binding.saveEditBtn.isEnabled = false
+        binding.toolbar.menu.findItem(R.id.action_save)?.isEnabled = false
         val updatedNote = note.copy(
             title = title,
             description = description,
@@ -476,6 +601,7 @@ class DetailFragment : Fragment() {
             currentNote = updatedNote.copy(updatedAt = System.currentTimeMillis(), edited = true)
             isSaving = false
             binding.saveEditBtn.isEnabled = true
+            binding.toolbar.menu.findItem(R.id.action_save)?.isEnabled = true
             bindNote()
             exitEditMode(resetFields = false)
             afterSave?.invoke()
@@ -592,6 +718,10 @@ class DetailFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        floatingHandler.removeCallbacks(showFloatingRunnable)
+        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(keyboardLayoutListener)
+        binding.editorToolsFab.animate().cancel()
+        binding.editorToolsCard.animate().cancel()
         binding.colorPicker.adapter = null
         colorAdapter = null
         editorHistory = null
