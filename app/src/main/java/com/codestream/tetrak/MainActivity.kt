@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.NavHostFragment
 import com.codestream.tetrak.ads.AdMobManager
 import com.codestream.tetrak.databinding.ActivityMainBinding
 import com.codestream.tetrak.premium.PremiumManager
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if (savedInstanceState == null) setupNavigationStartDestination()
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -32,6 +34,16 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         setupPremiumAwareAds()
+    }
+
+    private fun setupNavigationStartDestination() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        val graph = navController.navInflater.inflate(R.navigation.nav_graph)
+        graph.setStartDestination(
+            if (AppSettings.hasSeenFirstSplash(this)) R.id.startFragment else R.id.splashFragment
+        )
+        navController.graph = graph
     }
 
     private fun setupPremiumAwareAds() {

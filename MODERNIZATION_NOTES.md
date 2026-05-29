@@ -273,3 +273,10 @@ Production note: before Play Store release, create both subscription products in
 - Added a monochrome launcher icon for Android themed icons.
 - Regenerated legacy launcher WebP icons for mdpi, hdpi, xhdpi, xxhdpi, and xxxhdpi devices.
 - Updated the main notes header to use the new Tetrak logo artwork.
+
+## First-launch splash screen
+- Added a first-launch-only splash screen that shows the Tetrak logo and centered app name.
+- Added `SplashFragment` and `fragment_splash.xml`.
+- Added a persisted `AppSettings` flag so the splash screen appears only the first time the app is opened.
+- Updated `MainActivity` to set the Navigation start destination dynamically: Splash on first launch, Notes list on later launches.
+- Kept the standard launcher icon / system splash behavior unchanged; this is the app-owned branded intro screen after first install/open.

@@ -8,6 +8,7 @@ object AppSettings {
     private const val PREFS = "tetrak_settings"
     private const val KEY_THEME = "theme_mode"
     private const val KEY_LANGUAGE = "language_tag"
+    private const val KEY_FIRST_SPLASH_SEEN = "first_splash_seen"
 
     const val THEME_SYSTEM = "system"
     const val THEME_LIGHT = "light"
@@ -33,6 +34,13 @@ object AppSettings {
     }
 
     fun getLanguage(context: Context): String = prefs(context).getString(KEY_LANGUAGE, LANGUAGE_SYSTEM) ?: LANGUAGE_SYSTEM
+
+    fun hasSeenFirstSplash(context: Context): Boolean =
+        prefs(context).getBoolean(KEY_FIRST_SPLASH_SEEN, false)
+
+    fun markFirstSplashSeen(context: Context) {
+        prefs(context).edit().putBoolean(KEY_FIRST_SPLASH_SEEN, true).apply()
+    }
 
     fun setLanguage(context: Context, languageTag: String) {
         prefs(context).edit().putString(KEY_LANGUAGE, languageTag).apply()
