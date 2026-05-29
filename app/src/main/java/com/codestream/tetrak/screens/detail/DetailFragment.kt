@@ -36,6 +36,9 @@ import com.codestream.tetrak.util.NoteEditorSearch
 import com.codestream.tetrak.utils.AppConstants
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
@@ -511,7 +514,7 @@ class DetailFragment : Fragment() {
     private fun bindNote() = with(binding) {
         val note = currentNote ?: return@with
         selectedColor = note.color
-        title.text = note.title
+        title.text = note.title.ifBlank { getString(R.string.untitled_note) }
         description.text = note.description.ifBlank { getString(R.string.no_description) }
         editTitle.setText(note.title)
         editDescription.setText(note.description)
@@ -661,11 +664,6 @@ class DetailFragment : Fragment() {
         if (isSaving) return false
         val title = binding.editTitle.text?.toString().orEmpty().trim()
         val description = binding.editDescription.text?.toString().orEmpty().trim()
-        if (title.isBlank()) {
-            binding.titleInput.error = getString(R.string.title_required)
-            binding.editTitle.requestFocus()
-            return false
-        }
         if (!hasEditChanges()) {
             exitEditMode(resetFields = false)
             return true
@@ -673,14 +671,16 @@ class DetailFragment : Fragment() {
         isSaving = true
         binding.saveEditBtn.isEnabled = false
         binding.toolbar.menu.findItem(R.id.action_save)?.isEnabled = false
+        val now = System.currentTimeMillis()
+        val finalTitle = title.ifBlank { defaultTitle(now) }
         val updatedNote = note.copy(
-            title = title,
+            title = finalTitle,
             description = description,
             color = selectedColor,
             edited = true
         )
         viewModel.update(note, updatedNote) {
-            currentNote = updatedNote.copy(updatedAt = System.currentTimeMillis(), edited = true)
+            currentNote = updatedNote.copy(updatedAt = now, edited = true)
             isSaving = false
             binding.saveEditBtn.isEnabled = true
             binding.toolbar.menu.findItem(R.id.action_save)?.isEnabled = true
@@ -781,6 +781,11 @@ class DetailFragment : Fragment() {
         scaleY = 0.96f
         alpha = 0f
         animate().scaleX(1f).scaleY(1f).alpha(1f).setDuration(360L).start()
+    }
+
+    private fun defaultTitle(timestamp: Long): String {
+        val formatter = SimpleDateFormat("MMM d, yyyy - HH:mm", Locale.getDefault())
+        return "Note ${formatter.format(Date(timestamp))}"
     }
 
     private fun roundedColorDrawable(color: Int, radiusDp: Float): GradientDrawable {

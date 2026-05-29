@@ -17,7 +17,7 @@
     <string name="selected_color">رنگ انتخاب‌شده</string>
     <string name="open_note">باز کردن یادداشت</string>
     <string name="no_description">بدون توضیح</string>
-    <string name="title_required">عنوان الزامی است</string>
+    <string name="title_required">عنوان اختیاری است؛ اگر خالی باشد تاریخ فعلی استفاده می‌شود</string>
     <string name="settings">تنظیمات</string>
     <string name="settings_subtitle">تم و زبان برنامه را شخصی‌سازی کنید.</string>
     <string name="theme">تم</string>
@@ -96,4 +96,17 @@
     <string name="selected_plan">انتخاب شد</string>
     <string name="premium_continue">ادامه</string>
     <string name="continue_with_plan">ادامه - %1$s</string>
+
+    <string name="untitled_note">یادداشت بدون عنوان</string>
+    <string name="deleted_notes">یادداشت‌های حذف‌شده</string>
+    <string name="deleted_notes_retention">یادداشت‌های حذف‌شده %1$d روز نگهداری می‌شوند و سپس خودکار حذف می‌شوند.</string>
+    <string name="view_deleted_notes">نمایش حذف‌شده‌ها</string>
+    <string name="deleted_notes_empty">یادداشت حذف‌شده‌ای وجود ندارد.</string>
+    <string name="deleted_notes_dialog_message">یادداشت‌های حذف‌شده %1$d روز اینجا می‌مانند. آن‌ها را بازیابی یا برای همیشه حذف کنید.</string>
+    <string name="deleted_on_value">حذف شده: %1$s</string>
+    <string name="deleted_note_expires_value">حذف خودکار: %1$s</string>
+    <string name="restore">بازیابی</string>
+    <string name="delete_forever">حذف برای همیشه</string>
+    <string name="deleted_note_restored">یادداشت بازیابی شد</string>
+    <string name="deleted_note_removed">یادداشت حذف‌شده پاک شد</string>
 </resources>

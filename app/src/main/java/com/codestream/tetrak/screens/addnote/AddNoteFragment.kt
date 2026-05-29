@@ -541,18 +541,13 @@ class AddNoteFragment : Fragment() {
     }
 
     private fun setupValidation() {
-        binding.edAddTitle.doAfterTextChanged { binding.titleInput.error = null }
+        // Title is optional. Empty titles are saved with a date-based default title.
     }
 
     private fun setupClicks() {
         binding.addNoteBtn.setOnClickListener {
             val title = binding.edAddTitle.text?.toString().orEmpty().trim()
             val description = binding.edAddDesc.text?.toString().orEmpty().trim()
-
-            if (title.isBlank()) {
-                binding.titleInput.error = getString(R.string.title_required)
-                return@setOnClickListener
-            }
 
             saveNote(title, description)
         }
@@ -578,11 +573,6 @@ class AddNoteFragment : Fragment() {
             dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 val title = binding.edAddTitle.text?.toString().orEmpty().trim()
                 val description = binding.edAddDesc.text?.toString().orEmpty().trim()
-                if (title.isBlank()) {
-                    binding.titleInput.error = getString(R.string.title_required)
-                    binding.edAddTitle.requestFocus()
-                    return@setOnClickListener
-                }
                 dialog.dismiss()
                 saveNote(title, description)
             }

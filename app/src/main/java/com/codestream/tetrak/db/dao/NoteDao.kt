@@ -7,6 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.codestream.tetrak.model.DeletedNoteModel
 import com.codestream.tetrak.model.NoteHistoryModel
 import com.codestream.tetrak.model.NoteModel
 
@@ -20,6 +21,18 @@ interface NoteDao {
 
     @Delete
     suspend fun delete(noteModel: NoteModel)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDeletedNote(deletedNoteModel: DeletedNoteModel)
+
+    @Delete
+    suspend fun deleteDeletedNote(deletedNoteModel: DeletedNoteModel)
+
+    @Query("DELETE FROM deleted_note_table WHERE expiresAt <= :now")
+    suspend fun deleteExpiredDeletedNotes(now: Long)
+
+    @Query("SELECT * FROM deleted_note_table ORDER BY deletedAt DESC")
+    fun getDeletedNotes(): LiveData<List<DeletedNoteModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHistory(noteHistoryModel: NoteHistoryModel)

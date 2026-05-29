@@ -7,11 +7,12 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.codestream.tetrak.db.dao.NoteDao
+import com.codestream.tetrak.model.DeletedNoteModel
 import com.codestream.tetrak.model.NoteHistoryModel
 import com.codestream.tetrak.model.NoteModel
 import com.codestream.tetrak.utils.AppConstants
 
-@Database(entities = [NoteModel::class, NoteHistoryModel::class], version = AppConstants.DATABASE_VERSION, exportSchema = false)
+@Database(entities = [NoteModel::class, NoteHistoryModel::class, DeletedNoteModel::class], version = AppConstants.DATABASE_VERSION, exportSchema = false)
 abstract class NoteDatabase : RoomDatabase() {
     abstract fun getNoteDao(): NoteDao
 
@@ -37,6 +38,13 @@ abstract class NoteDatabase : RoomDatabase() {
             }
         }
 
+
+        private val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("CREATE TABLE IF NOT EXISTS deleted_note_table (`originalId` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `color` INTEGER NOT NULL DEFAULT ${NoteModel.DEFAULT_NOTE_COLOR}, `createdAt` INTEGER NOT NULL DEFAULT 0, `updatedAt` INTEGER NOT NULL DEFAULT 0, `edited` INTEGER NOT NULL DEFAULT 0, `deletedAt` INTEGER NOT NULL DEFAULT 0, `expiresAt` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`originalId`))")
+            }
+        }
+
         fun getInstance(context: Context): NoteDatabase {
             return database ?: synchronized(this) {
                 database ?: Room.databaseBuilder(
@@ -44,7 +52,7 @@ abstract class NoteDatabase : RoomDatabase() {
                     NoteDatabase::class.java,
                     "note_db"
                 )
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                     .build()
                     .also { database = it }
             }

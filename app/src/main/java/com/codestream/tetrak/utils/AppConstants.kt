@@ -1,7 +1,8 @@
 package com.codestream.tetrak.utils
 
 object AppConstants {
-    const val DATABASE_VERSION = 3
+    const val DATABASE_VERSION = 4
+    const val DELETED_NOTES_RETENTION_DAYS = 30
 
     /**
      * Global feature flag for the whole Premium layer.

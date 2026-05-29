@@ -17,7 +17,7 @@
     <string name="selected_color">Ընտրված գույն</string>
     <string name="open_note">Բացել նշումը</string>
     <string name="no_description">Նկարագրություն չկա</string>
-    <string name="title_required">Վերնագիրը պարտադիր է</string>
+    <string name="title_required">Վերնագիրը պարտադիր չէ․ դատարկ վերնագրի դեպքում կօգտագործվի ընթացիկ ամսաթիվը</string>
     <string name="settings">Կարգավորումներ</string>
     <string name="settings_subtitle">Անհատականացրեք հավելվածի թեման և լեզուն։</string>
     <string name="theme">Թեմա</string>
@@ -96,4 +96,17 @@
     <string name="selected_plan">Ընտրված</string>
     <string name="premium_continue">Շարունակել</string>
     <string name="continue_with_plan">Շարունակել - %1$s</string>
+
+    <string name="untitled_note">Անանուն նշում</string>
+    <string name="deleted_notes">Ջնջված նշումներ</string>
+    <string name="deleted_notes_retention">Ջնջված նշումները պահվում են %1$d օր, հետո ավտոմատ ջնջվում են։</string>
+    <string name="view_deleted_notes">Դիտել ջնջվածները</string>
+    <string name="deleted_notes_empty">Ջնջված նշումներ չկան։</string>
+    <string name="deleted_notes_dialog_message">Ջնջված նշումները պահվում են այստեղ %1$d օր։ Վերականգնեք կամ ջնջեք ընդմիշտ։</string>
+    <string name="deleted_on_value">Ջնջված է՝ %1$s</string>
+    <string name="deleted_note_expires_value">Ավտոջնջում՝ %1$s</string>
+    <string name="restore">Վերականգնել</string>
+    <string name="delete_forever">Ջնջել ընդմիշտ</string>
+    <string name="deleted_note_restored">Նշումը վերականգնվեց</string>
+    <string name="deleted_note_removed">Ջնջված նշումը հեռացվեց</string>
 </resources>

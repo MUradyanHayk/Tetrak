@@ -17,7 +17,7 @@
     <string name="selected_color">اللون المحدد</string>
     <string name="open_note">فتح الملاحظة</string>
     <string name="no_description">لا يوجد وصف</string>
-    <string name="title_required">العنوان مطلوب</string>
+    <string name="title_required">العنوان اختياري؛ سيتم استخدام التاريخ الحالي إذا تُرك فارغًا</string>
     <string name="settings">الإعدادات</string>
     <string name="settings_subtitle">خصص سمة التطبيق ولغته.</string>
     <string name="theme">السمة</string>
@@ -96,4 +96,17 @@
     <string name="selected_plan">محدد</string>
     <string name="premium_continue">متابعة</string>
     <string name="continue_with_plan">متابعة - %1$s</string>
+
+    <string name="untitled_note">ملاحظة بلا عنوان</string>
+    <string name="deleted_notes">الملاحظات المحذوفة</string>
+    <string name="deleted_notes_retention">يتم الاحتفاظ بالملاحظات المحذوفة لمدة %1$d يومًا ثم حذفها تلقائيًا.</string>
+    <string name="view_deleted_notes">عرض المحذوفة</string>
+    <string name="deleted_notes_empty">لا توجد ملاحظات محذوفة.</string>
+    <string name="deleted_notes_dialog_message">تبقى الملاحظات المحذوفة هنا لمدة %1$d يومًا. يمكنك استعادتها أو حذفها نهائيًا.</string>
+    <string name="deleted_on_value">تم الحذف: %1$s</string>
+    <string name="deleted_note_expires_value">الحذف التلقائي: %1$s</string>
+    <string name="restore">استعادة</string>
+    <string name="delete_forever">حذف نهائي</string>
+    <string name="deleted_note_restored">تمت استعادة الملاحظة</string>
+    <string name="deleted_note_removed">تم حذف الملاحظة نهائيًا</string>
 </resources>

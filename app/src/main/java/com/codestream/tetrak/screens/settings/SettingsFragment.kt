@@ -9,15 +9,21 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.codestream.tetrak.R
 import com.codestream.tetrak.databinding.FragmentSettingsBinding
+import com.codestream.tetrak.model.DeletedNoteModel
 import com.codestream.tetrak.premium.PremiumBillingManager
 import com.codestream.tetrak.utils.AppConstants
 import com.codestream.tetrak.utils.AppSettings
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SettingsViewModel by viewModels()
+    private var latestDeletedNotes: List<DeletedNoteModel> = emptyList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
@@ -31,6 +37,7 @@ class SettingsFragment : Fragment() {
         setupThemePicker()
         setupLanguagePicker()
         setupPremiumControls()
+        setupDeletedNotesControls()
         animateIntro()
     }
 
@@ -145,7 +152,72 @@ class SettingsFragment : Fragment() {
         } else {
             premiumCard.visibility = View.GONE
         }
+        deletedNotesCard.translationY = 32f
+        deletedNotesCard.alpha = 0f
         adsCard.animate().translationY(0f).alpha(if (viewModel.isPremium()) 0.55f else 1f).setStartDelay(if (AppConstants.HAS_PREMIUM_FEATURES) 270L else 180L).setDuration(280L).start()
+        deletedNotesCard.animate().translationY(0f).alpha(1f).setStartDelay(if (AppConstants.HAS_PREMIUM_FEATURES) 360L else 270L).setDuration(280L).start()
+    }
+
+    private fun setupDeletedNotesControls() = with(binding) {
+        deletedNotesRetention.text = getString(R.string.deleted_notes_retention, AppConstants.DELETED_NOTES_RETENTION_DAYS)
+        deletedNotesOpenBtn.setOnClickListener {
+            it.animate().scaleX(0.96f).scaleY(0.96f).setDuration(70L).withEndAction {
+                it.animate().scaleX(1f).scaleY(1f).setDuration(120L).start()
+            }.start()
+            showDeletedNotesDialog()
+        }
+        viewModel.deletedNotes.observe(viewLifecycleOwner) { notes ->
+            latestDeletedNotes = notes
+            deletedNotesCount.text = resources.getQuantityString(
+                R.plurals.deleted_notes_count,
+                notes.size,
+                notes.size
+            )
+            deletedNotesOpenBtn.isEnabled = notes.isNotEmpty()
+        }
+    }
+
+    private fun showDeletedNotesDialog() {
+        if (latestDeletedNotes.isEmpty()) {
+            Snackbar.make(binding.root, R.string.deleted_notes_empty, Snackbar.LENGTH_SHORT).show()
+            return
+        }
+        val dateFormat = SimpleDateFormat("MMM d, yyyy - HH:mm", Locale.getDefault())
+        val items = latestDeletedNotes.map { note ->
+            val deleted = dateFormat.format(Date(note.deletedAt))
+            "${note.title.ifBlank { getString(R.string.untitled_note) }}\n${getString(R.string.deleted_on_value, deleted)}"
+        }.toTypedArray()
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.deleted_notes)
+            .setMessage(getString(R.string.deleted_notes_dialog_message, AppConstants.DELETED_NOTES_RETENTION_DAYS))
+            .setItems(items) { _, index -> showDeletedNoteActionDialog(latestDeletedNotes[index]) }
+            .setPositiveButton(R.string.close, null)
+            .show()
+    }
+
+    private fun showDeletedNoteActionDialog(note: DeletedNoteModel) {
+        val dateFormat = SimpleDateFormat("MMM d, yyyy - HH:mm", Locale.getDefault())
+        val message = buildString {
+            appendLine(note.description.ifBlank { getString(R.string.no_description) })
+            appendLine()
+            append(getString(R.string.deleted_note_expires_value, dateFormat.format(Date(note.expiresAt))))
+        }
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(note.title.ifBlank { getString(R.string.untitled_note) })
+            .setMessage(message)
+            .setNegativeButton(R.string.delete_forever) { _, _ ->
+                viewModel.permanentlyDeleteDeletedNote(note) {
+                    Snackbar.make(binding.root, R.string.deleted_note_removed, Snackbar.LENGTH_SHORT).show()
+                }
+            }
+            .setPositiveButton(R.string.restore) { _, _ ->
+                viewModel.restoreDeletedNote(note) {
+                    Snackbar.make(binding.root, R.string.deleted_note_restored, Snackbar.LENGTH_SHORT).show()
+                }
+            }
+            .setNeutralButton(R.string.cancel, null)
+            .show()
     }
 
     override fun onDestroyView() {

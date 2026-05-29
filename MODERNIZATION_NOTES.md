@@ -235,3 +235,11 @@ Production note: before Play Store release, create both subscription products in
 - Added right-origin expand/collapse animation for the toolbar with fade, scale, and slide motion.
 - Added staggered button entrance/exit animations for Copy, Search, Undo, and Redo.
 - Applied the same polished floating tools behavior to Add Note and Note Details edit mode.
+
+### Optional titles + deleted notes retention
+- Made note titles optional in Add Note and Edit Note.
+- If a note is saved with an empty title, the repository generates a clean date-based default title such as `Note May 29, 2026 - 18:45`.
+- Added Room database version 4 with a new `deleted_note_table`.
+- Deleting a note now moves its latest data into deleted-note history before removing it from the active notes list.
+- Added a Deleted notes section in Settings with count, retention information, restore, and delete-forever actions.
+- Deleted notes are kept for `AppConstants.DELETED_NOTES_RETENTION_DAYS` days and automatically cleaned up on app start / repository cleanup.

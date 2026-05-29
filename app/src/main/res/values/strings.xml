@@ -17,7 +17,7 @@
     <string name="selected_color">Selected color</string>
     <string name="open_note">Open note</string>
     <string name="no_description">No description</string>
-    <string name="title_required">Title is required</string>
+    <string name="title_required">Title is optional; empty titles use the current date</string>
     <string name="settings">Settings</string>
     <string name="settings_subtitle">Personalize the app theme and language.</string>
     <string name="theme">Theme</string>
@@ -112,4 +112,21 @@
     <string name="selected_plan">Selected</string>
     <string name="premium_continue">Continue</string>
     <string name="continue_with_plan">Continue - %1$s</string>
+
+    <string name="untitled_note">Untitled note</string>
+    <string name="deleted_notes">Deleted notes</string>
+    <string name="deleted_notes_retention">Deleted notes are kept for %1$d days, then removed automatically.</string>
+    <string name="view_deleted_notes">View deleted notes</string>
+    <string name="deleted_notes_empty">No deleted notes.</string>
+    <string name="deleted_notes_dialog_message">Deleted notes stay here for %1$d days. Restore one, or delete it forever.</string>
+    <string name="deleted_on_value">Deleted: %1$s</string>
+    <string name="deleted_note_expires_value">Auto-removes: %1$s</string>
+    <string name="restore">Restore</string>
+    <string name="delete_forever">Delete forever</string>
+    <string name="deleted_note_restored">Note restored</string>
+    <string name="deleted_note_removed">Deleted note removed</string>
+    <plurals name="deleted_notes_count">
+        <item quantity="one">%1$d deleted note</item>
+        <item quantity="other">%1$d deleted notes</item>
+    </plurals>
 </resources>

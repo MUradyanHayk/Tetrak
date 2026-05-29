@@ -17,7 +17,7 @@
     <string name="selected_color">Выбранный цвет</string>
     <string name="open_note">Открыть заметку</string>
     <string name="no_description">Нет описания</string>
-    <string name="title_required">Заголовок обязателен</string>
+    <string name="title_required">Заголовок необязателен; пустой заголовок будет заменён текущей датой</string>
     <string name="settings">Настройки</string>
     <string name="settings_subtitle">Настройте тему и язык приложения.</string>
     <string name="theme">Тема</string>
@@ -96,4 +96,17 @@
     <string name="selected_plan">Выбрано</string>
     <string name="premium_continue">Продолжить</string>
     <string name="continue_with_plan">Продолжить - %1$s</string>
+
+    <string name="untitled_note">Заметка без названия</string>
+    <string name="deleted_notes">Удалённые заметки</string>
+    <string name="deleted_notes_retention">Удалённые заметки хранятся %1$d дней, затем удаляются автоматически.</string>
+    <string name="view_deleted_notes">Посмотреть удалённые</string>
+    <string name="deleted_notes_empty">Удалённых заметок нет.</string>
+    <string name="deleted_notes_dialog_message">Удалённые заметки хранятся здесь %1$d дней. Восстановите заметку или удалите навсегда.</string>
+    <string name="deleted_on_value">Удалено: %1$s</string>
+    <string name="deleted_note_expires_value">Автоудаление: %1$s</string>
+    <string name="restore">Восстановить</string>
+    <string name="delete_forever">Удалить навсегда</string>
+    <string name="deleted_note_restored">Заметка восстановлена</string>
+    <string name="deleted_note_removed">Удалённая заметка удалена</string>
 </resources>
