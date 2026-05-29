@@ -199,3 +199,15 @@ Production note: before Play Store release, create both subscription products in
 - Gave the description editor more uninterrupted writing space.
 - Kept compact icon-only tools, color picker, AI title action, keyboard-aware Save button animation, Premium feature flag, ads, and existing MVVM/XML/no-DI architecture.
 - Applied the same borderless editor style to the edit mode in Note Details.
+
+### Editor top toolbar refinement
+- Reworked the Add Note editor so the Save action is no longer a large bottom button.
+- Added a compact compose-style top bar: Back button on the left, horizontal scrollable editor tools in the middle, Save button on the right.
+- Moved editor tools out of the writing surface so only the tools area scrolls horizontally and the writing space stays clean.
+- Updated edit mode controls so Save/Cancel and editor tools are available in the top action area instead of occupying large bottom space.
+- Kept keyboard focus scrolling behavior without moving a bottom save bar.
+
+### Keyboard movement cleanup after top-toolbar editor
+- Removed the custom keyboard-aware focused-field auto-scroll logic from Add Note because Save is now fixed in the top toolbar.
+- Removed the matching custom focused-field auto-scroll logic from edit mode in Note Details.
+- Kept the top toolbar actions fixed and simple: Back/Cancel on the left area, tools in the middle, Save on the right.

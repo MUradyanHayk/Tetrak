@@ -1,6 +1,5 @@
 package com.codestream.tetrak.screens.addnote
 
-import android.animation.ValueAnimator
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -12,10 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.view.animation.DecelerateInterpolator
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -50,8 +45,6 @@ class AddNoteFragment : Fragment() {
     private var colorAdapter: NoteColorAdapter? = null
     private var selectedColor: Int = NoteModel.DEFAULT_NOTE_COLOR
     private var isSaving = false
-    private var saveButtonBottomAnimator: ValueAnimator? = null
-    private var lastSaveButtonBottomMargin: Int = -1
     private var editorHistory: NoteEditorHistory? = null
     private var editorSearch: NoteEditorSearch? = null
     private var isGeneratingTitle = false
@@ -65,7 +58,6 @@ class AddNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupBackHandling()
         setupToolbar()
-        setupKeyboardAwareSaveButton()
         setupColorPicker()
         setupEditorTools()
         setupAiTitleGenerator()
@@ -86,70 +78,7 @@ class AddNoteFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        binding.toolbar.setNavigationOnClickListener { handleExitRequest() }
-    }
-
-
-    private fun setupKeyboardAwareSaveButton() {
-        val defaultBottomMargin = binding.addNoteBtn.resources.getDimensionPixelSize(R.dimen.save_button_bottom_margin)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
-            val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val keyboardHeight = (imeInsets.bottom - systemBarInsets.bottom).coerceAtLeast(0)
-            val targetBottomMargin = defaultBottomMargin + keyboardHeight
-            val keyboardVisible = keyboardHeight > 0
-
-            animateSaveButtonForKeyboard(targetBottomMargin, keyboardVisible)
-            if (keyboardVisible) {
-                keepFocusedFieldVisible()
-            }
-            insets
-        }
-    }
-
-    private fun animateSaveButtonForKeyboard(targetBottomMargin: Int, keyboardVisible: Boolean) {
-        if (lastSaveButtonBottomMargin == targetBottomMargin) return
-
-        val params = binding.addNoteBtn.layoutParams as ConstraintLayout.LayoutParams
-        val startBottomMargin = if (lastSaveButtonBottomMargin == -1) params.bottomMargin else lastSaveButtonBottomMargin
-        lastSaveButtonBottomMargin = targetBottomMargin
-
-        saveButtonBottomAnimator?.cancel()
-        saveButtonBottomAnimator = ValueAnimator.ofInt(startBottomMargin, targetBottomMargin).apply {
-            duration = if (keyboardVisible) 280L else 220L
-            interpolator = DecelerateInterpolator()
-            addUpdateListener { animator ->
-                val animatedMargin = animator.animatedValue as Int
-                val animatedParams = binding.addNoteBtn.layoutParams as ConstraintLayout.LayoutParams
-                animatedParams.bottomMargin = animatedMargin
-                binding.addNoteBtn.layoutParams = animatedParams
-            }
-            start()
-        }
-
-        binding.addNoteBtn.animate()
-            .scaleX(if (keyboardVisible) 0.985f else 1f)
-            .scaleY(if (keyboardVisible) 0.985f else 1f)
-            .alpha(1f)
-            .setDuration(180L)
-            .withEndAction {
-                binding.addNoteBtn.animate()
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setDuration(140L)
-                    .start()
-            }
-            .start()
-    }
-
-    private fun keepFocusedFieldVisible() {
-        binding.editorScroll.postDelayed({
-            val focusedView = binding.root.findFocus() ?: return@postDelayed
-            val focusedBottom = focusedView.bottom + binding.editorScroll.paddingBottom + 32
-            if (focusedBottom > binding.editorScroll.scrollY + binding.editorScroll.height) {
-                binding.editorScroll.smoothScrollTo(0, focusedBottom - binding.editorScroll.height)
-            }
-        }, 120L)
+        binding.topBackBtn.setOnClickListener { handleExitRequest() }
     }
 
 
@@ -398,7 +327,6 @@ class AddNoteFragment : Fragment() {
     private fun findNextSearchMatch() {
         val found = editorSearch?.findNext(binding.searchInput.text?.toString().orEmpty()) == true
         binding.searchInputLayout.error = if (found) null else getString(R.string.search_no_results)
-        if (found) keepFocusedFieldVisible()
     }
 
     private fun copySelectionOrNoteText() {
@@ -521,8 +449,6 @@ class AddNoteFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        saveButtonBottomAnimator?.cancel()
-        saveButtonBottomAnimator = null
         binding.addNoteBtn.animate().cancel()
         binding.colorPicker.adapter = null
         colorAdapter = null
