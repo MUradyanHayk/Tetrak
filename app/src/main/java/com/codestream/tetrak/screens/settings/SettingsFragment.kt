@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.codestream.tetrak.R
 import com.codestream.tetrak.databinding.FragmentSettingsBinding
 import com.codestream.tetrak.premium.PremiumBillingManager
+import com.codestream.tetrak.utils.AppConstants
 import com.codestream.tetrak.utils.AppSettings
 import com.google.android.material.snackbar.Snackbar
 
@@ -83,6 +84,11 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupPremiumControls() = with(binding) {
+        if (!AppConstants.HAS_PREMIUM_FEATURES) {
+            premiumCard.visibility = View.GONE
+            return@with
+        }
+
         refreshPremiumUi()
 
         premiumUpgradeBtn.setOnClickListener {
@@ -111,6 +117,10 @@ class SettingsFragment : Fragment() {
     }
 
     private fun refreshPremiumUi() = with(binding) {
+        if (!AppConstants.HAS_PREMIUM_FEATURES) {
+            premiumCard.visibility = View.GONE
+            return@with
+        }
         val premium = viewModel.isPremium()
         premiumStatus.setText(if (premium) R.string.premium_status_active else R.string.premium_status_free)
         premiumDebugSwitch.isChecked = premium
@@ -122,16 +132,20 @@ class SettingsFragment : Fragment() {
     private fun animateIntro() = with(binding) {
         themeCard.translationY = 32f
         languageCard.translationY = 32f
-        premiumCard.translationY = 32f
+        if (AppConstants.HAS_PREMIUM_FEATURES) premiumCard.translationY = 32f
         adsCard.translationY = 32f
         themeCard.alpha = 0f
         languageCard.alpha = 0f
-        premiumCard.alpha = 0f
+        if (AppConstants.HAS_PREMIUM_FEATURES) premiumCard.alpha = 0f
         adsCard.alpha = 0f
         themeCard.animate().translationY(0f).alpha(1f).setDuration(280L).start()
         languageCard.animate().translationY(0f).alpha(1f).setStartDelay(90L).setDuration(280L).start()
-        premiumCard.animate().translationY(0f).alpha(1f).setStartDelay(180L).setDuration(280L).start()
-        adsCard.animate().translationY(0f).alpha(if (viewModel.isPremium()) 0.55f else 1f).setStartDelay(270L).setDuration(280L).start()
+        if (AppConstants.HAS_PREMIUM_FEATURES) {
+            premiumCard.animate().translationY(0f).alpha(1f).setStartDelay(180L).setDuration(280L).start()
+        } else {
+            premiumCard.visibility = View.GONE
+        }
+        adsCard.animate().translationY(0f).alpha(if (viewModel.isPremium()) 0.55f else 1f).setStartDelay(if (AppConstants.HAS_PREMIUM_FEATURES) 270L else 180L).setDuration(280L).start()
     }
 
     override fun onDestroyView() {

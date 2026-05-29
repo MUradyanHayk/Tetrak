@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import com.codestream.tetrak.ads.AdMobManager
 import com.codestream.tetrak.databinding.ActivityMainBinding
 import com.codestream.tetrak.premium.PremiumManager
+import com.codestream.tetrak.utils.AppConstants
 import com.codestream.tetrak.utils.AppSettings
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupPremiumAwareAds() {
-        if (PremiumManager.isPremium(this)) {
+        if (AppConstants.HAS_PREMIUM_FEATURES && PremiumManager.isPremium(this)) {
             bannerRequested = false
             binding.adSection.visibility = android.view.View.GONE
             binding.navFragment.layoutParams = binding.navFragment.layoutParams.apply {
@@ -76,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (PremiumManager.isPremium(this)) {
+        if (AppConstants.HAS_PREMIUM_FEATURES && PremiumManager.isPremium(this)) {
             bannerAdView?.destroy()
             bannerAdView = null
             bannerRequested = false

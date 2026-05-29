@@ -1,6 +1,7 @@
 package com.codestream.tetrak.premium
 
 import android.content.Context
+import com.codestream.tetrak.utils.AppConstants
 
 object PremiumManager {
     private const val PREFS = "tetrak_premium_prefs"
@@ -9,12 +10,21 @@ object PremiumManager {
     private const val KEY_PURCHASE_TOKEN = "purchase_token"
     private const val KEY_AI_TITLE_CLICKS = "ai_title_clicks"
 
-    fun isPremium(context: Context): Boolean = prefs(context).getBoolean(KEY_IS_PREMIUM, false)
+    fun isPremium(context: Context): Boolean =
+        AppConstants.HAS_PREMIUM_FEATURES && prefs(context).getBoolean(KEY_IS_PREMIUM, false)
 
     fun activeProductId(context: Context): String? =
-        prefs(context).getString(KEY_ACTIVE_PRODUCT_ID, null)
+        if (AppConstants.HAS_PREMIUM_FEATURES) prefs(context).getString(KEY_ACTIVE_PRODUCT_ID, null) else null
 
     fun setPremiumEntitlement(context: Context, productId: String?, purchaseToken: String?) {
+        if (!AppConstants.HAS_PREMIUM_FEATURES) {
+            prefs(context).edit()
+                .putBoolean(KEY_IS_PREMIUM, false)
+                .putString(KEY_ACTIVE_PRODUCT_ID, null)
+                .putString(KEY_PURCHASE_TOKEN, null)
+                .apply()
+            return
+        }
         prefs(context).edit()
             .putBoolean(KEY_IS_PREMIUM, productId != null)
             .putString(KEY_ACTIVE_PRODUCT_ID, productId)
@@ -23,6 +33,7 @@ object PremiumManager {
     }
 
     fun setPremiumForDevelopment(context: Context, enabled: Boolean) {
+        if (!AppConstants.HAS_PREMIUM_FEATURES) return
         setPremiumEntitlement(
             context = context,
             productId = if (enabled) PremiumConfig.PREMIUM_MONTHLY_PRODUCT_ID else null,
@@ -31,12 +42,14 @@ object PremiumManager {
     }
 
     fun recordAiTitleClick(context: Context): Int {
+        if (!AppConstants.HAS_PREMIUM_FEATURES) return 0
         val nextCount = prefs(context).getInt(KEY_AI_TITLE_CLICKS, 0) + 1
         prefs(context).edit().putInt(KEY_AI_TITLE_CLICKS, nextCount).apply()
         return nextCount
     }
 
-    fun aiTitleClickCount(context: Context): Int = prefs(context).getInt(KEY_AI_TITLE_CLICKS, 0)
+    fun aiTitleClickCount(context: Context): Int =
+        if (AppConstants.HAS_PREMIUM_FEATURES) prefs(context).getInt(KEY_AI_TITLE_CLICKS, 0) else 0
 
     private fun prefs(context: Context) =
         context.applicationContext.getSharedPreferences(PREFS, Context.MODE_PRIVATE)

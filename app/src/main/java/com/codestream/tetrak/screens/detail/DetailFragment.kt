@@ -34,6 +34,7 @@ import com.codestream.tetrak.premium.PremiumBillingManager
 import com.codestream.tetrak.premium.PremiumManager
 import com.codestream.tetrak.util.NoteEditorHistory
 import com.codestream.tetrak.util.NoteEditorSearch
+import com.codestream.tetrak.utils.AppConstants
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
@@ -188,6 +189,9 @@ class DetailFragment : Fragment() {
 
 
     private fun setupAiTitleGenerator() {
+        binding.titleInput.isEndIconVisible = AppConstants.HAS_PREMIUM_FEATURES
+        if (!AppConstants.HAS_PREMIUM_FEATURES) return
+
         binding.titleInput.setEndIconOnClickListener {
             animateToolTap(binding.titleInput)
             generateTitleWithAi()
@@ -244,6 +248,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun requirePremiumForAiTitle(): Boolean {
+        if (!AppConstants.HAS_PREMIUM_FEATURES) return false
         val clickCount = PremiumManager.recordAiTitleClick(requireContext())
         if (PremiumManager.isPremium(requireContext())) {
             Snackbar.make(

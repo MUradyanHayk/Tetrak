@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.ProgressBar
 import androidx.core.view.doOnLayout
 import com.codestream.tetrak.premium.PremiumManager
+import com.codestream.tetrak.utils.AppConstants
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
@@ -44,7 +45,7 @@ object AdMobManager {
         loadingView: ProgressBar,
         onLoaded: (AdView) -> Unit
     ) {
-        if (PremiumManager.isPremium(activity)) {
+        if (isAdFreePremium(activity)) {
             loadingView.visibility = View.GONE
             adShell.visibility = View.GONE
             adContainer.removeAllViews()
@@ -91,7 +92,7 @@ object AdMobManager {
     }
 
     fun preloadVideoAd(context: Context) {
-        if (PremiumManager.isPremium(context)) return
+        if (isAdFreePremium(context)) return
         initialize(context)
         if (interstitialAd != null || interstitialLoading) return
 
@@ -118,7 +119,7 @@ object AdMobManager {
         activity: Activity,
         onFinished: () -> Unit
     ) {
-        if (PremiumManager.isPremium(activity)) {
+        if (isAdFreePremium(activity)) {
             onFinished()
             return
         }
@@ -158,6 +159,9 @@ object AdMobManager {
         }
         ad.show(activity)
     }
+
+    private fun isAdFreePremium(context: Context): Boolean =
+        AppConstants.HAS_PREMIUM_FEATURES && PremiumManager.isPremium(context)
 
     private fun calculateAdWidth(activity: Activity, container: View): Int {
         val displayMetrics = DisplayMetrics()

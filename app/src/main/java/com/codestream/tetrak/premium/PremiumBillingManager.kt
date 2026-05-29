@@ -14,6 +14,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import com.codestream.tetrak.R
+import com.codestream.tetrak.utils.AppConstants
 
 /**
  * Real Google Play Billing boundary for Tetrak Premium.
@@ -34,6 +35,7 @@ object PremiumBillingManager : PurchasesUpdatedListener {
     private val productDetails = linkedMapOf<String, ProductDetails>()
 
     fun initialize(context: Context) {
+        if (!AppConstants.HAS_PREMIUM_FEATURES) return
         appContext = context.applicationContext
         if (billingClient != null) return
         billingClient = BillingClient.newBuilder(context.applicationContext)
@@ -49,6 +51,10 @@ object PremiumBillingManager : PurchasesUpdatedListener {
     }
 
     fun loadPlans(context: Context, onResult: (List<PremiumPlan>, String?) -> Unit) {
+        if (!AppConstants.HAS_PREMIUM_FEATURES) {
+            onResult(emptyList(), null)
+            return
+        }
         initialize(context)
         connectIfNeeded {
             val client = billingClient
@@ -81,6 +87,10 @@ object PremiumBillingManager : PurchasesUpdatedListener {
     }
 
     fun launchPremiumPurchase(activity: Activity, productId: String, onResult: (String) -> Unit) {
+        if (!AppConstants.HAS_PREMIUM_FEATURES) {
+            onResult(activity.getString(R.string.premium_billing_unavailable))
+            return
+        }
         initialize(activity)
         connectIfNeeded {
             val client = billingClient
@@ -106,6 +116,10 @@ object PremiumBillingManager : PurchasesUpdatedListener {
     }
 
     fun restorePurchases(context: Context, onResult: (Boolean, String) -> Unit) {
+        if (!AppConstants.HAS_PREMIUM_FEATURES) {
+            onResult(false, context.getString(R.string.premium_billing_unavailable))
+            return
+        }
         initialize(context)
         connectIfNeeded {
             val client = billingClient

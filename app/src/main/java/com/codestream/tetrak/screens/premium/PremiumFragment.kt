@@ -14,6 +14,7 @@ import com.codestream.tetrak.premium.PremiumConfig
 import com.codestream.tetrak.premium.PremiumManager
 import com.codestream.tetrak.premium.PremiumPlan
 import androidx.core.content.ContextCompat
+import com.codestream.tetrak.utils.AppConstants
 import com.google.android.material.snackbar.Snackbar
 
 class PremiumFragment : Fragment() {
@@ -30,6 +31,11 @@ class PremiumFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (!AppConstants.HAS_PREMIUM_FEATURES) {
+            binding.root.visibility = View.GONE
+            closePremiumScreen()
+            return
+        }
         setupBackNavigation()
         setupToolbar()
         setupStaticUi()
