@@ -109,4 +109,8 @@
     <string name="delete_forever">حذف برای همیشه</string>
     <string name="deleted_note_restored">یادداشت بازیابی شد</string>
     <string name="deleted_note_removed">یادداشت حذف‌شده پاک شد</string>
+    <string name="note_content_required">ابتدا یک عنوان یا توضیح بنویسید</string>
+    <string name="deleted_notes_empty_subtitle">سطل زباله خالی است. یادداشت های حذف شده قبل از حذف خودکار اینجا نمایش داده می شوند.</string>
+    <string name="delete_forever_title">برای همیشه حذف شود؟</string>
+    <string name="delete_forever_message">این یادداشت برای همیشه از تاریخچه حذف می شود و قابل بازیابی نیست.</string>
 </resources>

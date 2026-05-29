@@ -109,4 +109,8 @@
     <string name="delete_forever">حذف نهائي</string>
     <string name="deleted_note_restored">تمت استعادة الملاحظة</string>
     <string name="deleted_note_removed">تم حذف الملاحظة نهائيًا</string>
+    <string name="note_content_required">اكتب عنوانا أو وصفا أولا</string>
+    <string name="deleted_notes_empty_subtitle">سلة المهملات فارغة. ستظهر الملاحظات المحذوفة هنا قبل إزالتها تلقائيا.</string>
+    <string name="delete_forever_title">حذف نهائيا؟</string>
+    <string name="delete_forever_message">ستتم إزالة هذه الملاحظة نهائيا من السجل ولا يمكن استعادتها.</string>
 </resources>

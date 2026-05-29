@@ -57,6 +57,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_deletedNotesFragment"
+            app:destination="@id/deletedNotesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -64,4 +71,10 @@
         android:name="com.codestream.tetrak.screens.premium.PremiumFragment"
         android:label="@string/premium"
         tools:layout="@layout/fragment_premium" />
+
+    <fragment
+        android:id="@+id/deletedNotesFragment"
+        android:name="com.codestream.tetrak.screens.deletednotes.DeletedNotesFragment"
+        android:label="@string/deleted_notes"
+        tools:layout="@layout/fragment_deleted_notes" />
 </navigation>

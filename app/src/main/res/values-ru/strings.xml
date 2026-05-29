@@ -109,4 +109,8 @@
     <string name="delete_forever">Удалить навсегда</string>
     <string name="deleted_note_restored">Заметка восстановлена</string>
     <string name="deleted_note_removed">Удалённая заметка удалена</string>
+    <string name="note_content_required">Сначала напишите заголовок или описание</string>
+    <string name="deleted_notes_empty_subtitle">Корзина пуста. Удалённые заметки будут появляться здесь до автоматического удаления.</string>
+    <string name="delete_forever_title">Удалить навсегда?</string>
+    <string name="delete_forever_message">Эта заметка будет полностью удалена из истории и её нельзя будет восстановить.</string>
 </resources>

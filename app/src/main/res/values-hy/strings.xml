@@ -109,4 +109,8 @@
     <string name="delete_forever">Ջնջել ընդմիշտ</string>
     <string name="deleted_note_restored">Նշումը վերականգնվեց</string>
     <string name="deleted_note_removed">Ջնջված նշումը հեռացվեց</string>
+    <string name="note_content_required">Նախ գրեք վերնագիր կամ նկարագրություն</string>
+    <string name="deleted_notes_empty_subtitle">Աղբարկղը դատարկ է։ Ջնջված նշումները կհայտնվեն այստեղ մինչև ավտոմատ հեռացվելը։</string>
+    <string name="delete_forever_title">Ջնջե՞լ ընդմիշտ</string>
+    <string name="delete_forever_message">Այս նշումն ամբողջությամբ կհեռացվի պատմությունից և հնարավոր չի լինի վերականգնել։</string>
 </resources>

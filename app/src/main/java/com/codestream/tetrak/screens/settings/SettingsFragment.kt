@@ -164,7 +164,7 @@ class SettingsFragment : Fragment() {
             it.animate().scaleX(0.96f).scaleY(0.96f).setDuration(70L).withEndAction {
                 it.animate().scaleX(1f).scaleY(1f).setDuration(120L).start()
             }.start()
-            showDeletedNotesDialog()
+            findNavController().navigate(R.id.action_settingsFragment_to_deletedNotesFragment)
         }
         viewModel.deletedNotes.observe(viewLifecycleOwner) { notes ->
             latestDeletedNotes = notes
@@ -173,7 +173,7 @@ class SettingsFragment : Fragment() {
                 notes.size,
                 notes.size
             )
-            deletedNotesOpenBtn.isEnabled = notes.isNotEmpty()
+            deletedNotesOpenBtn.isEnabled = true
         }
     }
 

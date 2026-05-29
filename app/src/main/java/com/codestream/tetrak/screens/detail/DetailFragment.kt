@@ -542,6 +542,7 @@ class DetailFragment : Fragment() {
 
     private fun setupClicks() {
         binding.editTitle.doAfterTextChanged { binding.titleInput.error = null }
+        binding.editDescription.doAfterTextChanged { binding.descriptionInput.error = null }
         binding.deleteBtn.setOnClickListener {
             currentNote?.let { note ->
                 binding.deleteBtn.isEnabled = false
@@ -659,11 +660,30 @@ class DetailFragment : Fragment() {
             selectedColor != note.color
     }
 
+    private fun validateHasContent(title: String, description: String): Boolean {
+        val hasContent = title.isNotBlank() || description.isNotBlank()
+        if (hasContent) {
+            binding.titleInput.error = null
+            binding.descriptionInput.error = null
+            return true
+        }
+        binding.descriptionInput.error = getString(R.string.note_content_required)
+        Snackbar.make(binding.root, R.string.note_content_required, Snackbar.LENGTH_LONG).show()
+        binding.editDescription.requestFocus()
+        binding.detailCard.animate().translationX(10f).setDuration(55L).withEndAction {
+            binding.detailCard.animate().translationX(-10f).setDuration(55L).withEndAction {
+                binding.detailCard.animate().translationX(0f).setDuration(80L).start()
+            }.start()
+        }.start()
+        return false
+    }
+
     private fun saveEditedNote(afterSave: (() -> Unit)? = null): Boolean {
         val note = currentNote ?: return false
         if (isSaving) return false
         val title = binding.editTitle.text?.toString().orEmpty().trim()
         val description = binding.editDescription.text?.toString().orEmpty().trim()
+        if (!validateHasContent(title, description)) return false
         if (!hasEditChanges()) {
             exitEditMode(resetFields = false)
             return true

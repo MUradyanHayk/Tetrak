@@ -243,3 +243,12 @@ Production note: before Play Store release, create both subscription products in
 - Deleting a note now moves its latest data into deleted-note history before removing it from the active notes list.
 - Added a Deleted notes section in Settings with count, retention information, restore, and delete-forever actions.
 - Deleted notes are kept for `AppConstants.DELETED_NOTES_RETENTION_DAYS` days and automatically cleaned up on app start / repository cleanup.
+
+## Deleted notes screen + blank-note UX
+
+- Added a full Deleted Notes screen opened from Settings instead of a compact dialog.
+- Added animated deleted-note list items with note preview, delete time, and auto-removal date.
+- Added per-deleted-note restore action and delete-forever action.
+- Kept deleted notes retention cleanup at 30 days through `AppConstants.DELETED_NOTES_RETENTION_DAYS`.
+- Improved Add/Edit validation: title remains optional, but a note cannot be saved when both title and description are empty.
+- Empty note validation now shows field error, snackbar, focus, and a small shake animation to guide the user.

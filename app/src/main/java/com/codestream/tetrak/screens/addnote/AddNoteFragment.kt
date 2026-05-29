@@ -541,7 +541,8 @@ class AddNoteFragment : Fragment() {
     }
 
     private fun setupValidation() {
-        // Title is optional. Empty titles are saved with a date-based default title.
+        binding.edAddTitle.doAfterTextChanged { binding.titleInput.error = null }
+        binding.edAddDesc.doAfterTextChanged { binding.descriptionInput.error = null }
     }
 
     private fun setupClicks() {
@@ -586,8 +587,27 @@ class AddNoteFragment : Fragment() {
         return title.isNotBlank() || description.isNotBlank() || selectedColor != NoteModel.DEFAULT_NOTE_COLOR
     }
 
+    private fun validateHasContent(title: String, description: String): Boolean {
+        val hasContent = title.isNotBlank() || description.isNotBlank()
+        if (hasContent) {
+            binding.titleInput.error = null
+            binding.descriptionInput.error = null
+            return true
+        }
+        binding.descriptionInput.error = getString(R.string.note_content_required)
+        Snackbar.make(binding.root, R.string.note_content_required, Snackbar.LENGTH_LONG).show()
+        binding.edAddDesc.requestFocus()
+        binding.editorCard.animate().translationX(10f).setDuration(55L).withEndAction {
+            binding.editorCard.animate().translationX(-10f).setDuration(55L).withEndAction {
+                binding.editorCard.animate().translationX(0f).setDuration(80L).start()
+            }.start()
+        }.start()
+        return false
+    }
+
     private fun saveNote(title: String, description: String) {
         if (isSaving) return
+        if (!validateHasContent(title, description)) return
         isSaving = true
         binding.addNoteBtn.isEnabled = false
         viewModel.insert(NoteModel(title = title, description = description, color = selectedColor)) {
