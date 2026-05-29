@@ -252,3 +252,15 @@ Production note: before Play Store release, create both subscription products in
 - Kept deleted notes retention cleanup at 30 days through `AppConstants.DELETED_NOTES_RETENTION_DAYS`.
 - Improved Add/Edit validation: title remains optional, but a note cannot be saved when both title and description are empty.
 - Empty note validation now shows field error, snackbar, focus, and a small shake animation to guide the user.
+
+## Premium navigation back-stack fix
+- Replaced the Premium screen close logic with `navigateUp()` first.
+- Added safe fallback navigation to Settings with `NavOptions` only if Premium was opened directly without a previous destination.
+- Prevents empty/black NavHost state after returning from Premium plans.
+
+## Extensions cleanup
+- Added centralized `utils/Extensions.kt` for shared Kotlin extensions.
+- Replaced local `dp(...)` helper functions with `Int.dp` and `Float.dp` extension properties.
+- Moved shared color helper extensions (`toHexColor`, `toColorOrNull`) into `Extensions.kt`.
+- Moved shared lightweight view animation extensions into `Extensions.kt`.
+- Reused `pxToDp(...)` extension in AdMob adaptive banner width calculation.

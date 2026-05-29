@@ -11,6 +11,7 @@ import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.codestream.tetrak.utils.dp
 import kotlin.math.max
 
 class AdvancedColorPickerView @JvmOverloads constructor(
@@ -29,7 +30,7 @@ class AdvancedColorPickerView @JvmOverloads constructor(
     private val huePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = dp(1f)
+        strokeWidth = 1f.dp
         color = Color.argb(56, 120, 120, 120)
     }
     private val markerFillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -38,17 +39,17 @@ class AdvancedColorPickerView @JvmOverloads constructor(
     }
     private val markerStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = dp(2.5f)
+        strokeWidth = 2.5f.dp
         color = Color.argb(190, 0, 0, 0)
     }
     private val markerCenterPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
     }
 
-    private val cornerRadius = dp(22f)
-    private val sliderHeight = dp(26f)
-    private val gap = dp(24f)
-    private val contentPadding = dp(8f)
+    private val cornerRadius = 22f.dp
+    private val sliderHeight = 26f.dp
+    private val gap = 24f.dp
+    private val contentPadding = 8f.dp
     private var activeArea = Area.NONE
     private var changeListener: ((Int) -> Unit)? = null
     private var animator: ValueAnimator? = null
@@ -79,10 +80,10 @@ class AdvancedColorPickerView @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val desiredWidth = dp(320f).toInt()
+        val desiredWidth = 320f.dp.toInt()
         val width = resolveSize(desiredWidth, widthMeasureSpec)
         val spectrumSize = max(1, width - paddingLeft - paddingRight - (contentPadding * 2).toInt())
-        val desiredHeight = paddingTop + paddingBottom + (contentPadding * 2).toInt() + spectrumSize + gap.toInt() + sliderHeight.toInt() + dp(16f).toInt()
+        val desiredHeight = paddingTop + paddingBottom + (contentPadding * 2).toInt() + spectrumSize + gap.toInt() + sliderHeight.toInt() + 16f.dp.toInt()
         setMeasuredDimension(width, resolveSize(desiredHeight, heightMeasureSpec))
     }
 
@@ -208,18 +209,18 @@ class AdvancedColorPickerView @JvmOverloads constructor(
         val y = spectrumRect.top + spectrumRect.height() * (1f - animatedHsv[2])
         val color = Color.HSVToColor(animatedHsv)
         markerCenterPaint.color = color
-        canvas.drawCircle(x, y, dp(14f), markerFillPaint)
-        canvas.drawCircle(x, y, dp(14f), markerStrokePaint)
-        canvas.drawCircle(x, y, dp(8f), markerCenterPaint)
+        canvas.drawCircle(x, y, 14f.dp, markerFillPaint)
+        canvas.drawCircle(x, y, 14f.dp, markerStrokePaint)
+        canvas.drawCircle(x, y, 8f.dp, markerCenterPaint)
     }
 
     private fun drawHueMarker(canvas: Canvas) {
         val x = hueRect.left + hueRect.width() * (animatedHsv[0] / 360f)
         val y = hueRect.centerY()
         markerCenterPaint.color = Color.HSVToColor(floatArrayOf(animatedHsv[0], 1f, 1f))
-        canvas.drawCircle(x, y, dp(15f), markerFillPaint)
-        canvas.drawCircle(x, y, dp(15f), markerStrokePaint)
-        canvas.drawCircle(x, y, dp(8f), markerCenterPaint)
+        canvas.drawCircle(x, y, 15f.dp, markerFillPaint)
+        canvas.drawCircle(x, y, 15f.dp, markerStrokePaint)
+        canvas.drawCircle(x, y, 8f.dp, markerCenterPaint)
     }
 
     private fun animateTo(target: FloatArray) {
@@ -250,10 +251,9 @@ class AdvancedColorPickerView @JvmOverloads constructor(
     }
 
     private fun isNearHueSlider(x: Float, y: Float): Boolean {
-        val expandedTop = hueRect.top - dp(18f)
-        val expandedBottom = hueRect.bottom + dp(18f)
+        val expandedTop = hueRect.top - 18f.dp
+        val expandedBottom = hueRect.bottom + 18f.dp
         return x >= hueRect.left && x <= hueRect.right && y >= expandedTop && y <= expandedBottom
     }
 
-    private fun dp(value: Float): Float = value * resources.displayMetrics.density
 }

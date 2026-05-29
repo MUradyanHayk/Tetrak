@@ -15,6 +15,7 @@ import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import com.codestream.tetrak.R
 import com.codestream.tetrak.utils.AppConstants
+import com.codestream.tetrak.utils.toPremiumPlan
 
 /**
  * Real Google Play Billing boundary for Tetrak Premium.
@@ -194,24 +195,6 @@ object PremiumBillingManager : PurchasesUpdatedListener {
         })
     }
 
-    private fun ProductDetails.toPremiumPlan(context: Context): PremiumPlan {
-        val price = subscriptionOfferDetails
-            ?.firstOrNull()
-            ?.pricingPhases
-            ?.pricingPhaseList
-            ?.firstOrNull()
-            ?.formattedPrice
-            ?: fallbackPrice(productId)
-        return PremiumPlan(
-            productId = productId,
-            title = if (productId == PremiumConfig.PREMIUM_YEARLY_PRODUCT_ID) context.getString(R.string.premium_yearly) else context.getString(R.string.premium_monthly),
-            subtitle = if (productId == PremiumConfig.PREMIUM_YEARLY_PRODUCT_ID) context.getString(R.string.premium_yearly_subtitle) else context.getString(R.string.premium_monthly_subtitle),
-            formattedPrice = price,
-            offerToken = subscriptionOfferDetails?.firstOrNull()?.offerToken,
-            isBestValue = productId == PremiumConfig.PREMIUM_YEARLY_PRODUCT_ID
-        )
-    }
-
     fun defaultPlans(context: Context): List<PremiumPlan> = listOf(
         PremiumPlan(
             productId = PremiumConfig.PREMIUM_MONTHLY_PRODUCT_ID,
@@ -228,7 +211,4 @@ object PremiumBillingManager : PurchasesUpdatedListener {
             isBestValue = true
         )
     )
-
-    private fun fallbackPrice(productId: String) =
-        if (productId == PremiumConfig.PREMIUM_YEARLY_PRODUCT_ID) PremiumConfig.DEFAULT_YEARLY_PRICE else PremiumConfig.DEFAULT_MONTHLY_PRICE
 }

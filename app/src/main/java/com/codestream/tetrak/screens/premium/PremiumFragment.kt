@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.codestream.tetrak.R
 import com.codestream.tetrak.databinding.FragmentPremiumBinding
@@ -15,6 +16,7 @@ import com.codestream.tetrak.premium.PremiumManager
 import com.codestream.tetrak.premium.PremiumPlan
 import androidx.core.content.ContextCompat
 import com.codestream.tetrak.utils.AppConstants
+import com.codestream.tetrak.utils.dp
 import com.google.android.material.snackbar.Snackbar
 
 class PremiumFragment : Fragment() {
@@ -56,11 +58,21 @@ class PremiumFragment : Fragment() {
 
     private fun closePremiumScreen() {
         val navController = findNavController()
-        val returnedToSettings = navController.popBackStack(R.id.settingsFragment, false)
-        if (!returnedToSettings) {
-            val popped = navController.popBackStack()
-            if (!popped && isAdded) navController.navigate(R.id.startFragment)
-        }
+
+        // The Premium screen is normally opened from Settings, so the safest close action
+        // is standard back/up navigation. The previous implementation tried to pop to a
+        // specific destination and could leave the NavHost without a visible destination
+        // in some back-stack states, which looked like an empty/black screen.
+        val closed = runCatching { navController.navigateUp() }.getOrDefault(false)
+        if (closed || !isAdded) return
+
+        // Fallback for any future direct entry into Premium: create a valid visible stack.
+        val options = NavOptions.Builder()
+            .setPopUpTo(R.id.startFragment, false)
+            .setLaunchSingleTop(true)
+            .build()
+        runCatching { navController.navigate(R.id.settingsFragment, null, options) }
+            .onFailure { navController.navigate(R.id.startFragment) }
     }
 
     private fun setupStaticUi() = with(binding) {
@@ -132,8 +144,8 @@ class PremiumFragment : Fragment() {
 
         monthlyCard.strokeColor = if (monthlySelected) primary else outline
         yearlyCard.strokeColor = if (yearlySelected) primary else outline
-        monthlyCard.strokeWidth = dp(if (monthlySelected) 3 else 1)
-        yearlyCard.strokeWidth = dp(if (yearlySelected) 3 else 1)
+        monthlyCard.strokeWidth = (if (monthlySelected) 3 else 1).dp
+        yearlyCard.strokeWidth = (if (yearlySelected) 3 else 1).dp
         monthlyCard.setCardBackgroundColor(if (monthlySelected) selectedSurface else normalSurface)
         yearlyCard.setCardBackgroundColor(if (yearlySelected) selectedSurface else normalSurface)
         monthlyButton.setText(if (monthlySelected) R.string.selected_plan else R.string.choose)
@@ -198,7 +210,6 @@ class PremiumFragment : Fragment() {
             .start()
     }
 
-    private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
     private fun animateIntro() = with(binding) {
         heroCard.alpha = 0f

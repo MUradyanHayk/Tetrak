@@ -30,6 +30,9 @@ import com.codestream.tetrak.premium.PremiumManager
 import com.codestream.tetrak.util.NoteEditorHistory
 import com.codestream.tetrak.util.NoteEditorSearch
 import com.codestream.tetrak.utils.AppConstants
+import com.codestream.tetrak.utils.dp
+import com.codestream.tetrak.utils.toColorOrNull
+import com.codestream.tetrak.utils.toHexColor
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
@@ -628,18 +631,11 @@ class AddNoteFragment : Fragment() {
     private fun roundedColorDrawable(color: Int, radiusDp: Float): GradientDrawable {
         return GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
-            cornerRadius = radiusDp * resources.displayMetrics.density
+            cornerRadius = radiusDp.dp
             setColor(color)
         }
     }
 
-    private fun Int.toHexColor(): String = String.format("#%06X", 0xFFFFFF and this)
-
-    private fun String.toColorOrNull(): Int? {
-        val normalized = trim().removePrefix("#")
-        if (!Regex("^[0-9A-Fa-f]{6}$").matches(normalized)) return null
-        return runCatching { Color.parseColor("#$normalized") }.getOrNull()
-    }
 
     override fun onDestroyView() {
         floatingHandler.removeCallbacks(showFloatingRunnable)

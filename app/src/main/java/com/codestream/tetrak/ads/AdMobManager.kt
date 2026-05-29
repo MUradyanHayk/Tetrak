@@ -10,6 +10,9 @@ import android.widget.ProgressBar
 import androidx.core.view.doOnLayout
 import com.codestream.tetrak.premium.PremiumManager
 import com.codestream.tetrak.utils.AppConstants
+import com.codestream.tetrak.utils.hideAnimated
+import com.codestream.tetrak.utils.pxToDp
+import com.codestream.tetrak.utils.showAnimated
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
@@ -167,24 +170,8 @@ object AdMobManager {
         val displayMetrics = DisplayMetrics()
         @Suppress("DEPRECATION")
         activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        val density = displayMetrics.density
         val widthPixels = if (container.width > 0) container.width else displayMetrics.widthPixels
-        return (widthPixels / density).toInt().coerceAtLeast(320)
+        return widthPixels.pxToDp(displayMetrics).coerceAtLeast(320)
     }
 
-    private fun View.showAnimated() {
-        if (visibility != View.VISIBLE) {
-            visibility = View.VISIBLE
-            alpha = 0f
-            translationY = height.coerceAtLeast(24).toFloat()
-        }
-        animate().alpha(1f).translationY(0f).setDuration(220L).start()
-    }
-
-    private fun View.hideAnimated() {
-        animate().alpha(0f).translationY(height.coerceAtLeast(24).toFloat()).setDuration(180L).withEndAction {
-            visibility = View.GONE
-            translationY = 0f
-        }.start()
-    }
 }
