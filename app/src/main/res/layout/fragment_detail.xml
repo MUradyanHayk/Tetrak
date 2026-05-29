@@ -26,19 +26,19 @@
         android:id="@+id/detail_card"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="18dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="12dp"
         app:cardBackgroundColor="?attr/colorSurface"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="3dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toTopOf="@id/action_row"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:strokeColor="?attr/colorSurfaceVariant"
-        app:strokeWidth="2dp">
+        app:strokeColor="@android:color/transparent"
+        app:strokeWidth="0dp">
 
         <ScrollView
             android:id="@+id/detail_scroll"
@@ -46,7 +46,10 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:fillViewport="true"
-            android:padding="24dp">
+            android:paddingStart="20dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,7 +103,7 @@
                     android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="12dp"
                     android:lineSpacingExtra="4dp"
                     android:textColor="?attr/colorOnSurfaceVariant"
                     android:textSize="17sp"
@@ -110,7 +113,7 @@
                     android:id="@+id/edit_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="vertical"
                     android:visibility="gone">
 
@@ -138,12 +141,12 @@
                         android:id="@+id/editor_tools_card"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="6dp"
                         app:cardBackgroundColor="?attr/colorSurfaceContainer"
-                        app:cardCornerRadius="20dp"
+                        app:cardCornerRadius="22dp"
                         app:cardElevation="0dp"
-                        app:strokeColor="?attr/colorSurfaceVariant"
-                        app:strokeWidth="1dp">
+                        app:strokeColor="@android:color/transparent"
+                        app:strokeWidth="0dp">
 
                         <HorizontalScrollView
                             android:layout_width="match_parent"
@@ -303,41 +306,53 @@
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="12dp"
                         android:hint="@string/title_hint"
+                        app:boxBackgroundMode="none"
                     app:endIconContentDescription="@string/generate_title_with_ai"
                     app:endIconDrawable="@drawable/ic_auto_title"
                     app:endIconMode="custom"
-                        app:boxCornerRadiusBottomEnd="18dp"
-                        app:boxCornerRadiusBottomStart="18dp"
-                        app:boxCornerRadiusTopEnd="18dp"
-                        app:boxCornerRadiusTopStart="18dp">
+                        app:boxCornerRadiusBottomEnd="0dp"
+                        app:boxCornerRadiusBottomStart="0dp"
+                        app:boxCornerRadiusTopEnd="0dp"
+                        app:boxCornerRadiusTopStart="0dp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edit_title"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="56dp"
+                            android:background="@android:color/transparent"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:maxLines="2" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:id="@+id/edit_title_description_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="2dp"
+                        android:background="?attr/colorSurfaceVariant"
+                        android:alpha="0.55" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/description_input"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="4dp"
                         android:hint="@string/description_hint"
-                        app:boxCornerRadiusBottomEnd="18dp"
-                        app:boxCornerRadiusBottomStart="18dp"
-                        app:boxCornerRadiusTopEnd="18dp"
-                        app:boxCornerRadiusTopStart="18dp">
+                        app:boxBackgroundMode="none"
+                        app:boxCornerRadiusBottomEnd="0dp"
+                        app:boxCornerRadiusBottomStart="0dp"
+                        app:boxCornerRadiusTopEnd="0dp"
+                        app:boxCornerRadiusTopStart="0dp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edit_description"
                             android:layout_width="match_parent"
-                            android:layout_height="360dp"
+                            android:layout_height="430dp"
+                            android:background="@android:color/transparent"
                             android:gravity="top|start"
                             android:inputType="textMultiLine|textCapSentences"
                             android:overScrollMode="ifContentScrolls"

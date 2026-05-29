@@ -191,3 +191,11 @@ Production note: before Play Store release, create both subscription products in
 
 ## Premium color resource build fix
 - Replaced Material attribute lookup in PremiumFragment with project color resources to avoid `colorPrimary not found` issues on some Material/AGP combinations.
+
+## iOS Mail-style editor cleanup
+- Reworked Add Note editor container to feel more like a native iOS Mail compose screen.
+- Removed heavy editor/card borders and elevation that visually interrupted typing.
+- Converted title and description inputs to clean borderless fields with a subtle divider between them.
+- Gave the description editor more uninterrupted writing space.
+- Kept compact icon-only tools, color picker, AI title action, keyboard-aware Save button animation, Premium feature flag, ads, and existing MVVM/XML/no-DI architecture.
+- Applied the same borderless editor style to the edit mode in Note Details.
