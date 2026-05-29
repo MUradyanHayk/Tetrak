@@ -227,3 +227,11 @@ Production note: before Play Store release, create both subscription products in
 - Removed the auto-hide behavior that hid the floating editor tools FAB/tray while typing.
 - Removed the auto-hide behavior that hid the floating editor tools FAB/tray while scrolling.
 - Kept the other floating tools changes: bottom-end FAB, floating tools tray, keyboard-aware positioning, top Back/title/confirm action layout, and unchanged delete button behavior.
+
+### Floating tools toolbar animation polish
+- Changed the bottom-end editor FAB to use a dedicated tools/sliders icon instead of the edit pencil icon.
+- Added a smooth animated icon morph: tools icon rotates/scales into a close icon when the tray opens, then reverses when closed.
+- Reworked the tools tray into a compact horizontal toolbar positioned beside the FAB.
+- Added right-origin expand/collapse animation for the toolbar with fade, scale, and slide motion.
+- Added staggered button entrance/exit animations for Copy, Search, Undo, and Redo.
+- Applied the same polished floating tools behavior to Add Note and Note Details edit mode.

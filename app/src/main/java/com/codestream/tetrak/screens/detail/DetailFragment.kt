@@ -273,43 +273,119 @@ class DetailFragment : Fragment() {
     private fun setupFloatingEditorControls() = with(binding) {
         editorToolsCard.visibility = View.GONE
         editorToolsCard.alpha = 0f
+        editorToolsCard.scaleX = 0.55f
+        editorToolsCard.scaleY = 0.92f
+        editorToolsCard.translationX = 24f
+        editorToolsFab.setImageResource(R.drawable.ic_tools)
         editorToolsFab.setOnClickListener {
-            animateToolTap(it)
             toggleToolsTray(!isToolsTrayExpanded)
         }
-        // Keep the floating tools available while typing and scrolling in edit mode.
         root.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
+        showFloatingControls()
     }
 
     private fun toggleToolsTray(show: Boolean) {
         isToolsTrayExpanded = show
         val tray = binding.editorToolsCard
         tray.animate().cancel()
+        animateToolsFabIcon(show)
         if (show && isEditMode) {
             tray.visibility = View.VISIBLE
+            tray.pivotX = tray.width.takeIf { it > 0 }?.toFloat() ?: 206f
+            tray.pivotY = tray.height / 2f
             tray.alpha = 0f
-            tray.scaleX = 0.92f
-            tray.scaleY = 0.92f
-            tray.translationY = floatingKeyboardOffset + 18f
+            tray.scaleX = 0.35f
+            tray.scaleY = 0.86f
+            tray.translationX = 28f
+            tray.translationY = floatingKeyboardOffset + 6f
+            setToolButtonsVisible(false)
             tray.animate()
                 .alpha(1f)
                 .scaleX(1f)
                 .scaleY(1f)
+                .translationX(0f)
                 .translationY(floatingKeyboardOffset)
-                .setDuration(220L)
+                .setDuration(260L)
+                .withEndAction { animateToolButtonsIn() }
                 .start()
         } else {
+            animateToolButtonsOut()
             tray.animate()
                 .alpha(0f)
-                .scaleX(0.92f)
-                .scaleY(0.92f)
-                .translationY(floatingKeyboardOffset + 18f)
-                .setDuration(160L)
+                .scaleX(0.35f)
+                .scaleY(0.86f)
+                .translationX(28f)
+                .translationY(floatingKeyboardOffset + 6f)
+                .setDuration(190L)
                 .withEndAction { tray.visibility = View.GONE }
                 .start()
         }
     }
 
+    private fun animateToolsFabIcon(open: Boolean) = with(binding.editorToolsFab) {
+        animate().cancel()
+        animate()
+            .scaleX(0.78f)
+            .scaleY(0.78f)
+            .rotation(if (open) 90f else -90f)
+            .setDuration(95L)
+            .withEndAction {
+                setImageResource(if (open) R.drawable.ic_close else R.drawable.ic_tools)
+                contentDescription = getString(if (open) R.string.close else R.string.editor_tools)
+                rotation = if (open) -90f else 90f
+                animate()
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .rotation(0f)
+                    .setDuration(155L)
+                    .start()
+            }
+            .start()
+    }
+
+    private fun toolButtons(): List<View> = listOf(
+        binding.toolCopyBtn,
+        binding.toolSearchBtn,
+        binding.toolUndoBtn,
+        binding.toolRedoBtn
+    )
+
+    private fun setToolButtonsVisible(visible: Boolean) {
+        toolButtons().forEach { button ->
+            button.alpha = if (visible) 1f else 0f
+            button.translationX = if (visible) 0f else 16f
+            button.scaleX = if (visible) 1f else 0.82f
+            button.scaleY = if (visible) 1f else 0.82f
+        }
+    }
+
+    private fun animateToolButtonsIn() {
+        toolButtons().forEachIndexed { index, button ->
+            button.animate().cancel()
+            button.animate()
+                .alpha(1f)
+                .translationX(0f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .setStartDelay(index * 38L)
+                .setDuration(180L)
+                .start()
+        }
+    }
+
+    private fun animateToolButtonsOut() {
+        toolButtons().forEachIndexed { index, button ->
+            button.animate().cancel()
+            button.animate()
+                .alpha(0f)
+                .translationX(14f)
+                .scaleX(0.82f)
+                .scaleY(0.82f)
+                .setStartDelay(index * 18L)
+                .setDuration(110L)
+                .start()
+        }
+    }
     private fun hideFloatingControlsTemporarily() {
         floatingHandler.removeCallbacks(showFloatingRunnable)
         hideFloatingControls()
@@ -484,6 +560,9 @@ class DetailFragment : Fragment() {
         binding.deleteBtn.visibility = View.GONE
         binding.editContainer.visibility = View.VISIBLE
         binding.editorToolsFab.visibility = View.VISIBLE
+        binding.editorToolsFab.setImageResource(R.drawable.ic_tools)
+        binding.editorToolsFab.rotation = 0f
+        binding.editorToolsFab.contentDescription = getString(R.string.editor_tools)
         binding.cancelEditBtn.visibility = View.VISIBLE
         binding.saveEditBtn.visibility = View.GONE
         binding.editContainer.alpha = 0f
@@ -521,6 +600,9 @@ class DetailFragment : Fragment() {
         binding.editContainer.visibility = View.GONE
         binding.editorToolsCard.visibility = View.GONE
         binding.editorToolsFab.visibility = View.GONE
+        binding.editorToolsFab.setImageResource(R.drawable.ic_tools)
+        binding.editorToolsFab.rotation = 0f
+        binding.editorToolsFab.contentDescription = getString(R.string.editor_tools)
         isToolsTrayExpanded = false
         binding.cancelEditBtn.visibility = View.GONE
         binding.saveEditBtn.visibility = View.GONE

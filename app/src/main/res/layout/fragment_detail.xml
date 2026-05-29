@@ -324,18 +324,16 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/editor_tools_card"
-        android:layout_width="0dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginEnd="82dp"
-        android:layout_marginBottom="18dp"
+        android:layout_width="206dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="20dp"
         android:visibility="gone"
         app:cardBackgroundColor="?attr/colorSurfaceContainer"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="8dp"
+        app:cardCornerRadius="28dp"
+        app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/editor_tools_fab"
         app:strokeColor="?attr/colorSurfaceVariant"
         app:strokeWidth="1dp">
 
@@ -345,7 +343,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:overScrollMode="never"
-            android:paddingHorizontal="8dp"
+            android:paddingHorizontal="10dp"
             android:scrollbars="none">
 
             <LinearLayout
@@ -438,8 +436,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:contentDescription="@string/edit"
-        android:src="@drawable/ic_edit"
+        android:contentDescription="@string/editor_tools"
+        android:src="@drawable/ic_tools"
         android:visibility="gone"
         app:backgroundTint="?attr/colorPrimaryContainer"
         app:layout_constraintBottom_toBottomOf="parent"
