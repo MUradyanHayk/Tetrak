@@ -164,6 +164,76 @@
                         android:layout_height="48dp"
                         android:text="@string/language_persian"
                         android:textColor="?attr/colorOnSurface" />
+
+                    <RadioButton
+                        android:id="@+id/language_spanish"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/language_spanish"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <RadioButton
+                        android:id="@+id/language_french"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/language_french"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <RadioButton
+                        android:id="@+id/language_german"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/language_german"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <RadioButton
+                        android:id="@+id/language_portuguese"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/language_portuguese"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <RadioButton
+                        android:id="@+id/language_hindi"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/language_hindi"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <RadioButton
+                        android:id="@+id/language_chinese"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/language_chinese"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <RadioButton
+                        android:id="@+id/language_japanese"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/language_japanese"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <RadioButton
+                        android:id="@+id/language_korean"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/language_korean"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <RadioButton
+                        android:id="@+id/language_turkish"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/language_turkish"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <RadioButton
+                        android:id="@+id/language_ukrainian"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/language_ukrainian"
+                        android:textColor="?attr/colorOnSurface" />
                 </RadioGroup>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

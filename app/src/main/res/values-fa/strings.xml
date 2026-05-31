@@ -31,6 +31,16 @@
     <string name="language_russian">روسی</string>
     <string name="language_arabic">عربی</string>
     <string name="language_persian">فارسی</string>
+    <string name="language_spanish">اسپانیایی</string>
+    <string name="language_french">فرانسوی</string>
+    <string name="language_german">آلمانی</string>
+    <string name="language_portuguese">پرتغالی</string>
+    <string name="language_hindi">هندی</string>
+    <string name="language_chinese">چینی</string>
+    <string name="language_japanese">ژاپنی</string>
+    <string name="language_korean">کره‌ای</string>
+    <string name="language_turkish">ترکی</string>
+    <string name="language_ukrainian">اوکراینی</string>
     <string name="custom_note_color">رنگ سفارشی یادداشت</string>
     <string name="custom_note_color_subtitle">روی طیف رنگ بکشید، رنگ‌مایه را تنظیم کنید یا مقدار hex را وارد کنید.</string>
     <string name="hex_color">رنگ Hex</string>

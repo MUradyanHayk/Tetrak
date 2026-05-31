@@ -20,6 +20,16 @@ object AppSettings {
     const val LANGUAGE_RUSSIAN = "ru"
     const val LANGUAGE_ARABIC = "ar"
     const val LANGUAGE_PERSIAN = "fa"
+    const val LANGUAGE_SPANISH = "es"
+    const val LANGUAGE_FRENCH = "fr"
+    const val LANGUAGE_GERMAN = "de"
+    const val LANGUAGE_PORTUGUESE = "pt"
+    const val LANGUAGE_HINDI = "hi"
+    const val LANGUAGE_CHINESE = "zh-CN"
+    const val LANGUAGE_JAPANESE = "ja"
+    const val LANGUAGE_KOREAN = "ko"
+    const val LANGUAGE_TURKISH = "tr"
+    const val LANGUAGE_UKRAINIAN = "uk"
 
     fun applySavedSettings(context: Context) {
         applyTheme(getTheme(context))

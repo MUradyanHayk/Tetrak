@@ -31,6 +31,16 @@
     <string name="language_russian">الروسية</string>
     <string name="language_arabic">العربية</string>
     <string name="language_persian">الفارسية</string>
+    <string name="language_spanish">الإسبانية</string>
+    <string name="language_french">الفرنسية</string>
+    <string name="language_german">الألمانية</string>
+    <string name="language_portuguese">البرتغالية</string>
+    <string name="language_hindi">الهندية</string>
+    <string name="language_chinese">الصينية</string>
+    <string name="language_japanese">اليابانية</string>
+    <string name="language_korean">الكورية</string>
+    <string name="language_turkish">التركية</string>
+    <string name="language_ukrainian">الأوكرانية</string>
     <string name="custom_note_color">لون مخصص للملاحظة</string>
     <string name="custom_note_color_subtitle">اسحب داخل الطيف، أو غيّر التدرج، أو اكتب قيمة hex.</string>
     <string name="hex_color">لون Hex</string>

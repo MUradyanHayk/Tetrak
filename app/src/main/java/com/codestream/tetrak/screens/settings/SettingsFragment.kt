@@ -60,6 +60,16 @@ class SettingsFragment : Fragment() {
                 AppSettings.LANGUAGE_RUSSIAN -> R.id.language_russian
                 AppSettings.LANGUAGE_ARABIC -> R.id.language_arabic
                 AppSettings.LANGUAGE_PERSIAN -> R.id.language_persian
+                AppSettings.LANGUAGE_SPANISH -> R.id.language_spanish
+                AppSettings.LANGUAGE_FRENCH -> R.id.language_french
+                AppSettings.LANGUAGE_GERMAN -> R.id.language_german
+                AppSettings.LANGUAGE_PORTUGUESE -> R.id.language_portuguese
+                AppSettings.LANGUAGE_HINDI -> R.id.language_hindi
+                AppSettings.LANGUAGE_CHINESE -> R.id.language_chinese
+                AppSettings.LANGUAGE_JAPANESE -> R.id.language_japanese
+                AppSettings.LANGUAGE_KOREAN -> R.id.language_korean
+                AppSettings.LANGUAGE_TURKISH -> R.id.language_turkish
+                AppSettings.LANGUAGE_UKRAINIAN -> R.id.language_ukrainian
                 else -> R.id.language_system
             }
         )
@@ -84,6 +94,16 @@ class SettingsFragment : Fragment() {
                 R.id.language_russian -> AppSettings.LANGUAGE_RUSSIAN
                 R.id.language_arabic -> AppSettings.LANGUAGE_ARABIC
                 R.id.language_persian -> AppSettings.LANGUAGE_PERSIAN
+                R.id.language_spanish -> AppSettings.LANGUAGE_SPANISH
+                R.id.language_french -> AppSettings.LANGUAGE_FRENCH
+                R.id.language_german -> AppSettings.LANGUAGE_GERMAN
+                R.id.language_portuguese -> AppSettings.LANGUAGE_PORTUGUESE
+                R.id.language_hindi -> AppSettings.LANGUAGE_HINDI
+                R.id.language_chinese -> AppSettings.LANGUAGE_CHINESE
+                R.id.language_japanese -> AppSettings.LANGUAGE_JAPANESE
+                R.id.language_korean -> AppSettings.LANGUAGE_KOREAN
+                R.id.language_turkish -> AppSettings.LANGUAGE_TURKISH
+                R.id.language_ukrainian -> AppSettings.LANGUAGE_UKRAINIAN
                 else -> AppSettings.LANGUAGE_SYSTEM
             }
             viewModel.updateLanguage(language)

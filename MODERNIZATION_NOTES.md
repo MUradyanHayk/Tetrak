@@ -280,3 +280,20 @@ Production note: before Play Store release, create both subscription products in
 - Added a persisted `AppSettings` flag so the splash screen appears only the first time the app is opened.
 - Updated `MainActivity` to set the Navigation start destination dynamically: Splash on first launch, Notes list on later launches.
 - Kept the standard launcher icon / system splash behavior unchanged; this is the app-owned branded intro screen after first install/open.
+
+## Popular languages update
+
+- Added 10 more popular selectable languages to Settings:
+  - Spanish (`es`)
+  - French (`fr`)
+  - German (`de`)
+  - Portuguese (`pt`)
+  - Hindi (`hi`)
+  - Chinese Simplified (`zh-CN`)
+  - Japanese (`ja`)
+  - Korean (`ko`)
+  - Turkish (`tr`)
+  - Ukrainian (`uk`)
+- Added localized `values-*` resource folders for the new languages.
+- Updated the Settings language picker and `AppSettings` language constants.
+- Existing languages remain supported: English, Armenian, Russian, Arabic, and Persian.

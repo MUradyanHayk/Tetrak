@@ -31,6 +31,16 @@
     <string name="language_russian">Ռուսերեն</string>
     <string name="language_arabic">Արաբերեն</string>
     <string name="language_persian">Պարսկերեն</string>
+    <string name="language_spanish">Իսպաներեն</string>
+    <string name="language_french">Ֆրանսերեն</string>
+    <string name="language_german">Գերմաներեն</string>
+    <string name="language_portuguese">Պորտուգալերեն</string>
+    <string name="language_hindi">Հինդի</string>
+    <string name="language_chinese">Չինարեն</string>
+    <string name="language_japanese">Ճապոներեն</string>
+    <string name="language_korean">Կորեերեն</string>
+    <string name="language_turkish">Թուրքերեն</string>
+    <string name="language_ukrainian">Ուկրաիներեն</string>
     <string name="custom_note_color">Անհատական նշման գույն</string>
     <string name="custom_note_color_subtitle">Քաշեք գունային դաշտում, փոխեք երանգը կամ գրեք hex արժեք։</string>
     <string name="hex_color">Hex գույն</string>

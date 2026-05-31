@@ -31,6 +31,16 @@
     <string name="language_russian">Russian</string>
     <string name="language_arabic">Arabic</string>
     <string name="language_persian">Persian</string>
+    <string name="language_spanish">Spanish</string>
+    <string name="language_french">French</string>
+    <string name="language_german">German</string>
+    <string name="language_portuguese">Portuguese</string>
+    <string name="language_hindi">Hindi</string>
+    <string name="language_chinese">Chinese</string>
+    <string name="language_japanese">Japanese</string>
+    <string name="language_korean">Korean</string>
+    <string name="language_turkish">Turkish</string>
+    <string name="language_ukrainian">Ukrainian</string>
     <string name="custom_note_color">Custom note color</string>
     <string name="custom_note_color_subtitle">Drag anywhere on the spectrum, adjust hue, or type a hex value.</string>
     <string name="hex_color">Hex color</string>
