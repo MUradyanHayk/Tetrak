@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen_gradient">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:title="@string/settings_language_title"
+        app:titleTextColor="?attr/colorOnSurface" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:text="@string/settings_language_subtitle"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="15sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/options_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+
+                <RadioGroup
+                    android:id="@+id/language_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <RadioButton android:id="@+id/language_system" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_system" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_english" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_english" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_armenian" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_armenian" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_russian" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_russian" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_arabic" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_arabic" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_persian" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_persian" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_spanish" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_spanish" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_french" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_french" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_german" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_german" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_portuguese" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_portuguese" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_hindi" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_hindi" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_chinese" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_chinese" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_japanese" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_japanese" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_korean" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_korean" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_turkish" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_turkish" android:textColor="?attr/colorOnSurface" />
+                    <RadioButton android:id="@+id/language_ukrainian" android:layout_width="match_parent" android:layout_height="54dp" android:text="@string/language_ukrainian" android:textColor="?attr/colorOnSurface" />
+                </RadioGroup>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

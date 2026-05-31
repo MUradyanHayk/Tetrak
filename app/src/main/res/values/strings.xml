@@ -143,4 +143,18 @@
     <string name="deleted_notes_empty_subtitle">Trash is empty. Deleted notes will appear here before they are removed automatically.</string>
     <string name="delete_forever_title">Delete forever?</string>
     <string name="delete_forever_message">This note will be permanently removed from deleted history and cannot be restored.</string>
+
+    <string name="settings_language_title">Language</string>
+    <string name="settings_language_subtitle">Choose the language used by Tetrak.</string>
+    <string name="settings_theme_title">Theme</string>
+    <string name="settings_theme_subtitle">Choose how the app should look on this device.</string>
+    <string name="settings_ads_title">Ads</string>
+    <string name="settings_app_info_title">App info</string>
+    <string name="settings_app_info_subtitle">Version, logo, and app details</string>
+    <string name="ads_enabled_for_free">Ads enabled for Free plan</string>
+    <string name="ads_disabled_for_premium">Ads disabled for Premium</string>
+    <string name="ads_premium_disabled_message">Premium is active, so banner ads and full-screen video/interstitial ads are hidden across the app.</string>
+    <string name="app_version_value">Version %1$s</string>
+    <string name="app_info_description">Tetrak is a modern note saver with colors, history, deleted note recovery, AI title generation, Premium tools, dark mode, and multilingual support.</string>
+
 </resources>

@@ -297,3 +297,10 @@ Production note: before Play Store release, create both subscription products in
 - Added localized `values-*` resource folders for the new languages.
 - Updated the Settings language picker and `AppSettings` language constants.
 - Existing languages remain supported: English, Armenian, Russian, Arabic, and Persian.
+
+## Settings section redesign
+- Reworked Settings into a clean hub screen with section rows instead of showing every option on one long page.
+- Added separate screens for Language, Theme, Ads info, and App info.
+- Existing Premium and Deleted Notes screens are now opened as dedicated Settings sections.
+- Added section icons, current-value subtitles, navigation chevrons, and entry animations.
+- Kept MVVM, XML, no DI, localization support, Premium feature flag, and all previous functionality.

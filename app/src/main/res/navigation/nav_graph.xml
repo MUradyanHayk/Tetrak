@@ -70,6 +70,34 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_languageSettingsFragment"
+            app:destination="@id/languageSettingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_themeSettingsFragment"
+            app:destination="@id/themeSettingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_adsSettingsFragment"
+            app:destination="@id/adsSettingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_appInfoSettingsFragment"
+            app:destination="@id/appInfoSettingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -83,4 +111,30 @@
         android:name="com.codestream.tetrak.screens.deletednotes.DeletedNotesFragment"
         android:label="@string/deleted_notes"
         tools:layout="@layout/fragment_deleted_notes" />
+
+
+    <fragment
+        android:id="@+id/languageSettingsFragment"
+        android:name="com.codestream.tetrak.screens.settings.LanguageSettingsFragment"
+        android:label="@string/settings_language_title"
+        tools:layout="@layout/fragment_language_settings" />
+
+    <fragment
+        android:id="@+id/themeSettingsFragment"
+        android:name="com.codestream.tetrak.screens.settings.ThemeSettingsFragment"
+        android:label="@string/settings_theme_title"
+        tools:layout="@layout/fragment_theme_settings" />
+
+    <fragment
+        android:id="@+id/adsSettingsFragment"
+        android:name="com.codestream.tetrak.screens.settings.AdsSettingsFragment"
+        android:label="@string/settings_ads_title"
+        tools:layout="@layout/fragment_ads_settings" />
+
+    <fragment
+        android:id="@+id/appInfoSettingsFragment"
+        android:name="com.codestream.tetrak.screens.settings.AppInfoSettingsFragment"
+        android:label="@string/settings_app_info_title"
+        tools:layout="@layout/fragment_app_info_settings" />
+
 </navigation>

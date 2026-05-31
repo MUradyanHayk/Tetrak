@@ -9,21 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.codestream.tetrak.R
 import com.codestream.tetrak.databinding.FragmentSettingsBinding
-import com.codestream.tetrak.model.DeletedNoteModel
-import com.codestream.tetrak.premium.PremiumBillingManager
 import com.codestream.tetrak.utils.AppConstants
-import com.codestream.tetrak.utils.AppSettings
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SettingsViewModel by viewModels()
-    private var latestDeletedNotes: List<DeletedNoteModel> = emptyList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
@@ -33,11 +24,8 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
-        bindCurrentSettings()
-        setupThemePicker()
-        setupLanguagePicker()
-        setupPremiumControls()
-        setupDeletedNotesControls()
+        setupSectionClicks()
+        bindDynamicState()
         animateIntro()
     }
 
@@ -45,203 +33,62 @@ class SettingsFragment : Fragment() {
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
-    private fun bindCurrentSettings() = with(binding) {
-        themeGroup.check(
-            when (viewModel.theme()) {
-                AppSettings.THEME_LIGHT -> R.id.theme_light
-                AppSettings.THEME_DARK -> R.id.theme_dark
-                else -> R.id.theme_system
-            }
-        )
-        languageGroup.check(
-            when (viewModel.language()) {
-                AppSettings.LANGUAGE_ENGLISH -> R.id.language_english
-                AppSettings.LANGUAGE_ARMENIAN -> R.id.language_armenian
-                AppSettings.LANGUAGE_RUSSIAN -> R.id.language_russian
-                AppSettings.LANGUAGE_ARABIC -> R.id.language_arabic
-                AppSettings.LANGUAGE_PERSIAN -> R.id.language_persian
-                AppSettings.LANGUAGE_SPANISH -> R.id.language_spanish
-                AppSettings.LANGUAGE_FRENCH -> R.id.language_french
-                AppSettings.LANGUAGE_GERMAN -> R.id.language_german
-                AppSettings.LANGUAGE_PORTUGUESE -> R.id.language_portuguese
-                AppSettings.LANGUAGE_HINDI -> R.id.language_hindi
-                AppSettings.LANGUAGE_CHINESE -> R.id.language_chinese
-                AppSettings.LANGUAGE_JAPANESE -> R.id.language_japanese
-                AppSettings.LANGUAGE_KOREAN -> R.id.language_korean
-                AppSettings.LANGUAGE_TURKISH -> R.id.language_turkish
-                AppSettings.LANGUAGE_UKRAINIAN -> R.id.language_ukrainian
-                else -> R.id.language_system
-            }
-        )
-    }
+    private fun setupSectionClicks() = with(binding) {
+        languageSection.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_languageSettingsFragment) }
+        themeSection.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_themeSettingsFragment) }
+        premiumSection.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_premiumFragment) }
+        adsSection.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_adsSettingsFragment) }
+        deletedNotesSection.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_deletedNotesFragment) }
+        appInfoSection.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_appInfoSettingsFragment) }
 
-    private fun setupThemePicker() {
-        binding.themeGroup.setOnCheckedChangeListener { _, checkedId ->
-            val mode = when (checkedId) {
-                R.id.theme_light -> AppSettings.THEME_LIGHT
-                R.id.theme_dark -> AppSettings.THEME_DARK
-                else -> AppSettings.THEME_SYSTEM
-            }
-            viewModel.updateTheme(mode)
-        }
-    }
-
-    private fun setupLanguagePicker() {
-        binding.languageGroup.setOnCheckedChangeListener { _, checkedId ->
-            val language = when (checkedId) {
-                R.id.language_english -> AppSettings.LANGUAGE_ENGLISH
-                R.id.language_armenian -> AppSettings.LANGUAGE_ARMENIAN
-                R.id.language_russian -> AppSettings.LANGUAGE_RUSSIAN
-                R.id.language_arabic -> AppSettings.LANGUAGE_ARABIC
-                R.id.language_persian -> AppSettings.LANGUAGE_PERSIAN
-                R.id.language_spanish -> AppSettings.LANGUAGE_SPANISH
-                R.id.language_french -> AppSettings.LANGUAGE_FRENCH
-                R.id.language_german -> AppSettings.LANGUAGE_GERMAN
-                R.id.language_portuguese -> AppSettings.LANGUAGE_PORTUGUESE
-                R.id.language_hindi -> AppSettings.LANGUAGE_HINDI
-                R.id.language_chinese -> AppSettings.LANGUAGE_CHINESE
-                R.id.language_japanese -> AppSettings.LANGUAGE_JAPANESE
-                R.id.language_korean -> AppSettings.LANGUAGE_KOREAN
-                R.id.language_turkish -> AppSettings.LANGUAGE_TURKISH
-                R.id.language_ukrainian -> AppSettings.LANGUAGE_UKRAINIAN
-                else -> AppSettings.LANGUAGE_SYSTEM
-            }
-            viewModel.updateLanguage(language)
-        }
-    }
-
-    private fun setupPremiumControls() = with(binding) {
         if (!AppConstants.HAS_PREMIUM_FEATURES) {
-            premiumCard.visibility = View.GONE
-            return@with
-        }
-
-        refreshPremiumUi()
-
-        premiumUpgradeBtn.setOnClickListener {
-            it.animate().scaleX(0.96f).scaleY(0.96f).setDuration(70L).withEndAction {
-                it.animate().scaleX(1f).scaleY(1f).setDuration(120L).start()
-            }.start()
-            findNavController().navigate(R.id.action_settingsFragment_to_premiumFragment)
-        }
-
-        premiumRestoreBtn.setOnClickListener {
-            PremiumBillingManager.restorePurchases(requireContext()) { _, message ->
-                refreshPremiumUi()
-                Snackbar.make(root, message, Snackbar.LENGTH_LONG).show()
-            }
-        }
-
-        premiumDebugSwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.setPremiumForDevelopment(isChecked)
-            refreshPremiumUi()
-            Snackbar.make(
-                root,
-                if (isChecked) R.string.premium_dev_enabled else R.string.premium_dev_disabled,
-                Snackbar.LENGTH_SHORT
-            ).show()
+            premiumSection.visibility = View.GONE
         }
     }
 
-    private fun refreshPremiumUi() = with(binding) {
-        if (!AppConstants.HAS_PREMIUM_FEATURES) {
-            premiumCard.visibility = View.GONE
-            return@with
-        }
-        val premium = viewModel.isPremium()
-        premiumStatus.setText(if (premium) R.string.premium_status_active else R.string.premium_status_free)
-        premiumDebugSwitch.isChecked = premium
-        adsCard.alpha = if (premium) 0.55f else 1f
-        premiumUpgradeBtn.isEnabled = true
-        premiumUpgradeBtn.setText(if (premium) R.string.premium_manage_plan else R.string.premium_view_plans)
-    }
-
-    private fun animateIntro() = with(binding) {
-        themeCard.translationY = 32f
-        languageCard.translationY = 32f
-        if (AppConstants.HAS_PREMIUM_FEATURES) premiumCard.translationY = 32f
-        adsCard.translationY = 32f
-        themeCard.alpha = 0f
-        languageCard.alpha = 0f
-        if (AppConstants.HAS_PREMIUM_FEATURES) premiumCard.alpha = 0f
-        adsCard.alpha = 0f
-        themeCard.animate().translationY(0f).alpha(1f).setDuration(280L).start()
-        languageCard.animate().translationY(0f).alpha(1f).setStartDelay(90L).setDuration(280L).start()
-        if (AppConstants.HAS_PREMIUM_FEATURES) {
-            premiumCard.animate().translationY(0f).alpha(1f).setStartDelay(180L).setDuration(280L).start()
-        } else {
-            premiumCard.visibility = View.GONE
-        }
-        deletedNotesCard.translationY = 32f
-        deletedNotesCard.alpha = 0f
-        adsCard.animate().translationY(0f).alpha(if (viewModel.isPremium()) 0.55f else 1f).setStartDelay(if (AppConstants.HAS_PREMIUM_FEATURES) 270L else 180L).setDuration(280L).start()
-        deletedNotesCard.animate().translationY(0f).alpha(1f).setStartDelay(if (AppConstants.HAS_PREMIUM_FEATURES) 360L else 270L).setDuration(280L).start()
-    }
-
-    private fun setupDeletedNotesControls() = with(binding) {
-        deletedNotesRetention.text = getString(R.string.deleted_notes_retention, AppConstants.DELETED_NOTES_RETENTION_DAYS)
-        deletedNotesOpenBtn.setOnClickListener {
-            it.animate().scaleX(0.96f).scaleY(0.96f).setDuration(70L).withEndAction {
-                it.animate().scaleX(1f).scaleY(1f).setDuration(120L).start()
-            }.start()
-            findNavController().navigate(R.id.action_settingsFragment_to_deletedNotesFragment)
-        }
+    private fun bindDynamicState() = with(binding) {
+        languageValue.text = viewModel.languageLabel(requireContext())
+        themeValue.text = viewModel.themeLabel(requireContext())
+        premiumValue.text = getString(if (viewModel.isPremium()) R.string.premium_status_active else R.string.premium_status_free)
+        adsValue.text = getString(if (viewModel.isPremium()) R.string.ads_disabled_for_premium else R.string.ads_enabled_for_free)
         viewModel.deletedNotes.observe(viewLifecycleOwner) { notes ->
-            latestDeletedNotes = notes
-            deletedNotesCount.text = resources.getQuantityString(
+            deletedNotesValue.text = resources.getQuantityString(
                 R.plurals.deleted_notes_count,
                 notes.size,
                 notes.size
             )
-            deletedNotesOpenBtn.isEnabled = true
         }
     }
 
-    private fun showDeletedNotesDialog() {
-        if (latestDeletedNotes.isEmpty()) {
-            Snackbar.make(binding.root, R.string.deleted_notes_empty, Snackbar.LENGTH_SHORT).show()
-            return
-        }
-        val dateFormat = SimpleDateFormat("MMM d, yyyy - HH:mm", Locale.getDefault())
-        val items = latestDeletedNotes.map { note ->
-            val deleted = dateFormat.format(Date(note.deletedAt))
-            "${note.title.ifBlank { getString(R.string.untitled_note) }}\n${getString(R.string.deleted_on_value, deleted)}"
-        }.toTypedArray()
+    private fun animateIntro() {
+        val sections = listOf(
+            binding.languageSection,
+            binding.themeSection,
+            binding.premiumSection,
+            binding.adsSection,
+            binding.deletedNotesSection,
+            binding.appInfoSection
+        ).filter { it.visibility == View.VISIBLE }
 
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.deleted_notes)
-            .setMessage(getString(R.string.deleted_notes_dialog_message, AppConstants.DELETED_NOTES_RETENTION_DAYS))
-            .setItems(items) { _, index -> showDeletedNoteActionDialog(latestDeletedNotes[index]) }
-            .setPositiveButton(R.string.close, null)
-            .show()
+        sections.forEachIndexed { index, view ->
+            view.alpha = 0f
+            view.translationY = 28f
+            view.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setStartDelay(index * 55L)
+                .setDuration(260L)
+                .start()
+        }
     }
 
-    private fun showDeletedNoteActionDialog(note: DeletedNoteModel) {
-        val dateFormat = SimpleDateFormat("MMM d, yyyy - HH:mm", Locale.getDefault())
-        val message = buildString {
-            appendLine(note.description.ifBlank { getString(R.string.no_description) })
-            appendLine()
-            append(getString(R.string.deleted_note_expires_value, dateFormat.format(Date(note.expiresAt))))
-        }
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(note.title.ifBlank { getString(R.string.untitled_note) })
-            .setMessage(message)
-            .setNegativeButton(R.string.delete_forever) { _, _ ->
-                viewModel.permanentlyDeleteDeletedNote(note) {
-                    Snackbar.make(binding.root, R.string.deleted_note_removed, Snackbar.LENGTH_SHORT).show()
-                }
-            }
-            .setPositiveButton(R.string.restore) { _, _ ->
-                viewModel.restoreDeletedNote(note) {
-                    Snackbar.make(binding.root, R.string.deleted_note_restored, Snackbar.LENGTH_SHORT).show()
-                }
-            }
-            .setNeutralButton(R.string.cancel, null)
-            .show()
+    override fun onResume() {
+        super.onResume()
+        if (_binding != null) bindDynamicState()
     }
 
     override fun onDestroyView() {
-        _binding = null
         super.onDestroyView()
+        _binding = null
     }
 }
